@@ -7,62 +7,25 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.ncast.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_libraryFragment"
-            app:destination="@id/libraryFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-    </fragment>
+        android:name="com.example.ncast.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.ncast.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/action_searchFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_searchFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
-            android:id="@+id/action_searchFragment_to_libraryFragment"
-            app:destination="@id/libraryFragment" />
-    </fragment>
+        android:name="com.example.ncast.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
+
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.example.ncast.LibraryFragment"
-        android:label="fragment_library"
-        tools:layout="@layout/fragment_library" >
-        <action
-            android:id="@+id/action_libraryFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_libraryFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
-            android:id="@+id/action_libraryFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-    </fragment>
+        android:name="com.example.ncast.ui.library.LibraryFragment"
+        android:label="Library"
+        tools:layout="@layout/fragment_library" />
+
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.ncast.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_libraryFragment"
-            app:destination="@id/libraryFragment" />
-    </fragment>
+        android:name="com.example.ncast.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
