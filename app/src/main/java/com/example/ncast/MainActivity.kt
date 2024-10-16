@@ -15,6 +15,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        val navController = findNavController(R.id.nav_host_fragment)
+        bottomNavigationView.setupWithNavController(navController)
+       
     }
 
     override fun onDestroy() {

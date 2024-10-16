@@ -3,9 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs")
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
-
 }
-
 android {
     namespace = "com.example.ncast"
     compileSdk = 34
@@ -43,7 +41,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

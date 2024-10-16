@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "NCast"
+rootProject.name = "NCAST"
 include(":app")
  
