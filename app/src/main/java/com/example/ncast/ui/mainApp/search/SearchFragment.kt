@@ -1,4 +1,4 @@
-package com.example.ncast.ui.search
+package com.example.ncast.ui.mainApp.search
 
 import android.os.Bundle
 import android.view.LayoutInflater

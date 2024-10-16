@@ -1,19 +1,20 @@
-package com.example.ncast.ui.library
+package com.example.ncast.ui.mainApp.home
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.ncast.R
 
-class LibraryFragment : Fragment(R.layout.fragment_library) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_library, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 }

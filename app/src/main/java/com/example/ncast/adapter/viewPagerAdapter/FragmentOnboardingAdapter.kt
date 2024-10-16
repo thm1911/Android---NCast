@@ -1,12 +1,12 @@
-package com.example.ncast.adapter.viewpageradapter
+package com.example.ncast.adapter.viewPagerAdapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.ncast.ui.onboarding.Onboarding1Fragment
-import com.example.ncast.ui.onboarding.Onboarding2Fragment
-import com.example.ncast.ui.onboarding.Onboarding3Fragment
+import com.example.ncast.ui.onBoarding.Onboarding1Fragment
+import com.example.ncast.ui.onBoarding.Onboarding2Fragment
+import com.example.ncast.ui.onBoarding.Onboarding3Fragment
 
 class FragmentOnboardingAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {

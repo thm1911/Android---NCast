@@ -1,4 +1,4 @@
-package com.example.ncast.ui.onboarding
+package com.example.ncast.ui.onBoarding
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.example.ncast.adapter.viewpageradapter.FragmentOnboardingAdapter
+import com.example.ncast.adapter.viewPagerAdapter.FragmentOnboardingAdapter
 import com.example.ncast.databinding.FragmentOnboardingBinding
 import com.google.android.material.tabs.TabLayoutMediator
 

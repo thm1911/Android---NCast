@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.example.ncast.ui.onboarding.OnboardingFragment"
+        android:name="com.example.ncast.ui.onBoarding.OnboardingFragment"
         android:label="fragment_onboarding"
         tools:layout="@layout/fragment_onboarding" >
         <action
@@ -16,7 +16,16 @@
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
-        android:name="com.example.ncast.ui.onboarding.CreateAccountFragment"
+        android:name="com.example.ncast.ui.onBoarding.CreateAccountFragment"
         android:label="fragment_create_account"
-        tools:layout="@layout/fragment_create_account" />
+        tools:layout="@layout/fragment_create_account" >
+        <action
+            android:id="@+id/action_createAccountFragment_to_mainAppFragment"
+            app:destination="@id/mainAppFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainAppFragment"
+        android:name="com.example.ncast.ui.mainApp.MainAppFragment"
+        android:label="fragment_main_app"
+        tools:layout="@layout/fragment_main_app" />
 </navigation>
