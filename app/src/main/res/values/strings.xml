@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">Bottom Navigation</string>
+    <string name="app_name">NCast</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="skip_for_now"><u><font color="#FF000000">Skip for now</font></u></string>
+    <string name="Continue">Continue</string>
+    <string name="get_new_music_and_create_your_perfect_playlist">Get new music and create your perfect playlist</string>
+    <string name="stream_songs_in_just_a_few_clicks">Stream songs \n in just a few clicks</string>
+    <string name="enjoy_relaxing_moments_with_ncast">Enjoy relaxing \n moments with Ncast</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
