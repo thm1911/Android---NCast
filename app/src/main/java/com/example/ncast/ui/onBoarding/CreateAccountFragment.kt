@@ -23,8 +23,12 @@ class CreateAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.signUp.setOnClickListener {
+            findNavController().navigate(CreateAccountFragmentDirections.actionCreateAccountFragmentToEmailSignUpFragment())
+        }
+
         binding.signIn.setOnClickListener {
-            findNavController().navigate(CreateAccountFragmentDirections.actionCreateAccountFragmentToMainAppFragment())
+            findNavController().navigate(CreateAccountFragmentDirections.actionCreateAccountFragmentToUserSignInFragment())
         }
     }
 

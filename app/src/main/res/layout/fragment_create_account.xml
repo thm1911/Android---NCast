@@ -61,7 +61,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/button"
-        android:text="Sign In"
+        android:text="@string/sign_in"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +72,7 @@
         app:layout_constraintWidth_percent="0.5" />
 
     <TextView
+        android:id="@+id/sign_up"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeMaxTextSize="15sp"

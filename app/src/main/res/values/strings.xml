@@ -8,4 +8,16 @@
     <string name="stream_songs_in_just_a_few_clicks">Stream songs \n in just a few clicks</string>
     <string name="enjoy_relaxing_moments_with_ncast">Enjoy relaxing \n moments with Ncast</string>
     <string name="sign_up">Sign Up</string>
+    <string name="create_account">Create Account</string>
+    <string name="create_your_account_and_feel_the_benefits">Create your account and feel the benefits</string>
+    <string name="email"><b><font color="#FF000000">Email</font></b><b><font color="#F40303"> *</font></b></string>
+    <string name="username"><b><font color="#FF000000">Username</font></b><b><font color="#F40303"> *</font></b></string>
+    <string name="password"><b><font color="#FF000000">Password</font></b><b><font color="#F40303"> *</font></b></string>
+    <string name="cfPassword"><b><font color="#FF000000">Confirm Password</font></b><b><font color="#F40303"> *</font></b></string>
+    <string name="abc_gmail_com">abc@gmail.com</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="welcome_back">Welcome back!</string>
+    <string name="immerse_yourself_in_your_own_space">Immerse yourself in your own space</string>
+    <string name="sign_in">Sign In</string>
+
 </resources>
