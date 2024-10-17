@@ -20,12 +20,45 @@
         android:label="fragment_create_account"
         tools:layout="@layout/fragment_create_account" >
         <action
-            android:id="@+id/action_createAccountFragment_to_mainAppFragment"
-            app:destination="@id/mainAppFragment" />
+            android:id="@+id/action_createAccountFragment_to_emailSignUpFragment"
+            app:destination="@id/emailSignUpFragment" />
+        <action
+            android:id="@+id/action_createAccountFragment_to_userSignInFragment"
+            app:destination="@id/userSignInFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainAppFragment"
         android:name="com.example.ncast.ui.mainApp.MainAppFragment"
         android:label="fragment_main_app"
         tools:layout="@layout/fragment_main_app" />
+    <fragment
+        android:id="@+id/emailSignUpFragment"
+        android:name="com.example.ncast.ui.signUp.email.EmailSignUpFragment"
+        android:label="fragment_email_sign_up"
+        tools:layout="@layout/fragment_email_sign_up" >
+        <action
+            android:id="@+id/action_emailSignUpFragment_to_userSignUpFragment"
+            app:destination="@id/userSignUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userSignUpFragment"
+        android:name="com.example.ncast.ui.signUp.user.UserSignUpFragment"
+        android:label="fragment_user_sign_up"
+        tools:layout="@layout/fragment_user_sign_up" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_userSignUpFragment_to_mainAppFragment"
+            app:destination="@id/mainAppFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userSignInFragment"
+        android:name="com.example.ncast.ui.signIn.UserSignInFragment"
+        android:label="fragment_user_sign_in"
+        tools:layout="@layout/fragment_user_sign_in" >
+        <action
+            android:id="@+id/action_userSignInFragment_to_mainAppFragment"
+            app:destination="@id/mainAppFragment" />
+    </fragment>
 </navigation>

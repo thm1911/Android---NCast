@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main">#4C0099</color>
     <color name="grey">#787777</color>
+    <color name="red">#F40303</color>
+    <color name="input_color">#A9B0C5</color>
 </resources>
