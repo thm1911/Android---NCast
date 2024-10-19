@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.ncast.R
 
-class LibraryFragment : Fragment(R.layout.fragment_library) {
+class LibraryFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
