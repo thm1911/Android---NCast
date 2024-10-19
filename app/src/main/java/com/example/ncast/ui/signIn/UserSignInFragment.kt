@@ -53,6 +53,7 @@ class UserSignInFragment : Fragment() {
 
         if(username.isNullOrEmpty()){
             binding.usernameLayout.helperText = "Cannot be left blank"
+            binding.username.setBackgroundResource(R.drawable.input_error)
             callback(false)
             return
         }
@@ -62,10 +63,14 @@ class UserSignInFragment : Fragment() {
                 callback(true)
                 binding.passwordLayout.helperText = ""
                 binding.usernameLayout.helperText = ""
+                binding.password.setBackgroundResource(R.drawable.input_text)
+                binding.username.setBackgroundResource(R.drawable.input_text)
             }
             else{
                 binding.usernameLayout.helperText = ""
                 binding.passwordLayout.helperText = "Password is incorrect"
+                binding.password.setBackgroundResource(R.drawable.input_error)
+                binding.username.setBackgroundResource(R.drawable.input_text)
                 callback(false)
             }
         }

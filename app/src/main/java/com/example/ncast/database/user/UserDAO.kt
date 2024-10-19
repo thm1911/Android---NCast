@@ -1,5 +1,6 @@
 package com.example.ncast.database.user
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -21,4 +22,10 @@ interface UserDAO {
 
     @Query("SELECT id FROM User WHERE username = :username")
     suspend fun getUserIdFromUsername(username: String): Long
+
+    @Query("SELECT * FROM User WHERE id = :id")
+    fun getUserById(id: Long): LiveData<User>
+
+    @Query("UPDATE User SET password = :password WHERE id = :id")
+    suspend fun updatePassword(id: Long, password: String)
 }
