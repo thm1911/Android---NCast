@@ -5,6 +5,6 @@
     <color name="main">#4C0099</color>
     <color name="green">#24A19C</color>
     <color name="grey">#787777</color>
-    <color name="lavender">#8692f7</color>
-
+    <color name="red">#F40303</color>
+    <color name="input_color">#A9B0C5</color>
 </resources>
