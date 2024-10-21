@@ -1,4 +1,4 @@
-package com.example.ncast.adapter.recyclerViewHomeAdapter
+package com.example.ncast.adapter.recyclerViewAdapter
 
 import android.view.LayoutInflater
 import android.view.View

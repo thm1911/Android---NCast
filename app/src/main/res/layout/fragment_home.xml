@@ -8,22 +8,9 @@
     tools:context=".ui.mainApp.home.HomeFragment">
 
     <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="15dp"
-        android:src="@drawable/notification"
-        app:layout_constraintBottom_toTopOf="@id/continue_listening"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.475" />
-
-    <ImageView
         android:id="@+id/avt"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
         android:background="@drawable/rounded_image_avt"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
@@ -31,6 +18,8 @@
         app:layout_constraintBottom_toTopOf="@id/continue_listening"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.52" />
@@ -39,7 +28,6 @@
         android:id="@+id/welcome"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
         android:autoSizeMaxTextSize="25sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
@@ -52,6 +40,8 @@
         app:layout_constraintWidth_percent="0.6"
         app:layout_constraintStart_toEndOf="@id/avt"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintVertical_bias="0.3" />
 
     <TextView
@@ -63,19 +53,32 @@
         android:autoSizeTextType="uniform"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintWidth_percent="0.6"
-        android:layout_marginStart="10dp"
         android:text="chandrama"
         android:textColor="@color/grey"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/avt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintTop_toBottomOf="@id/welcome"
         app:layout_constraintVertical_bias="0.02" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/notification"
+        app:layout_constraintBottom_toTopOf="@id/continue_listening"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/welcome"
+        app:layout_constraintHeight_percent="0.035"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintVertical_bias="0.475" />
 
     <TextView
         android:id="@+id/continue_listening"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
         android:autoSizeMaxTextSize="25sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
@@ -85,7 +88,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintWidth_percent="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.13" />
@@ -110,10 +114,6 @@
         android:id="@+id/recyclerView_continue"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="-5dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toTopOf="@id/your_top_mixes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,17 +124,17 @@
         android:id="@+id/your_top_mixes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
         android:autoSizeMaxTextSize="25sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
         android:text="Your Top Mixes"
         android:textColor="@color/black"
         android:textStyle="bold"
+        app:layout_constraintWidth_percent="0.6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.46" />
@@ -159,20 +159,16 @@
         android:id="@+id/recyclerView_top_trending"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toTopOf="@id/recent_listening"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/your_top_mixes"
-        app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/trend_music" />
 
     <TextView
         android:id="@+id/recent_listening"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
         android:autoSizeMaxTextSize="25sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
@@ -181,8 +177,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.6"
         app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.74" />
@@ -208,10 +205,8 @@
         android:id="@+id/recyclerView_recent_music_listening"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recent_listening"
         app:layout_constraintVertical_bias="0.0"
