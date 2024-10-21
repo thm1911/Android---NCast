@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.ncast.R
 import com.example.ncast.databinding.FragmentEmailSignUpBinding
 
 class EmailSignUpFragment : Fragment() {
@@ -41,11 +42,13 @@ class EmailSignUpFragment : Fragment() {
         val email = binding.email.text.toString()
         if (email.isNullOrEmpty()){
             binding.emailLayout.helperText = "Cannot be left blank"
+            binding.email.setBackgroundResource(R.drawable.input_error)
             callback(false)
             return
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             binding.emailLayout.helperText = "Invalid email"
+            binding.email.setBackgroundResource(R.drawable.input_error)
             callback(false)
             return
         }
@@ -53,9 +56,13 @@ class EmailSignUpFragment : Fragment() {
         viewModel.isEmailExist(email){exist ->
             if(exist){
                 binding.emailLayout.helperText = "Email already exists"
+                binding.email.setBackgroundResource(R.drawable.input_error)
                 callback(false)
             }
-            else callback(true)
+            else {
+                binding.email.setBackgroundResource(R.drawable.input_text)
+                callback(true)
+            }
         }
 
     }

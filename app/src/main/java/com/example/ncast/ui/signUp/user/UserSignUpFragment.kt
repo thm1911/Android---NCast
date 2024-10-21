@@ -61,12 +61,15 @@ class UserSignUpFragment : Fragment() {
 
         if(username.isNullOrEmpty()){
             binding.usernameLayout.helperText = "Cannot be left blank"
+            binding.username.setBackgroundResource(R.drawable.input_error)
             callback(false)
             return
         }
         else if(password.isNullOrEmpty()){
             binding.usernameLayout.helperText = ""
             binding.passwordLayout.helperText = "Cannot be left blank"
+            binding.password.setBackgroundResource(R.drawable.input_error)
+            binding.username.setBackgroundResource(R.drawable.input_text)
             callback(false)
             return
         }
@@ -74,6 +77,9 @@ class UserSignUpFragment : Fragment() {
             binding.usernameLayout.helperText = ""
             binding.passwordLayout.helperText = ""
             binding.cfPasswordLayout.helperText = "Confirm password is incorrect"
+            binding.cfPassword.setBackgroundResource(R.drawable.input_error)
+            binding.password.setBackgroundResource(R.drawable.input_text)
+            binding.username.setBackgroundResource(R.drawable.input_text)
             callback(false)
             return
         }
@@ -83,12 +89,19 @@ class UserSignUpFragment : Fragment() {
                 binding.passwordLayout.helperText = ""
                 binding.cfPasswordLayout.helperText = ""
                 binding.usernameLayout.helperText = "Username already exists"
+                binding.username.setBackgroundResource(R.drawable.input_error)
+                binding.password.setBackgroundResource(R.drawable.input_text)
+                binding.cfPassword.setBackgroundResource(R.drawable.input_text)
                 callback(false)
             }
             else{
                 binding.passwordLayout.helperText = ""
                 binding.cfPasswordLayout.helperText = ""
                 binding.usernameLayout.helperText = ""
+
+                binding.cfPassword.setBackgroundResource(R.drawable.input_text)
+                binding.password.setBackgroundResource(R.drawable.input_text)
+                binding.username.setBackgroundResource(R.drawable.input_text)
                 callback(true)
             }
         }
