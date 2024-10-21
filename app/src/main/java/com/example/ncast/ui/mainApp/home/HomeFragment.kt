@@ -1,6 +1,6 @@
 package com.example.ncast.ui.mainApp.home
 
-import com.example.ncast.adapter.recyclerViewHomeAdapter.ContinueCategoryAdapter
+import com.example.ncast.adapter.recyclerViewAdapter.ContinueCategoryAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ncast.R
 import com.example.ncast.SpacingItem
-import com.example.ncast.adapter.recyclerViewHomeAdapter.RecentMusicListeningAdapter
-import com.example.ncast.adapter.recyclerViewHomeAdapter.TopTrendingAdapter
+import com.example.ncast.adapter.recyclerViewAdapter.RecentMusicListeningAdapter
+import com.example.ncast.adapter.recyclerViewAdapter.TopTrendingAdapter
 import com.example.ncast.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
