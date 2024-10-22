@@ -14,9 +14,8 @@
 
         <ImageView
             android:id="@+id/music_image_recent"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:contentDescription="Image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:src="@drawable/pic_trend"
             app:layout_constraintStart_toStartOf="parent"
