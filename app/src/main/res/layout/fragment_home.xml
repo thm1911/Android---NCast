@@ -63,17 +63,17 @@
         app:layout_constraintVertical_bias="0.02" />
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="15dp"
         android:src="@drawable/notification"
-        app:layout_constraintBottom_toTopOf="@id/continue_listening"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/welcome"
         app:layout_constraintHeight_percent="0.035"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintVertical_bias="0.475" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <TextView
         android:id="@+id/continue_listening"
@@ -118,7 +118,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/continue_listening"
-        tools:listitem="@layout/item_music" />
+        tools:listitem="@layout/item_music_home" />
 
     <TextView
         android:id="@+id/your_top_mixes"
@@ -163,7 +163,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/your_top_mixes"
-        tools:listitem="@layout/trend_music" />
+        tools:listitem="@layout/item_trend_music_home" />
 
     <TextView
         android:id="@+id/recent_listening"
@@ -210,6 +210,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recent_listening"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/recent_music_listening" />
+        tools:listitem="@layout/item_recent_music_listening_home" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

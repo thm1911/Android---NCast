@@ -1,4 +1,4 @@
-package com.example.ncast.adapter.recyclerViewAdapter
+package com.example.ncast.adapter.recyclerViewAdapterHome
 
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +16,7 @@ class RecentMusicListeningAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentMusicViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recent_music_listening, parent, false)
+            .inflate(R.layout.item_recent_music_listening_home, parent, false)
         return RecentMusicViewHolder(view)
     }
 

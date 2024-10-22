@@ -1,4 +1,4 @@
-package com.example.ncast.adapter.recyclerViewAdapter
+package com.example.ncast.adapter.recyclerViewAdapterHome
 
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +18,7 @@ class ContinueCategoryAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_music, parent, false)
+            .inflate(R.layout.item_music_home, parent, false)
         return CategoryViewHolder(view)
     }
 
