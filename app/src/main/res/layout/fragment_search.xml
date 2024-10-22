@@ -7,6 +7,21 @@
     android:background="@color/white"
     tools:context=".ui.mainApp.search.SearchFragment">
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
     <TextView
         android:id="@+id/text_search"
         android:layout_width="0dp"
@@ -20,8 +35,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.06"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.03"
         app:layout_constraintWidth_percent="0.65" />
@@ -30,14 +45,14 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="15dp"
         android:src="@drawable/notification"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHeight_percent="0.035"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.04"
+        app:layout_constraintHorizontal_bias="1"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/search"
@@ -46,9 +61,9 @@
         app:cardCornerRadius="15dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHeight_percent="0.075"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.14"
         app:layout_constraintWidth_percent="0.9">>
@@ -75,11 +90,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25"
-        app:layout_constraintWidth_percent="0.62" />
+        app:layout_constraintWidth_percent="0.62"
+        android:gravity="center_vertical"/>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -88,10 +104,12 @@
         android:src="@drawable/fire"
         app:layout_constraintBottom_toBottomOf="@id/text_mss"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintHeight_percent="0.03"
+        app:layout_constraintHeight_percent="0.025"
         app:layout_constraintStart_toEndOf="@id/text_mss"
         app:layout_constraintTop_toTopOf="@id/text_mss"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.5"
+        android:gravity="center_vertical"
+        />
 
     <TextView
         android:id="@+id/text_update_every_hour"
@@ -112,13 +130,32 @@
         app:layout_constraintVertical_bias="0.01"
         app:layout_constraintWidth_percent="0.62" />
 
+    <TextView
+        android:id="@+id/update_every_more"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="View All >>"
+        android:textColor="@color/green"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeTextType="uniform"
+        android:textStyle="italic"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintBottom_toBottomOf="@id/text_update_every_hour"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintTop_toTopOf="@id/text_update_every_hour"
+        app:layout_constraintVertical_bias="0.5"
+        android:gravity="center_vertical" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_update_every_hour"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/text_discoveries"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/text_update_every_hour"
         tools:listitem="@layout/item_music_search" />
 
@@ -135,20 +172,40 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHeight_percent="0.055"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65"
-        app:layout_constraintWidth_percent="0.62" />
+        app:layout_constraintVertical_bias="0.64"
+        app:layout_constraintWidth_percent="0.62"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/discoveries_more"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="View All >>"
+        android:textColor="@color/green"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeTextType="uniform"
+        android:textStyle="italic"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintBottom_toBottomOf="@id/text_discoveries"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintTop_toTopOf="@id/text_discoveries"
+        app:layout_constraintVertical_bias="0.5"
+        android:gravity="center_vertical" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_discoveries"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/text_discoveries"
         tools:listitem="@layout/item_discoveries_search" />
 
