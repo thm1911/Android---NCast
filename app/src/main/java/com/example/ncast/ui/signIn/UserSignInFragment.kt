@@ -11,13 +11,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentUserSignInBinding
 import com.example.ncast.utils.SharePref.SharePref
+import com.google.firebase.auth.FirebaseAuth
 
 class UserSignInFragment : Fragment() {
     private var _binding: FragmentUserSignInBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: UserSignInViewModel by viewModels {
-        UserSignInViewModel.UserSignInViewModelFactory(requireActivity().application)
-    }
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,51 +28,60 @@ class UserSignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        auth = FirebaseAuth.getInstance()
 
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.userSignInFragment, true)
             .setPopUpTo(R.id.createAccountFragment, true)
             .build()
+
         binding.signIn.setOnClickListener {
             checkUser { check ->
-                if(check){
-                    viewModel.getUserIdFromUsername(binding.username.text.toString()){id ->
-                        SharePref.setUserIdToSharePref(requireActivity().application, id)
-                    }
-                    findNavController().navigate(UserSignInFragmentDirections.actionUserSignInFragmentToMainAppFragment(), navOptions)
+                if (check) {
+                    findNavController().navigate(
+                        UserSignInFragmentDirections.actionUserSignInFragmentToMainAppFragment(),
+                        navOptions
+                    )
 
                 }
             }
         }
     }
 
-    private fun checkUser(callback: (Boolean) -> Unit){
-        val username = binding.username.text.toString()
+    private fun checkUser(callback: (Boolean) -> Unit) {
+        val email = binding.email.text.toString()
         val password = binding.password.text.toString()
 
-        if(username.isNullOrEmpty()){
-            binding.usernameLayout.helperText = "Cannot be left blank"
-            binding.username.setBackgroundResource(R.drawable.input_error)
+        if (email.isNullOrEmpty()) {
+            binding.emailLayout.helperText = "Cannot be left blank"
+            binding.email.setBackgroundResource(R.drawable.input_error)
+            callback(false)
+            return
+        } else if (password.isNullOrEmpty()) {
+            binding.passwordLayout.helperText = "Cannot be left blank"
+            binding.password.setBackgroundResource(R.drawable.input_error)
+            binding.emailLayout.helperText = ""
+            binding.email.setBackgroundResource(R.drawable.input_text)
             callback(false)
             return
         }
 
-        viewModel.checkUserSignIn(username, password){check ->
-            if(check){
-                callback(true)
-                binding.passwordLayout.helperText = ""
-                binding.usernameLayout.helperText = ""
-                binding.password.setBackgroundResource(R.drawable.input_text)
-                binding.username.setBackgroundResource(R.drawable.input_text)
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    callback(true)
+                    binding.passwordLayout.helperText = ""
+                    binding.emailLayout.helperText = ""
+                    binding.password.setBackgroundResource(R.drawable.input_text)
+                    binding.email.setBackgroundResource(R.drawable.input_text)
+                } else {
+                    binding.emailLayout.helperText = ""
+                    binding.passwordLayout.helperText = "Password or email is incorrect"
+                    binding.password.setBackgroundResource(R.drawable.input_error)
+                    binding.email.setBackgroundResource(R.drawable.input_text)
+                    callback(false)
+                }
             }
-            else{
-                binding.usernameLayout.helperText = ""
-                binding.passwordLayout.helperText = "Password is incorrect"
-                binding.password.setBackgroundResource(R.drawable.input_error)
-                binding.username.setBackgroundResource(R.drawable.input_text)
-                callback(false)
-            }
-        }
     }
 
     override fun onDestroyView() {
