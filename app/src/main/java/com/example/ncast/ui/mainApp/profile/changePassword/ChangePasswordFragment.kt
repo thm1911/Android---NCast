@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentChangePasswordBinding
@@ -46,6 +47,14 @@ class ChangePasswordFragment : Fragment() {
             findNavController().popBackStack()
         }
 
+        binding.forgotPassword.setOnClickListener {
+            auth.signOut()
+            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+            val navController = navHostFragment.navController
+
+            navController.popBackStack()
+            navController.navigate(R.id.forgotPasswordFragment)
+        }
     }
 
     private fun check(callback: (Boolean) -> Unit){
