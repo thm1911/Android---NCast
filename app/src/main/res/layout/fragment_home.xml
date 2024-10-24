@@ -26,25 +26,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.02" />
+        app:layout_constraintGuide_percent="0.025"  />
 
 
-    <ImageView
-        android:id="@+id/avt"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/image_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/rounded_image_avt"
-        android:clipToOutline="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/avt"
         app:layout_constraintBottom_toTopOf="@id/continue_listening"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintHeight_percent="0.085"
+        app:layout_constraintHeight_percent="0.08"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="@id/guideline3"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0"
+        app:cardCornerRadius="100sp"
+        app:cardElevation="5sp">
+
+        <ImageView
+            android:id="@+id/avt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_circle_shape"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_app"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+
 
     <TextView
         android:id="@+id/welcome"
@@ -53,14 +64,14 @@
         android:autoSizeMaxTextSize="25sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
-        android:text="@string/welcome_back_home"
-        android:textColor="@color/black"
+        android:text="Welcome back"
+        android:textColor="@color/main"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/continue_listening"
         app:layout_constraintHeight_percent="0.04"
         app:layout_constraintWidth_percent="0.6"
-        app:layout_constraintStart_toEndOf="@id/avt"
+        app:layout_constraintStart_toEndOf="@id/image_layout"
         app:layout_constraintTop_toTopOf="@id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
@@ -73,19 +84,19 @@
         android:autoSizeMaxTextSize="20sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
-        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintHeight_percent="0.04"
         app:layout_constraintWidth_percent="0.6"
         android:text="chandrama"
         android:textColor="@color/grey"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/avt"
+        app:layout_constraintStart_toEndOf="@id/image_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintTop_toBottomOf="@id/welcome"
         app:layout_constraintVertical_bias="0.02" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/bell"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/notification"
@@ -126,7 +137,7 @@
         android:autoSizeMaxTextSize="15sp"
         android:autoSizeMinTextSize="5sp"
         android:autoSizeTextType="uniform"
-        android:textStyle="italic"
+        android:textStyle="bold"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintBottom_toBottomOf="@id/continue_listening"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -142,8 +153,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/your_top_mixes"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/continue_listening"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_music_home" />
 
     <TextView
@@ -175,7 +188,7 @@
         android:autoSizeMaxTextSize="15sp"
         android:autoSizeMinTextSize="5sp"
         android:autoSizeTextType="uniform"
-        android:textStyle="italic"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/your_top_mixes"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHorizontal_bias="1"
@@ -227,7 +240,7 @@
         android:autoSizeMaxTextSize="15sp"
         android:autoSizeMinTextSize="5sp"
         android:autoSizeTextType="uniform"
-        android:textStyle="italic"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/recent_listening"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHorizontal_bias="1"

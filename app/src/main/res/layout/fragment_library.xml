@@ -4,19 +4,192 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mainApp.library.LibraryFragment"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".ui.mainApp.library.LibraryFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Library"
-        android:textColor="@color/black"
-        android:layout_centerInParent="true"
-        android:textSize="36sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.025" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/image_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="100sp"
+        app:cardElevation="5sp"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toTopOf="@id/guideline3"
+        app:layout_constraintVertical_bias="0">
+
+        <ImageView
+            android:id="@+id/avt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_circle_shape"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_app" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/text_search"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="35sp"
+        android:autoSizeMinTextSize="20sp"
+        android:autoSizeTextType="uniform"
+        android:text="Your Library"
+        android:textColor="@color/main"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/image_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toEndOf="@id/image_layout"
+        app:layout_constraintTop_toTopOf="@id/image_layout"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintWidth_percent="0.65" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_new_playist"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHorizontal_bias="0">
+
+        <Button
+            android:id="@+id/playlist_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_button_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            />
+
+        <TextView
+            android:id="@+id/text_new_playlist"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autoSizeMaxTextSize="25sp"
+            android:autoSizeMinTextSize="15sp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_vertical"
+            android:text="Add New Playlist"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/playlist_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/playlist_button"
+            app:layout_constraintTop_toTopOf="@id/playlist_button"
+            app:layout_constraintWidth_percent="0.75" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/your_liked_songs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHorizontal_bias="0">
+
+        <Button
+            android:id="@+id/your_song_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_button_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            />
+
+        <TextView
+            android:id="@+id/text_your_song"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autoSizeMaxTextSize="25sp"
+            android:autoSizeMinTextSize="15sp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_vertical"
+            android:text="Your Liked Songs"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/your_song_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/your_song_button"
+            app:layout_constraintTop_toTopOf="@id/your_song_button"
+            app:layout_constraintWidth_percent="0.75" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/text_your_playlist"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeTextType="uniform"
+        android:text="Your playlists"
+        app:layout_constraintHeight_percent="0.05"
+        android:textColor="@color/main"
+        android:textStyle="bold"
+        app:layout_constraintVertical_bias="0.35"
+        android:gravity="center_vertical"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_your_playlist"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_your_playlist"
+        tools:listitem="@layout/item_my_playlist_library"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
