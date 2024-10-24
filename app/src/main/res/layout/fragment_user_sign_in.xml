@@ -59,7 +59,7 @@
         android:id="@+id/text3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/username"
+        android:text="@string/email"
         app:layout_constraintTop_toBottomOf="@id/text2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline1"
@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="0.05"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/username_layout"
+        android:id="@+id/email_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/text3"
@@ -86,11 +86,12 @@
         app:startIconTint="@color/main">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/username"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/input_text"
-            android:hint="@string/enter_your_username"
+            android:hint="@string/abc_gmail_com"
+            android:inputType="textEmailAddress"
             android:textColorHint="@color/input_color"
             android:textColor="@color/black"
             android:paddingStart="45sp"/>
@@ -101,7 +102,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/password"
-        app:layout_constraintTop_toBottomOf="@id/username_layout"
+        app:layout_constraintTop_toBottomOf="@id/email_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintEnd_toEndOf="@id/guideline2"

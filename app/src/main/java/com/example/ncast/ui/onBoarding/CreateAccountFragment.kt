@@ -24,7 +24,7 @@ class CreateAccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.signUp.setOnClickListener {
-            findNavController().navigate(CreateAccountFragmentDirections.actionCreateAccountFragmentToEmailSignUpFragment())
+            findNavController().navigate(CreateAccountFragmentDirections.actionCreateAccountFragmentToUserSignUpFragment())
         }
 
         binding.signIn.setOnClickListener {

@@ -5,19 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentChangePasswordBinding
 import com.example.ncast.utils.SharePref.SharePref
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class ChangePasswordFragment : Fragment() {
     private var _binding: FragmentChangePasswordBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ChangePassWordViewModel by viewModels {
-        ChangePassWordViewModel.ChangePassWordViewModelFactory(requireActivity().application)
-    }
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,15 +31,12 @@ class ChangePasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var curPass = ""
-        viewModel.user.observe(viewLifecycleOwner){user ->
-            curPass = user.password
-        }
+        auth = FirebaseAuth.getInstance()
+
 
         binding.save.setOnClickListener {
-            check(curPass){check ->
+            check{check ->
                 if(check){
-                    viewModel.updatePassword(SharePref.getUserIdFromSharePref(requireActivity().application), binding.cfNewPassword.text.toString())
                     findNavController().popBackStack()
                 }
             }
@@ -50,18 +48,12 @@ class ChangePasswordFragment : Fragment() {
 
     }
 
-    private fun check(pass: String, callback: (Boolean) -> Unit){
-        val curPass = binding.curPassword.text.toString()
+    private fun check(callback: (Boolean) -> Unit){
+        val user = auth.currentUser
         val newPass = binding.newPassword.text.toString()
         val cfNewPass = binding.cfNewPassword.text.toString()
 
-        if(curPass != pass){
-            binding.curPasswordLayout.helperText = "Password is incorrect"
-            binding.curPassword.setBackgroundResource(R.drawable.input_error)
-            callback(false)
-            return
-        }
-        else if(newPass.isNullOrEmpty()){
+        if(newPass.isNullOrEmpty()){
             binding.curPasswordLayout.helperText = ""
             binding.newPasswordLayout.helperText = "Cannot be left blank"
             binding.curPassword.setBackgroundResource(R.drawable.input_text)
@@ -69,11 +61,11 @@ class ChangePasswordFragment : Fragment() {
             callback(false)
             return
         }
-        else if(cfNewPass.isNullOrEmpty()){
-            binding.newPasswordLayout.helperText = ""
-            binding.cfNewPasswordLayout.helperText = "Cannot be left blank"
-            binding.newPassword.setBackgroundResource(R.drawable.input_text)
-            binding.cfNewPassword.setBackgroundResource(R.drawable.input_error)
+        else if(newPass.length < 6){
+            binding.curPasswordLayout.helperText = ""
+            binding.newPasswordLayout.helperText = "Password must be at least 6 characters"
+            binding.curPassword.setBackgroundResource(R.drawable.input_text)
+            binding.newPassword.setBackgroundResource(R.drawable.input_error)
             callback(false)
             return
         }
@@ -85,10 +77,29 @@ class ChangePasswordFragment : Fragment() {
             callback(false)
             return
         }
-        else{
-            callback(true)
-            return
+
+        user?.updatePassword(newPass)?.addOnCompleteListener {task ->
+            if (task.isSuccessful){
+                callback(true)
+                updatePassToDatabase(user.uid, newPass)
+                Toast.makeText(requireContext(), "Password changed sucessfully", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                callback(false)
+                binding.curPasswordLayout.helperText = "Password is incorrect"
+                binding.newPasswordLayout.helperText = ""
+                binding.cfNewPasswordLayout.helperText = ""
+                binding.curPassword.setBackgroundResource(R.drawable.input_text)
+                binding.newPassword.setBackgroundResource(R.drawable.input_text)
+                binding.cfNewPassword.setBackgroundResource(R.drawable.input_error)
+            }
         }
+    }
+
+    private fun updatePassToDatabase(userId: String, newPass: String){
+        val database = FirebaseDatabase.getInstance()
+        val userRef = database.getReference("user").child(userId)
+        userRef.child("password").setValue(newPass)
     }
 
     override fun onDestroyView() {

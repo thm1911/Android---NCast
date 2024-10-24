@@ -10,13 +10,15 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentProfileBinding
+import com.example.ncast.model.User
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ProfileViewModel by viewModels {
-        ProfileViewModel.ProfileViewModelFactory(requireActivity().application)
-    }
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,14 +31,20 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNav.visibility = View.VISIBLE
 
-        init()
+        auth = FirebaseAuth.getInstance()
+        val userId = auth.currentUser?.uid
+        init(userId!!)
 
         binding.changePassword.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment())
+            bottomNav.visibility = View.GONE
         }
 
         binding.logout.setOnClickListener {
+            auth.signOut()
             val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
             val navController = navHostFragment.navController
 
@@ -46,10 +54,16 @@ class ProfileFragment : Fragment() {
 
     }
 
-    private fun init(){
-        viewModel.user.observe(viewLifecycleOwner){user ->
-            binding.username.setText(user.username)
-            binding.email.setText(user.email)
+    private fun init(userId: String){
+        val database = FirebaseDatabase.getInstance()
+        val userRef = database.getReference("user").child(userId)
+
+        userRef.get().addOnSuccessListener { data ->
+            val user = data.getValue(User::class.java)
+            if(user != null){
+                binding.email.text = user.email
+                binding.username.text = user.username
+            }
         }
     }
 

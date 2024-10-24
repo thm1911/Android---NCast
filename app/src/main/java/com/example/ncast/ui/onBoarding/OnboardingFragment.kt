@@ -10,10 +10,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.ncast.adapter.viewPagerAdapter.FragmentOnboardingAdapter
 import com.example.ncast.databinding.FragmentOnboardingBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class OnboardingFragment : Fragment() {
     private var _binding: FragmentOnboardingBinding? = null
     private val binding get() = _binding!!
+    private lateinit var firebaseRef: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +28,8 @@ class OnboardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        firebaseRef = FirebaseDatabase.getInstance().getReference("test")
 
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout

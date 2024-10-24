@@ -13,11 +13,15 @@ import com.example.ncast.SpacingItem
 import com.example.ncast.adapter.recyclerViewAdapterHome.RecentMusicListeningAdapter
 import com.example.ncast.adapter.recyclerViewAdapterHome.TopTrendingAdapter
 import com.example.ncast.databinding.FragmentHomeBinding
+import com.example.ncast.model.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +55,21 @@ class HomeFragment : Fragment() {
         // Adding spacing
         val space = resources.getDimensionPixelSize(R.dimen.space)
         binding.recyclerViewContinue.addItemDecoration(SpacingItem(space))
+
+        auth = FirebaseAuth.getInstance()
+        val userId = auth.currentUser?.uid
+        initUser(userId!!)
+    }
+
+    private fun initUser(userId: String){
+        val database = FirebaseDatabase.getInstance()
+        val userRef = database.getReference("user").child(userId)
+        userRef.get().addOnSuccessListener { data ->
+            val user = data.getValue(User::class.java)
+            if (user != null){
+                binding.name.text = user.username
+            }
+        }
     }
 
     override fun onDestroyView() {
