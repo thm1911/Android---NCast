@@ -35,4 +35,14 @@
     <string name="view_all"><![CDATA[View All >>]]></string>
     <string name="your_top_mixes">Your Top Mixes</string>
     <string name="recently_played_songs">Recently played songs</string>
+    <string name="search">Search</string>
+    <string name="most_searched_songs">Most Searched Songs</string>
+    <string name="updated_every_hour">Updated every hour</string>
+    <string name="discoveries">Discoveries</string>
+    <string name="your_library">Your Library</string>
+    <string name="add_new_playlist">Add New Playlist</string>
+    <string name="your_liked_songs">Your Liked Songs</string>
+    <string name="your_playlists">Your playlists</string>
+    <string name="forgot_password"><u>Forgot your password</u></string>
+    <string name="forgot_pass">Forgot Password</string>
 </resources>

@@ -48,5 +48,13 @@
         <action
             android:id="@+id/action_userSignInFragment_to_mainAppFragment"
             app:destination="@id/mainAppFragment" />
+        <action
+            android:id="@+id/action_userSignInFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.ncast.ui.forgotPassword.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
 </navigation>

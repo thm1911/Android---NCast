@@ -12,6 +12,7 @@ import com.example.ncast.R
 import com.example.ncast.databinding.FragmentUserSignInBinding
 import com.example.ncast.utils.SharePref.SharePref
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class UserSignInFragment : Fragment() {
     private var _binding: FragmentUserSignInBinding? = null
@@ -38,13 +39,19 @@ class UserSignInFragment : Fragment() {
         binding.signIn.setOnClickListener {
             checkUser { check ->
                 if (check) {
+                    val userId = auth.currentUser?.uid
+                    val password = binding.password.text.toString()
+                    updatePassToDatabase(userId!!, password)
                     findNavController().navigate(
                         UserSignInFragmentDirections.actionUserSignInFragmentToMainAppFragment(),
                         navOptions
                     )
-
                 }
             }
+        }
+
+        binding.forgotPassword.setOnClickListener {
+            findNavController().navigate(UserSignInFragmentDirections.actionUserSignInFragmentToForgotPasswordFragment())
         }
     }
 
@@ -82,6 +89,12 @@ class UserSignInFragment : Fragment() {
                     callback(false)
                 }
             }
+    }
+
+    private fun updatePassToDatabase(userId: String, pass: String){
+        val database = FirebaseDatabase.getInstance()
+        val userRef = database.getReference("user").child(userId)
+        userRef.child("password").setValue(pass)
     }
 
     override fun onDestroyView() {
