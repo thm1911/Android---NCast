@@ -55,7 +55,8 @@ class OnboardingFragment : Fragment() {
         })
 
         binding.Continue.setOnClickListener {
-            findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToCreateAccountFragment())
+            findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToTestFragment())
+//            findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToCreateAccountFragment())
         }
 
         binding.skip.setOnClickListener {

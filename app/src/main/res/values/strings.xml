@@ -31,9 +31,7 @@
     <string name="enter_your_new_password">Enter your new password</string>
     <string name="save">Save</string>
     <string name="welcome_back_home">Welcome back,</string>
-    <string name="continue_listening">Continue Listening</string>
     <string name="view_all"><![CDATA[View All >>]]></string>
-    <string name="your_top_mixes">Your Top Mixes</string>
     <string name="recently_played_songs">Recently played songs</string>
     <string name="search">Search</string>
     <string name="most_searched_songs">Most Searched Songs</string>
@@ -45,4 +43,6 @@
     <string name="your_playlists">Your playlists</string>
     <string name="forgot_password"><u>Forgot your password</u></string>
     <string name="forgot_pass">Forgot Password</string>
+    <string name="new_album_release">New Album Release</string>
+    <string name="featured_playlist">Featured Playlist</string>
 </resources>

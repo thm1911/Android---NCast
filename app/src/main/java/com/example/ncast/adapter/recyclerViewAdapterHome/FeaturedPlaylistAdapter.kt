@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ncast.R
 
-class TopTrendingAdapter :
-    RecyclerView.Adapter<TopTrendingAdapter.TopTrendingViewHolder>() {
+class FeaturedPlaylistAdapter() :
+    RecyclerView.Adapter<FeaturedPlaylistAdapter.TopTrendingViewHolder>() {
 
     inner class TopTrendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.music_text_top_trend)
@@ -18,7 +18,7 @@ class TopTrendingAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopTrendingViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_trend_music_home, parent, false)
+            .inflate(R.layout.item_featured_playlist_home, parent, false)
         return TopTrendingViewHolder(view)
     }
 
