@@ -6,22 +6,44 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ncast.R
 import com.example.ncast.SpacingItem
-import com.example.ncast.adapter.recyclerViewAdapterHome.RecentMusicListeningAdapter
-import com.example.ncast.adapter.recyclerViewAdapterHome.TopTrendingAdapter
+import com.example.ncast.adapter.recyclerViewAdapterHome.NewAlbumReleaseAdapter
+import com.example.ncast.adapter.recyclerViewAdapterHome.FeaturedPlaylistAdapter
+import com.example.ncast.database.SpotifyService
+import com.example.ncast.database.newAlbumRelease.NewAlbumRelease
+import com.example.ncast.database.newAlbumRelease.NewAlbumReleaseResponse
 import com.example.ncast.databinding.FragmentHomeBinding
 import com.example.ncast.model.User
+import com.example.ncast.ui.mainApp.home.newAlbumRelease.NewReleaseAlbumViewModel
+import com.example.ncast.utils.Url
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var spotifyService: SpotifyService
     private lateinit var auth: FirebaseAuth
+    private lateinit var newAlbumReleaseAdapter: NewAlbumReleaseAdapter
+    private val viewModel: NewReleaseAlbumViewModel by viewModels {
+        NewReleaseAlbumViewModel.NewReleaseAlbumViewModelFactory(spotifyService)
+    }
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,30 +57,42 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Continue Listening
-        binding.recyclerViewContinue.layoutManager = GridLayoutManager(requireContext(), 2) // cột
-        val adapter = ContinueCategoryAdapter()
-        binding.recyclerViewContinue.adapter = adapter
+        bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNav.visibility = View.VISIBLE
 
-        // Top Trending
-        binding.recyclerViewTopTrending.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val adapterTrending = TopTrendingAdapter()
-        binding.recyclerViewTopTrending.adapter = adapterTrending
+        spotifyService = Retrofit.Builder()
+            .baseUrl(Url.SPOTIFY.url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(SpotifyService::class.java)
 
-        // Recent Music Listening
-        binding.recyclerViewRecentMusicListening.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val adapterRecentMusic = RecentMusicListeningAdapter()
-        binding.recyclerViewRecentMusicListening.adapter = adapterRecentMusic
-
-        // Adding spacing
-        val space = resources.getDimensionPixelSize(R.dimen.space)
-        binding.recyclerViewContinue.addItemDecoration(SpacingItem(space))
+        initNewAlbumRelease()
+        viewModel.loadAlbums()
+        initFeaturedPlaylist()
 
         auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser?.uid
         initUser(userId!!)
+
+        // Top Trending
+
+        // Recent Music Listening
+        binding.recyclerViewRecentMusicListening.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val adapterRecentMusic = ContinueCategoryAdapter()
+        binding.recyclerViewRecentMusicListening.adapter = adapterRecentMusic
+
+        // Adding spacing
+        val space = resources.getDimensionPixelSize(R.dimen.space)
+        binding.recyclerViewNewAlbumRelease.addItemDecoration(SpacingItem(space))
+
+        binding.newAlbumReleaseMore.setOnClickListener {
+            bottomNav.visibility = View.GONE
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNewReleaseAlbumFragment())
+        }
+
+
+
     }
 
     private fun initUser(userId: String){
@@ -71,6 +105,30 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    private fun initNewAlbumRelease(){
+        newAlbumReleaseAdapter = NewAlbumReleaseAdapter(mutableListOf()){ album ->
+            bottomNav.visibility = View.GONE
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAlbumInforFragment(album.id))
+        }
+        viewModel.newAlbumReleaseList.observe(viewLifecycleOwner){albums ->
+            newAlbumReleaseAdapter.setData(albums)
+            newAlbumReleaseAdapter.notifyDataSetChanged()
+        }
+        binding.recyclerViewNewAlbumRelease.adapter = newAlbumReleaseAdapter
+        binding.recyclerViewNewAlbumRelease.layoutManager = GridLayoutManager(requireContext(), 2)
+        newAlbumReleaseAdapter.showAllAlbum(false)
+
+    }
+
+    private fun initFeaturedPlaylist(){
+        binding.recyclerViewFeaturedPlaylist.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val adapterTrending = FeaturedPlaylistAdapter()
+        binding.recyclerViewFeaturedPlaylist.adapter = adapterTrending
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

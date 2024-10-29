@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ncast.databinding.ActivityMainBinding
+import com.example.ncast.utils.AccessToken
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
@@ -15,7 +17,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-       
+
+        AccessToken.getAccessToken{token ->
+            val database = FirebaseDatabase.getInstance()
+            val accessTokenRef = database.getReference("Access Token")
+            accessTokenRef.setValue(token)
+        }
     }
 
     override fun onDestroy() {
