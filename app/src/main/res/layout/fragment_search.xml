@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.mainApp.search.SearchFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.025"  />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/image_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toTopOf="@id/guideline3"
+        app:layout_constraintVertical_bias="0"
+        app:cardCornerRadius="100sp"
+        app:cardElevation="5sp">
+
+        <ImageView
+            android:id="@+id/avt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_circle_shape"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_app"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/text_search"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="35sp"
+        android:autoSizeMinTextSize="20sp"
+        android:autoSizeTextType="uniform"
+        android:text="@string/search"
+        android:textColor="@color/main"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/image_layout"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toEndOf="@id/image_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/image_layout"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintWidth_percent="0.65"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/search"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintHeight_percent="0.075"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.14"
+        app:layout_constraintWidth_percent="0.9">>
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/text_mss"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMinTextSize="20sp"
+        android:autoSizeTextType="uniform"
+        android:text="@string/most_searched_songs"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintWidth_percent="0.62"
+        android:gravity="center_vertical"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/fire"
+        app:layout_constraintBottom_toBottomOf="@id/text_mss"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHeight_percent="0.025"
+        app:layout_constraintStart_toEndOf="@id/text_mss"
+        app:layout_constraintTop_toTopOf="@id/text_mss"
+        app:layout_constraintVertical_bias="0.5"
+        android:gravity="center_vertical"
+        />
+
+    <TextView
+        android:id="@+id/text_update_every_hour"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center|start"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeMinTextSize="15sp"
+        android:autoSizeTextType="uniform"
+        android:text="@string/updated_every_hour"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_mss"
+        app:layout_constraintVertical_bias="0.01"
+        app:layout_constraintWidth_percent="0.62" />
+
+    <TextView
+        android:id="@+id/update_every_more"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/view_all"
+        android:textColor="@color/green"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeTextType="uniform"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintBottom_toBottomOf="@id/text_update_every_hour"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintTop_toTopOf="@id/text_update_every_hour"
+        app:layout_constraintVertical_bias="0.5"
+        android:gravity="center_vertical" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_update_every_hour"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/text_discoveries"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/text_update_every_hour"
+        tools:listitem="@layout/item_music_search" />
+
+
+    <TextView
+        android:id="@+id/text_discoveries"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMinTextSize="20sp"
+        android:autoSizeTextType="uniform"
+        android:text="@string/discoveries"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.055"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64"
+        app:layout_constraintWidth_percent="0.62"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/discoveries_more"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/view_all"
+        android:textColor="@color/green"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeTextType="uniform"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintBottom_toBottomOf="@id/text_discoveries"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintTop_toTopOf="@id/text_discoveries"
+        app:layout_constraintVertical_bias="0.5"
+        android:gravity="center_vertical" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_discoveries"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/text_discoveries"
+        tools:listitem="@layout/item_discoveries_search" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

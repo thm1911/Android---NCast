@@ -1,0 +1,67 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="6dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintDimensionRatio="1:1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/music_picture_top_trend"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/top_trending"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            />
+
+        <ImageView
+            android:id="@+id/cycle1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ellipse_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintHeight_percent="0.2" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ellipse_large"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintWidth_percent="0.15"
+            app:layout_constraintHeight_percent="0.4" />
+
+        <TextView
+            android:id="@+id/music_text_top_trend"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Pop Mix"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:autoSizeMaxTextSize="15sp"
+            android:autoSizeMinTextSize="5sp"
+            android:autoSizeTextType="uniform"
+            app:layout_constraintStart_toEndOf="@id/cycle1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintHeight_percent="0.2"
+            android:gravity="center_vertical"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

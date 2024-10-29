@@ -1,0 +1,77 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2"
+            />
+
+        <TextView
+            android:id="@+id/name_popular_albums"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Podcasts"
+            android:textColor="@android:color/white"
+            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeMinTextSize="10sp"
+            android:autoSizeTextType="uniform"
+            app:layout_constraintHeight_percent="0.7"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintEnd_toStartOf="@id/item_image_card"
+
+            />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item_image_card"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="10dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/guideline1"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintHorizontal_bias="1.5"
+            android:rotation="15"
+            >
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/trend_song"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

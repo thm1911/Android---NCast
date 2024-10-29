@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "458059644501",
+    "project_id": "first-app-a1277",
+    "storage_bucket": "first-app-a1277.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458059644501:android:2cd0c722914379b59f1edc",
+        "android_client_info": {
+          "package_name": "com.example.ncast"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8B_sdykn0ii2TXQlLzAJWkad__rnFvCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/account_navigation_graph"
+    app:startDestination="@id/onboardingFragment">
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.example.ncast.ui.onBoarding.OnboardingFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboarding" >
+        <action
+            android:id="@+id/action_onboardingFragment_to_createAccountFragment"
+            app:destination="@id/createAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.example.ncast.ui.onBoarding.CreateAccountFragment"
+        android:label="fragment_create_account"
+        tools:layout="@layout/fragment_create_account" >
+        <action
+            android:id="@+id/action_createAccountFragment_to_userSignInFragment"
+            app:destination="@id/userSignInFragment" />
+        <action
+            android:id="@+id/action_createAccountFragment_to_userSignUpFragment"
+            app:destination="@id/userSignUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainAppFragment"
+        android:name="com.example.ncast.ui.mainApp.MainAppFragment"
+        android:label="fragment_main_app"
+        tools:layout="@layout/fragment_main_app" />
+    <fragment
+        android:id="@+id/userSignUpFragment"
+        android:name="com.example.ncast.ui.signUp.UserSignUpFragment"
+        android:label="fragment_user_sign_up"
+        tools:layout="@layout/fragment_user_sign_up" >
+        <action
+            android:id="@+id/action_userSignUpFragment_to_mainAppFragment"
+            app:destination="@id/mainAppFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userSignInFragment"
+        android:name="com.example.ncast.ui.signIn.UserSignInFragment"
+        android:label="fragment_user_sign_in"
+        tools:layout="@layout/fragment_user_sign_in" >
+        <action
+            android:id="@+id/action_userSignInFragment_to_mainAppFragment"
+            app:destination="@id/mainAppFragment" />
+        <action
+            android:id="@+id/action_userSignInFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.ncast.ui.forgotPassword.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
+</navigation>
