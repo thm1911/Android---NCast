@@ -1,7 +1,6 @@
 package com.example.ncast.ui.mainApp.home.newAlbumRelease
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +13,9 @@ import com.bumptech.glide.Glide
 import com.example.ncast.R
 import com.example.ncast.SpacingItem
 import com.example.ncast.adapter.recyclerViewAdapterHome.SongAdapter
-import com.example.ncast.database.SpotifyService
+import com.example.ncast.model.SpotifyService
 import com.example.ncast.databinding.FragmentAlbumInforBinding
+import com.example.ncast.utils.SharePref
 import com.example.ncast.utils.Url
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -57,6 +57,7 @@ class AlbumInforFragment : Fragment() {
             binding.albumType.setText(album.album_type)
             binding.name.setText(album.name)
             binding.more.setText(String.format("%s - %d tracks", album.artists.get(0).name, album.total_tracks))
+            SharePref.setImageUrl(requireActivity().application, album.images.get(0).url)
         }
 
         initSong()
@@ -69,8 +70,9 @@ class AlbumInforFragment : Fragment() {
 
     private fun initSong(){
         songAdapter = SongAdapter(mutableListOf()){song ->
-
+            findNavController().navigate(AlbumInforFragmentDirections.actionAlbumInforFragmentToPlaySongFragment(song.id))
         }
+
         viewModel.songList.observe(viewLifecycleOwner){song ->
             songAdapter.setData(song)
         }

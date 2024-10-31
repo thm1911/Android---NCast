@@ -1,5 +1,6 @@
 package com.example.ncast.ui.signIn
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentUserSignInBinding
+import com.example.ncast.utils.SharePref
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -41,6 +43,9 @@ class UserSignInFragment : Fragment() {
                     val userId = auth.currentUser?.uid
                     val password = binding.password.text.toString()
                     updatePassToDatabase(userId!!, password)
+
+                    SharePref.setUserLoginState(requireActivity().application, true)
+
                     findNavController().navigate(
                         UserSignInFragmentDirections.actionUserSignInFragmentToMainAppFragment(),
                         navOptions

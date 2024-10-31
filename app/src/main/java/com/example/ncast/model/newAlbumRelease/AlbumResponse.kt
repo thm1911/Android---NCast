@@ -1,4 +1,4 @@
-package com.example.ncast.database.newAlbumRelease
+package com.example.ncast.model.newAlbumRelease
 
 data class AlbumResponse(
     val album_type: String,
@@ -24,8 +24,7 @@ data class AlbumResponse(
     data class Item(
         val artists: List<Artist>,
         val id: String,
-        val name: String,
-        val preview_url: String,
+        val name: String
     )
 }
 

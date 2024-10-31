@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_onboardingFragment_to_testFragment"
             app:destination="@id/testFragment" />
+        <action
+            android:id="@+id/action_onboardingFragment_to_mainAppFragment"
+            app:destination="@id/mainAppFragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
