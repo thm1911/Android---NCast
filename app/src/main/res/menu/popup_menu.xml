@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="@string/add_to_playlist"
+        android:id="@+id/add_playlist"
+        android:icon="@drawable/ic_playlist" />
+
+    <item
+        android:title="Download"
+        android:id="@+id/download"
+        android:icon="@drawable/ic_download" />
+</menu>

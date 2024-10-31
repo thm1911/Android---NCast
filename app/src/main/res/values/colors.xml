@@ -8,4 +8,6 @@
     <color name="red">#F40303</color>
     <color name="input_color">#A9B0C5</color>
     <color name="orange">#EC904D</color>
+    <color name="black_bg">#262626</color>
+    <color name="transparent">#00000000</color>
 </resources>

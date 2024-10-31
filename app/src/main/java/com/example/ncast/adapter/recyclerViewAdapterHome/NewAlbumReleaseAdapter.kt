@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.ncast.database.newAlbumRelease.NewAlbumRelease
+import com.example.ncast.model.newAlbumRelease.NewAlbumRelease
 import com.example.ncast.databinding.ItemNewAlbumReleaseHomeBinding
 
 class NewAlbumReleaseAdapter(

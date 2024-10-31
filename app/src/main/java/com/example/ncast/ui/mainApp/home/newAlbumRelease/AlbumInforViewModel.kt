@@ -1,18 +1,16 @@
 package com.example.ncast.ui.mainApp.home.newAlbumRelease
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.ncast.database.SpotifyService
-import com.example.ncast.database.newAlbumRelease.AlbumResponse
+import com.example.ncast.model.SpotifyService
+import com.example.ncast.model.newAlbumRelease.AlbumResponse
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback

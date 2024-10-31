@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.ncast.database.SpotifyService
-import com.example.ncast.database.newAlbumRelease.NewAlbumReleaseResponse
+import com.example.ncast.model.SpotifyService
+import com.example.ncast.model.newAlbumRelease.NewAlbumReleaseResponse
 import com.example.ncast.databinding.FragmentTestBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

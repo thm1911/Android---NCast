@@ -14,22 +14,14 @@ import com.example.ncast.R
 import com.example.ncast.SpacingItem
 import com.example.ncast.adapter.recyclerViewAdapterHome.NewAlbumReleaseAdapter
 import com.example.ncast.adapter.recyclerViewAdapterHome.FeaturedPlaylistAdapter
-import com.example.ncast.database.SpotifyService
-import com.example.ncast.database.newAlbumRelease.NewAlbumRelease
-import com.example.ncast.database.newAlbumRelease.NewAlbumReleaseResponse
+import com.example.ncast.model.SpotifyService
 import com.example.ncast.databinding.FragmentHomeBinding
 import com.example.ncast.model.User
 import com.example.ncast.ui.mainApp.home.newAlbumRelease.NewReleaseAlbumViewModel
 import com.example.ncast.utils.Url
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
