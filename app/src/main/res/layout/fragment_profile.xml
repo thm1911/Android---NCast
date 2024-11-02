@@ -32,7 +32,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/image_layout"
+        android:id="@+id/image_avt_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/text1"
@@ -47,7 +47,7 @@
         app:layout_constraintHorizontal_bias="0">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/image_avt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/custom_circle_shape"
@@ -60,9 +60,9 @@
         android:id="@+id/infor"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/image_layout"
-        app:layout_constraintBottom_toBottomOf="@id/image_layout"
-        app:layout_constraintStart_toEndOf="@id/image_layout"
+        app:layout_constraintTop_toTopOf="@id/image_avt_layout"
+        app:layout_constraintBottom_toBottomOf="@id/image_avt_layout"
+        app:layout_constraintStart_toEndOf="@id/image_avt_layout"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHorizontal_bias="0.05">
 
@@ -76,7 +76,7 @@
             app:layout_constraintVertical_bias="0"
             android:drawableStart="@drawable/ic_profile"
             android:drawableTint="@color/main"
-            android:text="pt"
+            android:text="loading..."
             android:textColor="@color/black"
             android:gravity="center|start"
             android:drawablePadding="10sp"/>
@@ -89,17 +89,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:drawableStart="@drawable/ic_email"
             android:textColor="@color/black"
-            android:text="hihi@gmail.com"
+            android:text="loading..."
             android:gravity="center|start"
             android:drawablePadding="10sp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
     <androidx.cardview.widget.CardView
-        android:id="@+id/change_pass_layout"
+        android:id="@+id/change_avt_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/image_layout"
+        app:layout_constraintTop_toBottomOf="@id/image_avt_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -108,23 +110,57 @@
         app:cardCornerRadius="10sp"
         app:cardElevation="10sp">
 
-            <TextView
-                android:id="@+id/change_password"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.6"
-                app:layout_constraintHorizontal_bias="0"
-                android:paddingStart="10dp"
-                android:drawableStart="@drawable/ic_password"
-                android:drawableTint="@color/main"
-                android:text="@string/change_password"
-                android:background="@color/white"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:gravity="center|start"
-                android:drawablePadding="10sp"/>
+        <TextView
+            android:id="@+id/change_avt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:drawableStart="@drawable/ic_password"
+            android:drawablePadding="10sp"
+            android:drawableTint="@color/main"
+            android:gravity="center|start"
+            android:paddingStart="10dp"
+            android:text="Change profile photo"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.6" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/change_pass_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/change_avt_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintVertical_bias="0.05"
+        app:cardCornerRadius="10sp"
+        app:cardElevation="10sp">
+
+        <TextView
+            android:id="@+id/change_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.6"
+            app:layout_constraintHorizontal_bias="0"
+            android:paddingStart="10dp"
+            android:drawableStart="@drawable/ic_password"
+            android:drawableTint="@color/main"
+            android:text="@string/change_password"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:gravity="center|start"
+            android:drawablePadding="10sp"/>
 
     </androidx.cardview.widget.CardView>
 

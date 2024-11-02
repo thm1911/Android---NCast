@@ -1,7 +1,6 @@
-package com.example.ncast.adapter.recyckeViewAdapterLibrary
+package com.example.ncast.adapter.recycleViewAdapterLibrary
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ncast.R

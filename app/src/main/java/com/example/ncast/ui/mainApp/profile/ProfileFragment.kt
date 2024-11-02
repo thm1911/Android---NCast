@@ -5,15 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentProfileBinding
 import com.example.ncast.model.User
+import com.example.ncast.ui.mainApp.profile.dialog.ProfilePictureBottomSheet
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.bumptech.glide.Glide
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -25,7 +26,7 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,32 +39,40 @@ class ProfileFragment : Fragment() {
         val userId = auth.currentUser?.uid
         init(userId!!)
 
-        binding.changePassword.setOnClickListener {
-            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment())
-            bottomNav.visibility = View.GONE
+        // Lắng nghe kết quả từ ProfilePictureBottomSheet
+        setFragmentResultListener("requestKey") { _, bundle ->
+            val imageUrl = bundle.getString("imageUrl")
+            updateProfileImage(imageUrl)
         }
 
-        binding.logout.setOnClickListener {
-            auth.signOut()
-            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-            val navController = navHostFragment.navController
-
-            navController.popBackStack()
-            navController.navigate(R.id.createAccountFragment)
+        binding.changeAvtLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_chooseAppProfileFragment)
         }
-
     }
 
-    private fun init(userId: String){
+    private fun init(userId: String) {
         val database = FirebaseDatabase.getInstance()
         val userRef = database.getReference("user").child(userId)
 
         userRef.get().addOnSuccessListener { data ->
             val user = data.getValue(User::class.java)
-            if(user != null){
+            if (user != null) {
                 binding.email.text = user.email
                 binding.username.text = user.username
+                user.imageUrl?.let { imageUrl ->
+                    Glide.with(this)
+                        .load(imageUrl)
+                        .into(binding.imageAvt)
+                }
             }
+        }
+    }
+
+    private fun updateProfileImage(imageUrl: String?) {
+        imageUrl?.let {
+            Glide.with(this)
+                .load(it)
+                .into(binding.imageAvt)
         }
     }
 

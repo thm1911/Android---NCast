@@ -1,6 +1,5 @@
 package com.example.ncast.ui.mainApp.home
 
-import com.example.ncast.adapter.recyclerViewAdapterHome.ContinueCategoryAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.ncast.R
 import com.example.ncast.SpacingItem
+import com.example.ncast.adapter.recyclerViewAdapterHome.ContinueCategoryAdapter
 import com.example.ncast.adapter.recyclerViewAdapterHome.NewAlbumReleaseAdapter
 import com.example.ncast.adapter.recyclerViewAdapterHome.FeaturedPlaylistAdapter
 import com.example.ncast.database.SpotifyService
-import com.example.ncast.database.newAlbumRelease.NewAlbumRelease
-import com.example.ncast.database.newAlbumRelease.NewAlbumReleaseResponse
 import com.example.ncast.databinding.FragmentHomeBinding
 import com.example.ncast.model.User
 import com.example.ncast.ui.mainApp.home.newAlbumRelease.NewReleaseAlbumViewModel
@@ -27,9 +26,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -57,11 +53,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNav = requireActivity().findViewById(R.id.bottomNavigation)
         bottomNav.visibility = View.VISIBLE
 
         spotifyService = Retrofit.Builder()
-            .baseUrl(Url.SPOTIFY.url)
+            .baseUrl(Url.SPOTIFY.url) // Ensure Url.SPOTIFY is defined correctly
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(SpotifyService::class.java)
@@ -72,9 +68,9 @@ class HomeFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser?.uid
-        initUser(userId!!)
-
-        // Top Trending
+        if (userId != null) {
+            initUser(userId)
+        }
 
         // Recent Music Listening
         binding.recyclerViewRecentMusicListening.layoutManager =
@@ -82,7 +78,6 @@ class HomeFragment : Fragment() {
         val adapterRecentMusic = ContinueCategoryAdapter()
         binding.recyclerViewRecentMusicListening.adapter = adapterRecentMusic
 
-        // Adding spacing
         val space = resources.getDimensionPixelSize(R.dimen.space)
         binding.recyclerViewNewAlbumRelease.addItemDecoration(SpacingItem(space))
 
@@ -90,45 +85,53 @@ class HomeFragment : Fragment() {
             bottomNav.visibility = View.GONE
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNewReleaseAlbumFragment())
         }
-
-
-
     }
 
-    private fun initUser(userId: String){
+    private fun initUser(userId: String) {
         val database = FirebaseDatabase.getInstance()
         val userRef = database.getReference("user").child(userId)
-        userRef.get().addOnSuccessListener { data ->
-            val user = data.getValue(User::class.java)
-            if (user != null){
-                binding.name.text = user.username
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(data: DataSnapshot) {
+                val user = data.getValue(User::class.java)
+                if (user != null) {
+                    // Kiểm tra xem fragment có còn gắn vào Activity hay không
+                    if (isAdded) {
+                        binding.name.text = user.username
+                        user.imageUrl?.let { imageUrl ->
+                            Glide.with(this@HomeFragment)
+                                .load(imageUrl)
+                                .into(binding.avt)
+                        }
+                    }
+                }
             }
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Do nothing
+            }
+        })
     }
 
-    private fun initNewAlbumRelease(){
-        newAlbumReleaseAdapter = NewAlbumReleaseAdapter(mutableListOf()){ album ->
+    private fun initNewAlbumRelease() {
+        newAlbumReleaseAdapter = NewAlbumReleaseAdapter(mutableListOf()) { album ->
             bottomNav.visibility = View.GONE
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAlbumInforFragment(album.id))
         }
-        viewModel.newAlbumReleaseList.observe(viewLifecycleOwner){albums ->
+        viewModel.newAlbumReleaseList.observe(viewLifecycleOwner) { albums ->
             newAlbumReleaseAdapter.setData(albums)
             newAlbumReleaseAdapter.notifyDataSetChanged()
         }
         binding.recyclerViewNewAlbumRelease.adapter = newAlbumReleaseAdapter
         binding.recyclerViewNewAlbumRelease.layoutManager = GridLayoutManager(requireContext(), 2)
         newAlbumReleaseAdapter.showAllAlbum(false)
-
     }
 
-    private fun initFeaturedPlaylist(){
+    private fun initFeaturedPlaylist() {
         binding.recyclerViewFeaturedPlaylist.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val adapterTrending = FeaturedPlaylistAdapter()
         binding.recyclerViewFeaturedPlaylist.adapter = adapterTrending
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
