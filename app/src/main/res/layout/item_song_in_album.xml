@@ -15,12 +15,12 @@
             android:id="@+id/play"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:background="@drawable/ic_play"
+            android:background="@drawable/ic_pause"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/name_song"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintDimensionRatio="1:1"/>
 
         <TextView
@@ -56,8 +56,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:autoSizeMinTextSize="20sp"
-            android:autoSizeMaxTextSize="23sp"
+            android:autoSizeMinTextSize="15sp"
+            android:autoSizeMaxTextSize="20sp"
             android:autoSizeTextType="uniform"/>
 
         <TextView
@@ -71,7 +71,7 @@
             app:layout_constraintStart_toEndOf="@id/stt"
             app:layout_constraintEnd_toEndOf="@id/name_song"
             android:autoSizeMinTextSize="10sp"
-            android:autoSizeMaxTextSize="17sp"
+            android:autoSizeMaxTextSize="15sp"
             android:autoSizeTextType="uniform"
             app:layout_constraintHeight_percent="0.3"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

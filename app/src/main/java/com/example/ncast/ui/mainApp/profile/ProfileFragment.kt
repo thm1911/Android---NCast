@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentProfileBinding
 import com.example.ncast.model.User
 import com.example.ncast.ui.mainApp.profile.dialog.ProfilePictureBottomSheet
+import com.example.ncast.utils.SharePref
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -47,6 +49,17 @@ class ProfileFragment : Fragment() {
 
         binding.changeAvtLayout.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_chooseAppProfileFragment)
+
+        binding.logout.setOnClickListener {
+            auth.signOut()
+
+            SharePref.setUserLoginState(requireActivity().application, false)
+
+            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+            val navController = navHostFragment.navController
+
+            navController.popBackStack()
+            navController.navigate(R.id.createAccountFragment)
         }
     }
 

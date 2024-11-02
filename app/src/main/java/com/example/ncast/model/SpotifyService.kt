@@ -1,8 +1,8 @@
-package com.example.ncast.database
+package com.example.ncast.model
 
-import com.example.ncast.database.newAlbumRelease.AlbumResponse
-import com.example.ncast.database.newAlbumRelease.NewAlbumReleaseResponse
-import com.example.ncast.database.song.SearchResponse
+import com.example.ncast.model.newAlbumRelease.AlbumResponse
+import com.example.ncast.model.newAlbumRelease.NewAlbumReleaseResponse
+import com.example.ncast.model.track.TrackResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -21,4 +21,10 @@ interface SpotifyService {
         @Header("Authorization") accessToken: String,
         @Path("id") id: String
     ): Call<AlbumResponse>
+
+    @GET("v1/tracks/{id}")
+    fun getTrack(
+        @Header("Authorization") accessToken: String,
+        @Path("id") id: String
+    ): Call<TrackResponse>
 }

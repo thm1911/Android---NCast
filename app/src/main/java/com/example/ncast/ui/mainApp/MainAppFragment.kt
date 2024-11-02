@@ -1,6 +1,7 @@
 package com.example.ncast.ui.mainApp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentMainAppBinding
+import com.example.ncast.utils.SharePref
 
 class MainAppFragment : Fragment() {
     private var _binding: FragmentMainAppBinding? = null

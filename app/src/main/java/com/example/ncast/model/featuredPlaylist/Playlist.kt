@@ -1,4 +1,4 @@
-package com.example.ncast.database.featuredPlaylist
+package com.example.ncast.model.featuredPlaylist
 
 data class Playlist(
     val items: List<Item>

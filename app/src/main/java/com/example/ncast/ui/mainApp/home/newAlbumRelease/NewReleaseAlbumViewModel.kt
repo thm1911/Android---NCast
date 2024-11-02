@@ -1,15 +1,13 @@
 package com.example.ncast.ui.mainApp.home.newAlbumRelease
 
-import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.ncast.database.SpotifyService
-import com.example.ncast.database.newAlbumRelease.NewAlbumRelease
-import com.example.ncast.database.newAlbumRelease.NewAlbumReleaseResponse
+import com.example.ncast.model.SpotifyService
+import com.example.ncast.model.newAlbumRelease.NewAlbumRelease
+import com.example.ncast.model.newAlbumRelease.NewAlbumReleaseResponse
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

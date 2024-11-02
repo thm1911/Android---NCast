@@ -2,10 +2,9 @@ package com.example.ncast.adapter.recyclerViewAdapterHome
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.constraintlayout.motion.widget.MotionScene.Transition.TransitionOnClick
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ncast.database.newAlbumRelease.AlbumResponse
+import com.example.ncast.model.newAlbumRelease.AlbumResponse
 import com.example.ncast.databinding.ItemSongInAlbumBinding
 
 class SongAdapter(

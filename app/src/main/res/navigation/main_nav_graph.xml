@@ -67,6 +67,21 @@
         <argument
             android:name="id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_albumInforFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playSongFragment"
+        android:name="com.example.ncast.ui.mainApp.playSong.PlaySongFragment"
+        android:label="fragment_play_song"
+        tools:layout="@layout/fragment_play_song" >
+        <argument
+            android:name="idTrack"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_playSongFragment_to_albumInforFragment"
+            app:destination="@id/albumInforFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseAppProfileFragment"

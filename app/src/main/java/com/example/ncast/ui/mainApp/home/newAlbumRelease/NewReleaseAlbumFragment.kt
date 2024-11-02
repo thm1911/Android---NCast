@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ncast.adapter.recyclerViewAdapterHome.NewAlbumReleaseAdapter
-import com.example.ncast.database.SpotifyService
+import com.example.ncast.model.SpotifyService
 import com.example.ncast.databinding.FragmentNewReleaseAlbumBinding
 import com.example.ncast.utils.Url
 import retrofit2.Retrofit

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentUserSignUpBinding
 import com.example.ncast.model.User
+import com.example.ncast.utils.SharePref
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -51,6 +52,8 @@ class UserSignUpFragment : Fragment() {
                             if (task.isSuccessful) {
                                 val userId = auth.currentUser?.uid
                                 val user = User(userId!!, email, username, password)
+
+                                SharePref.setUserLoginState(requireActivity().application, true)
 
                                 saveUserToDatabase(user) //Luu nguoi dung vao firebase realtime database
                                 findNavController().navigate(
