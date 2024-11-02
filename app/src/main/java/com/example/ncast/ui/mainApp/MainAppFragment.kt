@@ -19,16 +19,19 @@ class MainAppFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMainAppBinding.inflate(layoutInflater, container, false)
+    ): View {
+        _binding = FragmentMainAppBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Lấy NavHostFragment từ layout
         val navHostFragment = childFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment
         val navController = navHostFragment.navController
+
+        // Thiết lập BottomNavigationView với NavController
         binding.bottomNavigation.setupWithNavController(navController)
     }
 
@@ -36,5 +39,4 @@ class MainAppFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

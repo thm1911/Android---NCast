@@ -11,5 +11,6 @@ data class User(
     val userId: String = "",
     val email: String = "",
     val username: String = "",
-    val password: String = ""
+    val password: String = "",
+    val imageUrl: String? = null
 )
