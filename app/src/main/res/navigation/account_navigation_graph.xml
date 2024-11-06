@@ -14,9 +14,6 @@
             android:id="@+id/action_onboardingFragment_to_createAccountFragment"
             app:destination="@id/createAccountFragment" />
         <action
-            android:id="@+id/action_onboardingFragment_to_testFragment"
-            app:destination="@id/testFragment" />
-        <action
             android:id="@+id/action_onboardingFragment_to_mainAppFragment"
             app:destination="@id/mainAppFragment" />
     </fragment>
@@ -63,9 +60,4 @@
         android:name="com.example.ncast.ui.forgotPassword.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
-    <fragment
-        android:id="@+id/testFragment"
-        android:name="com.example.ncast.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
 </navigation>

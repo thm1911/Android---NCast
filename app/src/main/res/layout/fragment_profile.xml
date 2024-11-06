@@ -115,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:drawableStart="@drawable/ic_password"
+            android:drawableStart="@drawable/ic_avt"
             android:drawablePadding="10sp"
             android:drawableTint="@color/main"
             android:gravity="center|start"

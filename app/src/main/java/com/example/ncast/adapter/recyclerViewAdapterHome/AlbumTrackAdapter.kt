@@ -5,38 +5,38 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ncast.model.newAlbumRelease.AlbumResponse
-import com.example.ncast.databinding.ItemSongInAlbumBinding
+import com.example.ncast.databinding.ItemTrackInAlbumBinding
 
-class SongAdapter(
+class AlbumTrackAdapter(
     private var songList: MutableList<AlbumResponse.Item>,
     private val onClick: (AlbumResponse.Item) -> Unit
-) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+) : RecyclerView.Adapter<AlbumTrackAdapter.TrackViewHolder>() {
 
-    inner class SongViewHolder(private val binding: ItemSongInAlbumBinding) :
+    inner class TrackViewHolder(private val binding: ItemTrackInAlbumBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val stt = binding.stt
-        val nameSong = binding.nameSong
+        val nameTrack = binding.nameSong
         val artist = binding.artist
 
-        fun bind(song: AlbumResponse.Item, position: Int) {
+        fun bind(track: AlbumResponse.Item, position: Int) {
             stt.setText(position.toString())
-            nameSong.setText(song.name)
-            artist.setText(song.artists.get(0).name)
+            nameTrack.setText(track.name)
+            artist.setText(track.artists.get(0).name)
         }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val binding =
-            ItemSongInAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return SongViewHolder(binding)
+            ItemTrackInAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TrackViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return songList.size
     }
 
-    override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         val song = songList[position]
         holder.bind(song, position + 1)
         holder.itemView.setOnClickListener {

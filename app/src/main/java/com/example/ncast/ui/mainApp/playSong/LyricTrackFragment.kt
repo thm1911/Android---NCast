@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentLyricTrackBinding
+import com.example.ncast.utils.SharePref
 
 class LyricTrackFragment : Fragment() {
     private var _binding: FragmentLyricTrackBinding? = null
@@ -22,6 +23,8 @@ class LyricTrackFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.lyric.setText(SharePref.getLyric(requireActivity().application))
     }
 
     override fun onDestroyView() {

@@ -6,7 +6,8 @@ data class TrackResponse(
     val duration_ms: Int,
     val id: String,
     val name: String,
-    val preview_url: String
+    var preview_url: String = "",
+//    var lyric: String = ""
 ) {
     data class Album(
         val id: String

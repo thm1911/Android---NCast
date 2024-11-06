@@ -48,7 +48,7 @@ class PlaySongFragment : Fragment() {
     private lateinit var previewUrl: String
     private lateinit var nameTrack: String
     private val viewModel: PlaySongViewModel by viewModels {
-        PlaySongViewModel.PlaySongViewModelFactory(spotifyService)
+        PlaySongViewModel.PlaySongViewModelFactory(requireActivity().application, spotifyService)
     }
 
     override fun onCreateView(

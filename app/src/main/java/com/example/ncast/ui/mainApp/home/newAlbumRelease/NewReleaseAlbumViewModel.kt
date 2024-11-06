@@ -30,8 +30,7 @@ class NewReleaseAlbumViewModel(private val spotifyService: SpotifyService): View
                 val accessToken = snapshot.getValue(String::class.java) ?: ""
                 fetchNewAlbumRelease(accessToken)
             }
-
-            override fun onCancelled(error: DatabaseError) {
+                override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 

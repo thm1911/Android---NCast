@@ -2,4 +2,5 @@
 <resources>
     <dimen name="space">-10dp</dimen>
     <dimen name="space_song">10dp</dimen>
+    <dimen name="space_featured_playlist">6dp</dimen>
 </resources>

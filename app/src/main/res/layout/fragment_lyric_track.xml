@@ -11,10 +11,10 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/lyric"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/abeezee"
-            android:text="@string/lyric_test"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:letterSpacing="0.1"/>

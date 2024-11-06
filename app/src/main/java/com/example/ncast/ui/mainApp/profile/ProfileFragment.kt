@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.bumptech.glide.Glide
+import com.example.ncast.ui.mainApp.profile.ProfileFragmentDirections
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -49,6 +50,17 @@ class ProfileFragment : Fragment() {
 
         binding.changeAvtLayout.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_chooseAppProfileFragment)
+            bottomNav.visibility = View.GONE
+        }
+
+        binding.changePassword.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment())
+            bottomNav.visibility = View.GONE
+        }
+
+        binding.about.setOnClickListener {
+            bottomNav.visibility = View.GONE
+        }
 
         binding.logout.setOnClickListener {
             auth.signOut()
