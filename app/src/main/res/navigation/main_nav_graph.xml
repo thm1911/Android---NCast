@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_homeFragment_to_albumInforFragment"
             app:destination="@id/albumInforFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_featuredPlaylistFragment"
+            app:destination="@id/featuredPlaylistFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
     </fragment>
 
     <fragment
@@ -79,13 +85,31 @@
         <argument
             android:name="idTrack"
             app:argType="string" />
-        <action
-            android:id="@+id/action_playSongFragment_to_albumInforFragment"
-            app:destination="@id/albumInforFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseAppProfileFragment"
         android:name="com.example.ncast.ui.mainApp.profile.ChooseAppProfileFragment"
         android:label="fragment_choose_app_profile"
         tools:layout="@layout/fragment_choose_app_profile" />
+    <fragment
+        android:id="@+id/featuredPlaylistFragment"
+        android:name="com.example.ncast.ui.mainApp.home.featuredPlaylist.FeaturedPlaylistFragment"
+        android:label="fragment_featured_playlist"
+        tools:layout="@layout/fragment_featured_playlist" >
+        <action
+            android:id="@+id/action_featuredPlaylistFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.example.ncast.ui.mainApp.home.featuredPlaylist.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist" >
+        <argument
+            android:name="playlistId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_playlistFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
 </navigation>

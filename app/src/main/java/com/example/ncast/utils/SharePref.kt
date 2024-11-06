@@ -31,5 +31,19 @@ class SharePref {
             return sharePref.getString("image_url", null)
         }
 
+        fun setLyric(application: Application, lyric: String){
+            val sharePref = application.getSharedPreferences("lyric", Context.MODE_PRIVATE)
+            with(sharePref.edit()){
+                putString("lyric", lyric)
+                apply()
+            }
+        }
+
+        fun getLyric(application: Application): String?{
+            val sharePref = application.getSharedPreferences("lyric", Context.MODE_PRIVATE)
+            return sharePref.getString("lyric", null)
+        }
+
+
     }
 }

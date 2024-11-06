@@ -18,10 +18,14 @@ import com.example.ncast.adapter.recyclerViewAdapterHome.FeaturedPlaylistAdapter
 import com.example.ncast.model.SpotifyService
 import com.example.ncast.databinding.FragmentHomeBinding
 import com.example.ncast.model.User
+import com.example.ncast.model.featuredPlaylist.FeaturedPlaylist
+import com.example.ncast.ui.mainApp.home.featuredPlaylist.FeaturedPlaylistViewModel
 import com.example.ncast.ui.mainApp.home.newAlbumRelease.NewReleaseAlbumViewModel
 import com.example.ncast.utils.Url
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import retrofit2.Retrofit
@@ -34,8 +38,12 @@ class HomeFragment : Fragment() {
     private lateinit var spotifyService: SpotifyService
     private lateinit var auth: FirebaseAuth
     private lateinit var newAlbumReleaseAdapter: NewAlbumReleaseAdapter
-    private val viewModel: NewReleaseAlbumViewModel by viewModels {
+    private lateinit var featuredPlaylistAdapter: FeaturedPlaylistAdapter
+    private val newReleaseAlbumViewModel: NewReleaseAlbumViewModel by viewModels {
         NewReleaseAlbumViewModel.NewReleaseAlbumViewModelFactory(spotifyService)
+    }
+    private val featuredPlaylistViewModel: FeaturedPlaylistViewModel by viewModels {
+        FeaturedPlaylistViewModel.FeaturedPlaylistViewModelFactory(spotifyService)
     }
     private lateinit var bottomNav: BottomNavigationView
 
@@ -55,14 +63,17 @@ class HomeFragment : Fragment() {
         bottomNav.visibility = View.VISIBLE
 
         spotifyService = Retrofit.Builder()
-            .baseUrl(Url.SPOTIFY.url) // Ensure Url.SPOTIFY is defined correctly
+            .baseUrl(Url.SPOTIFY.url)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(SpotifyService::class.java)
 
         initNewAlbumRelease()
-        viewModel.loadAlbums()
+        newReleaseAlbumViewModel.loadAlbums()
+
         initFeaturedPlaylist()
+        featuredPlaylistViewModel.loadPlaylist()
+
 
         auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser?.uid
@@ -72,7 +83,7 @@ class HomeFragment : Fragment() {
 
         // Recent Music Listening
         binding.recyclerViewRecentMusicListening.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         val adapterRecentMusic = ContinueCategoryAdapter()
         binding.recyclerViewRecentMusicListening.adapter = adapterRecentMusic
 
@@ -83,6 +94,12 @@ class HomeFragment : Fragment() {
             bottomNav.visibility = View.GONE
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNewReleaseAlbumFragment())
         }
+
+        binding.featuredPlaylistMore.setOnClickListener {
+            bottomNav.visibility = View.GONE
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFeaturedPlaylistFragment())
+        }
+
     }
 
     private fun initUser(userId: String) {
@@ -115,7 +132,7 @@ class HomeFragment : Fragment() {
             bottomNav.visibility = View.GONE
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAlbumInforFragment(album.id))
         }
-        viewModel.newAlbumReleaseList.observe(viewLifecycleOwner) { albums ->
+        newReleaseAlbumViewModel.newAlbumReleaseList.observe(viewLifecycleOwner) { albums ->
             newAlbumReleaseAdapter.setData(albums)
             newAlbumReleaseAdapter.notifyDataSetChanged()
         }
@@ -125,10 +142,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun initFeaturedPlaylist() {
+        featuredPlaylistAdapter = FeaturedPlaylistAdapter(mutableListOf()){playlist ->
+            bottomNav.visibility = View.GONE
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPlaylistFragment(playlist.id))
+        }
+        featuredPlaylistViewModel.featuredPlaylist.observe(viewLifecycleOwner){playlist ->
+            featuredPlaylistAdapter.setData(playlist)
+            featuredPlaylistAdapter.notifyDataSetChanged()
+        }
+        binding.recyclerViewFeaturedPlaylist.adapter = featuredPlaylistAdapter
         binding.recyclerViewFeaturedPlaylist.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val adapterTrending = FeaturedPlaylistAdapter()
-        binding.recyclerViewFeaturedPlaylist.adapter = adapterTrending
+        featuredPlaylistAdapter.showAllPlaylist(false)
     }
 
     override fun onDestroyView() {

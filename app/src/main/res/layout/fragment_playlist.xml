@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context=".ui.mainApp.home.newAlbumRelease.AlbumInforFragment">
+    tools:context=".ui.mainApp.home.featuredPlaylist.PlaylistFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/header"
@@ -95,6 +95,9 @@
                 app:layout_constraintBottom_toBottomOf="@id/image"
                 app:layout_constraintStart_toEndOf="@id/image"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
+                android:autoSizeMinTextSize="7sp"
+                android:autoSizeMaxTextSize="15sp"
+                android:autoSizeTextType="uniform"
                 android:textColor="@color/black"
                 android:paddingStart="10dp"/>
 

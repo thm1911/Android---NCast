@@ -35,9 +35,6 @@ class ChooseAppProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottomNav.visibility = View.GONE
-
         binding.recyclerViewChoosePiture.layoutManager = GridLayoutManager(requireContext(), 2)
         val adapter = ChoosePictureAdapter(imageUrls) { selectedImageUrl ->
             showProfilePictureBottomSheet(selectedImageUrl)

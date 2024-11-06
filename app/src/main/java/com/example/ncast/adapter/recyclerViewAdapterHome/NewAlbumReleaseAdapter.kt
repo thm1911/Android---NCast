@@ -50,7 +50,7 @@ class NewAlbumReleaseAdapter(
 
     override fun getItemCount(): Int {
         if (showAll) return albums.size
-        else return minOf(albums.size, 6)
+        else return minOf(albums.size, 4)
     }
 
     fun showAllAlbum(check: Boolean) {

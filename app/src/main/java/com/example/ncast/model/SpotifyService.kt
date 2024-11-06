@@ -1,5 +1,7 @@
 package com.example.ncast.model
 
+import com.example.ncast.model.featuredPlaylist.FeaturedPlaylistResponse
+import com.example.ncast.model.featuredPlaylist.PlaylistResponse
 import com.example.ncast.model.newAlbumRelease.AlbumResponse
 import com.example.ncast.model.newAlbumRelease.NewAlbumReleaseResponse
 import com.example.ncast.model.track.TrackResponse
@@ -27,4 +29,16 @@ interface SpotifyService {
         @Header("Authorization") accessToken: String,
         @Path("id") id: String
     ): Call<TrackResponse>
+
+    @GET("v1/browse/featured-playlists")
+    fun getFeaturedPlaylist(
+        @Header("Authorization") accessToken: String,
+        @Query("limit") limit: Int = 10,
+    ): Call<FeaturedPlaylistResponse>
+
+    @GET("v1/playlists/{playlist_id}")
+    fun getPlaylist(
+        @Header("Authorization") accessToken: String,
+        @Path("playlist_id") id: String
+    ): Call<PlaylistResponse>
 }
