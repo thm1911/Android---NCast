@@ -130,7 +130,11 @@ class HomeFragment : Fragment() {
     private fun initNewAlbumRelease() {
         newAlbumReleaseAdapter = NewAlbumReleaseAdapter(mutableListOf()) { album ->
             bottomNav.visibility = View.GONE
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAlbumInforFragment(album.id))
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToAlbumInforFragment(
+                    album.id
+                )
+            )
         }
         newReleaseAlbumViewModel.newAlbumReleaseList.observe(viewLifecycleOwner) { albums ->
             newAlbumReleaseAdapter.setData(albums)
@@ -142,11 +146,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun initFeaturedPlaylist() {
-        featuredPlaylistAdapter = FeaturedPlaylistAdapter(mutableListOf()){playlist ->
+        featuredPlaylistAdapter = FeaturedPlaylistAdapter(mutableListOf()) { playlist ->
             bottomNav.visibility = View.GONE
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPlaylistFragment(playlist.id))
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToPlaylistFragment(
+                    playlist.id
+                )
+            )
         }
-        featuredPlaylistViewModel.featuredPlaylist.observe(viewLifecycleOwner){playlist ->
+        featuredPlaylistViewModel.featuredPlaylist.observe(viewLifecycleOwner) { playlist ->
             featuredPlaylistAdapter.setData(playlist)
             featuredPlaylistAdapter.notifyDataSetChanged()
         }

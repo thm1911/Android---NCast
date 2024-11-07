@@ -16,7 +16,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 class AccessToken {
-    companion object{
+    companion object {
         fun getAccessToken(callback: (String?) -> Unit) {
             val database = FirebaseDatabase.getInstance()
             val clientIdRef = database.getReference("Access Token").child("clientId")

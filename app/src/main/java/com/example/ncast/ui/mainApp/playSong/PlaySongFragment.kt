@@ -24,6 +24,7 @@ import com.example.ncast.R
 import com.example.ncast.adapter.viewPagerAdapter.TrackAdapter
 import com.example.ncast.databinding.FragmentPlaySongBinding
 import com.example.ncast.model.SpotifyService
+import com.example.ncast.utils.Track
 import com.example.ncast.utils.Url
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -44,8 +45,7 @@ class PlaySongFragment : Fragment() {
     private lateinit var handle: Handler
     private var runable: Runnable? = null
     private var repeatMode = Player.REPEAT_MODE_OFF
-    private lateinit var idAlbum: String
-    private lateinit var previewUrl: String
+    private lateinit var urlMp3: String
     private lateinit var nameTrack: String
     private val viewModel: PlaySongViewModel by viewModels {
         PlaySongViewModel.PlaySongViewModelFactory(requireActivity().application, spotifyService)
@@ -96,27 +96,30 @@ class PlaySongFragment : Fragment() {
         }
 
         // popup Menu
-        binding.menu.setOnClickListener {view ->
+        binding.menu.setOnClickListener { view ->
             val popupMenu = PopupMenu(requireContext(), view)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
 
             val downLoadIcon = popupMenu.menu.findItem(R.id.download)
-            if(previewUrl.isNullOrEmpty()){
+            if (urlMp3.isNullOrEmpty()) {
                 downLoadIcon.icon = resources.getDrawable(R.drawable.ic_not_download)
                 downLoadIcon.isEnabled = true
             }
 
-            popupMenu.setOnMenuItemClickListener {item ->
-                when(item.itemId){
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
                     R.id.add_playlist -> {
                         true
                     }
 
                     R.id.download -> {
-                        if(previewUrl.isNullOrEmpty()){
-                            Toast.makeText(requireContext(), "Preview is unavailable. You don't download", Toast.LENGTH_SHORT).show()
-                        }
-                        else downloadTrack()
+                        if (urlMp3.isNullOrEmpty()) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Preview is unavailable. You don't download",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else downloadTrack()
                         true
                     }
 
@@ -134,22 +137,26 @@ class PlaySongFragment : Fragment() {
 
     }
 
-    private fun setData(){
-        viewModel.track.observe(viewLifecycleOwner){track ->
-            idAlbum = track.album.id
-            Log.d("Test", "$idAlbum")
-            if(track.preview_url == null){
-                previewUrl = ""
-                Toast.makeText(requireContext(), "Previews is unavailable", Toast.LENGTH_SHORT).show()
-            }
+    private fun setData() {
+        viewModel.track.observe(viewLifecycleOwner) { track ->
+            Track.getUrlFromDatabase(track.id) { url ->
+                if (url.isNullOrEmpty()) {
+                    if (track.preview_url.isNullOrEmpty()) {
+                        urlMp3 = ""
+                        Toast.makeText(
+                            requireContext(),
+                            "Previews is unavailable",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        urlMp3 = track.preview_url
+                    }
+                } else urlMp3 = url
 
-            else{
-                //Theo doi trang thai cua phat nhac
-                previewUrl = track.preview_url
                 nameTrack = track.name
-                exoPlayer.addListener(object : Player.Listener{
+                exoPlayer.addListener(object : Player.Listener {
                     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-                        if(playbackState == Player.STATE_READY && playWhenReady){
+                        if (playbackState == Player.STATE_READY && playWhenReady) {
                             binding.playPause.setBackgroundResource(R.drawable.ic_play)
                             binding.name.setText(track.name)
                             binding.nameTrack.setText(track.name)
@@ -157,9 +164,7 @@ class PlaySongFragment : Fragment() {
                             binding.seekBar.max = exoPlayer.duration.toInt()
                             binding.duration.setText(formatTime(exoPlayer.duration.toInt()))
                             setupSeekBar()
-                        }
-
-                        else if (playbackState == Player.STATE_READY && !playWhenReady){
+                        } else if (playbackState == Player.STATE_READY && !playWhenReady) {
                             binding.playPause.setBackgroundResource(R.drawable.ic_pause)
                             binding.name.setText(track.name)
                             binding.nameTrack.setText(track.name)
@@ -175,15 +180,20 @@ class PlaySongFragment : Fragment() {
 
                 })
 
-                val mediaItem = MediaItem.fromUri(track.preview_url)
+                val mediaItem = MediaItem.fromUri(urlMp3)
                 exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.prepare()
                 exoPlayer.play()
 
                 // update seekBar khi kéo
-                binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-                    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                        if(fromUser) exoPlayer.seekTo(progress.toLong())
+                binding.seekBar.setOnSeekBarChangeListener(object :
+                    SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(
+                        seekBar: SeekBar?,
+                        progress: Int,
+                        fromUser: Boolean
+                    ) {
+                        if (fromUser) exoPlayer.seekTo(progress.toLong())
                     }
 
                     override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -196,15 +206,15 @@ class PlaySongFragment : Fragment() {
         // viewPager + tabLayout để hiển thị ảnh, lyric
         trackAdapter = TrackAdapter(parentFragmentManager, lifecycle)
         binding.viewPager.adapter = trackAdapter
-        TabLayoutMediator(binding.tabLayout, binding.viewPager){tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
 
         }.attach()
     }
 
     // Cập nhât seekBar
-    private fun setupSeekBar(){
+    private fun setupSeekBar() {
         runable = Runnable {
-            if(exoPlayer.isPlaying) {
+            if (exoPlayer.isPlaying) {
                 binding.seekBar.progress = exoPlayer.currentPosition.toInt()
                 binding.curPlay.setText(formatTime(exoPlayer.currentPosition.toInt()))
                 handle.postDelayed(runable!!, 1000)
@@ -214,56 +224,58 @@ class PlaySongFragment : Fragment() {
     }
 
     // Chuyển đổi duration từ milliseconds -> dạng 00:00
-    private fun formatTime(milliseconds: Int): String{
+    private fun formatTime(milliseconds: Int): String {
         val minutes = (milliseconds / 1000) / 60
         val seconds = (milliseconds / 1000) % 60
         return String.format("%02d:%02d", minutes, seconds)
     }
 
-    private fun setupRepeat(){
-        repeatMode = when (repeatMode){
+    private fun setupRepeat() {
+        repeatMode = when (repeatMode) {
             Player.REPEAT_MODE_OFF -> {
                 binding.repeat.setBackgroundResource(R.drawable.ic_repeat_one)
                 exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
                 Player.REPEAT_MODE_ONE
             }
 
-            Player.REPEAT_MODE_ONE ->{
+            Player.REPEAT_MODE_ONE -> {
                 binding.repeat.setBackgroundResource(R.drawable.ic_repeat_off)
                 exoPlayer.repeatMode = Player.REPEAT_MODE_OFF
                 Player.REPEAT_MODE_OFF
             }
+
             else -> Player.REPEAT_MODE_OFF
         }
     }
 
     //Tua lại 5s
-    private fun setupReplay(){
+    private fun setupReplay() {
         val curPos = exoPlayer.currentPosition
         exoPlayer.seekTo(maxOf(curPos - 5000, 0))
     }
 
     //Tua tiếp 5s
-    private fun setupForward(){
+    private fun setupForward() {
         val curPos = exoPlayer.currentPosition
         exoPlayer.seekTo(minOf(curPos + 5000, exoPlayer.duration))
         exoPlayer.playWhenReady = true
     }
 
-    private fun downloadTrack(){
-        val request = DownloadManager.Request(Uri.parse(previewUrl))
+    private fun downloadTrack() {
+        val request = DownloadManager.Request(Uri.parse(urlMp3))
             .setTitle("Downloading ${nameTrack}.mp3")
             .setDescription("Downloading file...")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${nameTrack}.mp3")
 
-        val downloadManager = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val downloadManager =
+            requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         downloadManager.enqueue(request)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if(!previewUrl.isNullOrEmpty()){
+        if (!urlMp3.isNullOrEmpty()) {
             handle.removeCallbacks(runable!!)
             exoPlayer.release()
         }

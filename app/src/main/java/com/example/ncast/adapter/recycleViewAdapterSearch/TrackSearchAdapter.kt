@@ -38,14 +38,17 @@ class TrackSearchAdapter(
         }
     }
 
-    fun setData(trackList: List<Tracks.Item>){
+    fun setData(trackList: List<Tracks.Item>) {
         val ressult = DiffUtil.calculateDiff(SearchTrackDillUtil(this.trackList, trackList))
         this.trackList.clear()
         this.trackList.addAll(trackList)
         ressult.dispatchUpdatesTo(this)
     }
 
-    class SearchTrackDillUtil(private val oldList: List<Tracks.Item>, private val newList: List<Tracks.Item>): DiffUtil.Callback(){
+    class SearchTrackDillUtil(
+        private val oldList: List<Tracks.Item>,
+        private val newList: List<Tracks.Item>
+    ) : DiffUtil.Callback() {
         override fun getOldListSize(): Int {
             return oldList.size
         }

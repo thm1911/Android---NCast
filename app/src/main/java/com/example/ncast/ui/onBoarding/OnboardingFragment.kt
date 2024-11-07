@@ -68,14 +68,17 @@ class OnboardingFragment : Fragment() {
 
     }
 
-    private fun checkLogInState(){
+    private fun checkLogInState() {
         val isLogIn = SharePref.getIsUserLogIn(requireActivity().application)
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.onboardingFragment, true)
             .build()
 
-        if(isLogIn){
-            findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToMainAppFragment(), navOptions)
+        if (isLogIn) {
+            findNavController().navigate(
+                OnboardingFragmentDirections.actionOnboardingFragmentToMainAppFragment(),
+                navOptions
+            )
         }
     }
 

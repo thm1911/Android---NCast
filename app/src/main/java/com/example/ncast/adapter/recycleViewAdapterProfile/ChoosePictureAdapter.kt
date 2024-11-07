@@ -11,10 +11,12 @@ class ChoosePictureAdapter(
     private val onImageSelected: (String) -> Unit
 ) : RecyclerView.Adapter<ChoosePictureAdapter.ChoosePictureHolder>() {
 
-    inner class ChoosePictureHolder(val binding: ItemChooseAvtProfileBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ChoosePictureHolder(val binding: ItemChooseAvtProfileBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChoosePictureHolder {
-        val binding = ItemChooseAvtProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemChooseAvtProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ChoosePictureHolder(binding)
     }
 

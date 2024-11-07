@@ -8,7 +8,7 @@ data class AlbumResponse(
     val name: String,
     val artists: List<NewAlbumRelease.Item.Artist>,
     val tracks: Track
-){
+) {
 
     data class Track(
         val items: List<Item>

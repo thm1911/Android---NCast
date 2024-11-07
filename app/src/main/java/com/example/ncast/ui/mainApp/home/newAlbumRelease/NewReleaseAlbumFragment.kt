@@ -52,18 +52,23 @@ class NewReleaseAlbumFragment : Fragment() {
     }
 
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView() {
         val recyclerView = binding.recyclerViewNewAlbumRelease
-        newAlbumReleaseAdapter = NewAlbumReleaseAdapter(mutableListOf()){album ->
-            findNavController().navigate(NewReleaseAlbumFragmentDirections.actionNewReleaseAlbumFragmentToAlbumInforFragment(album.id))
+        newAlbumReleaseAdapter = NewAlbumReleaseAdapter(mutableListOf()) { album ->
+            findNavController().navigate(
+                NewReleaseAlbumFragmentDirections.actionNewReleaseAlbumFragmentToAlbumInforFragment(
+                    album.id
+                )
+            )
         }
 
-        viewModel.newAlbumReleaseList.observe(viewLifecycleOwner){albums ->
+        viewModel.newAlbumReleaseList.observe(viewLifecycleOwner) { albums ->
             newAlbumReleaseAdapter.setData(albums)
             newAlbumReleaseAdapter.notifyDataSetChanged()
         }
         recyclerView.adapter = newAlbumReleaseAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         newAlbumReleaseAdapter.showAllAlbum(true)
 
     }

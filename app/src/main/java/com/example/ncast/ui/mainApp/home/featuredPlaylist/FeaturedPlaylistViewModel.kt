@@ -18,19 +18,20 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FeaturedPlaylistViewModel(private val spotifyService: SpotifyService): ViewModel() {
+class FeaturedPlaylistViewModel(private val spotifyService: SpotifyService) : ViewModel() {
     private var _featuredPlaylist = MutableLiveData<List<FeaturedPlaylist.Item>>()
     val featuredPlaylist: LiveData<List<FeaturedPlaylist.Item>> get() = _featuredPlaylist
 
     override fun onCleared() {
         super.onCleared()
     }
-    fun loadPlaylist(){
+
+    fun loadPlaylist() {
 
         val database = FirebaseDatabase.getInstance()
         val accessTokenRef = database.getReference("Access Token").child("value")
 
-        accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener{
+        accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val accessToken = snapshot.getValue(String::class.java) ?: ""
                 fetchFeaturedPlaylist(accessToken)
@@ -43,23 +44,21 @@ class FeaturedPlaylistViewModel(private val spotifyService: SpotifyService): Vie
         })
     }
 
-    private fun fetchFeaturedPlaylist(accessToken: String){
+    private fun fetchFeaturedPlaylist(accessToken: String) {
         viewModelScope.launch {
             val response = spotifyService.getFeaturedPlaylist("Bearer $accessToken")
-            response.enqueue(object : Callback<FeaturedPlaylistResponse>{
+            response.enqueue(object : Callback<FeaturedPlaylistResponse> {
                 override fun onResponse(
                     call: Call<FeaturedPlaylistResponse>,
                     response: Response<FeaturedPlaylistResponse>
                 ) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         Log.d("Test", "Success Response")
                         val featuredPlaylist = response.body()?.playlists?.items
                         featuredPlaylist.let {
                             _featuredPlaylist.value = it
                         }
-                    }
-
-                    else{
+                    } else {
                         Log.d("Test", "Failed Response")
                     }
                 }
@@ -72,14 +71,15 @@ class FeaturedPlaylistViewModel(private val spotifyService: SpotifyService): Vie
         }
     }
 
-    class FeaturedPlaylistViewModelFactory(private val spotifyService: SpotifyService): ViewModelProvider
-    .Factory{
-            override fun <T: ViewModel> create (modelClass: Class<T>): T{
-                if(modelClass.isAssignableFrom(FeaturedPlaylistViewModel::class.java)){
-                    @Suppress("UNCHECKED_CAST")
-                    return FeaturedPlaylistViewModel(spotifyService) as T
-                }
-                throw IllegalArgumentException("Unknown ViewModel class")
+    class FeaturedPlaylistViewModelFactory(private val spotifyService: SpotifyService) :
+        ViewModelProvider
+        .Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(FeaturedPlaylistViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return FeaturedPlaylistViewModel(spotifyService) as T
             }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
+    }
 }

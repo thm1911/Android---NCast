@@ -56,11 +56,15 @@ class FeaturedPlaylistFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView(){
-        featuredPlaylistAdapter = FeaturedPlaylistAdapter(mutableListOf()){playlist ->
-            findNavController().navigate(FeaturedPlaylistFragmentDirections.actionFeaturedPlaylistFragmentToPlaylistFragment(playlist.id))
+    private fun initRecyclerView() {
+        featuredPlaylistAdapter = FeaturedPlaylistAdapter(mutableListOf()) { playlist ->
+            findNavController().navigate(
+                FeaturedPlaylistFragmentDirections.actionFeaturedPlaylistFragmentToPlaylistFragment(
+                    playlist.id
+                )
+            )
         }
-        viewModel.featuredPlaylist.observe(viewLifecycleOwner){playlist ->
+        viewModel.featuredPlaylist.observe(viewLifecycleOwner) { playlist ->
             featuredPlaylistAdapter.setData(playlist)
             featuredPlaylistAdapter.notifyDataSetChanged()
         }
