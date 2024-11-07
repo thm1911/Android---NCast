@@ -1,5 +1,6 @@
 package com.example.ncast.ui.mainApp.home.newAlbumRelease
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,7 @@ class NewReleaseAlbumViewModel(private val spotifyService: SpotifyService): View
 
     fun loadAlbums(){
         val database = FirebaseDatabase.getInstance()
-        val accessTokenRef = database.getReference("Access Token")
+        val accessTokenRef = database.getReference("Access Token").child("value")
 
         accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

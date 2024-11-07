@@ -1,4 +1,4 @@
-package com.example.ncast.model.song
+package com.example.ncast.model.search
 
 import Tracks
 

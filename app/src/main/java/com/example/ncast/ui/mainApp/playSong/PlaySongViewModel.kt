@@ -25,7 +25,7 @@ class PlaySongViewModel(private val application: Application, private val spotif
 
     fun loadTrack(idTrack: String){
         val database = FirebaseDatabase.getInstance()
-        val accessTokenRef = database.getReference("Access Token")
+        val accessTokenRef = database.getReference("Access Token").child("value")
         accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val accessToken = snapshot.getValue(String::class.java) ?: ""

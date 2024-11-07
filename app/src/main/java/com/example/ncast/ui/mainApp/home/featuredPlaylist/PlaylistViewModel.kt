@@ -24,7 +24,7 @@ class PlaylistViewModel(private val spotifyService: SpotifyService): ViewModel()
 
     fun loadPlaylist(id: String){
         val database = FirebaseDatabase.getInstance()
-        val accessTokenRef = database.getReference("Access Token")
+        val accessTokenRef = database.getReference("Access Token").child("value")
         accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val accessToken = snapshot.getValue(String::class.java) ?: ""
@@ -51,16 +51,7 @@ class PlaylistViewModel(private val spotifyService: SpotifyService): ViewModel()
                     playlist.let {
                         _playlist.value = it
                         _trackList.value = it?.tracks?.items
-
-                        val database = FirebaseDatabase.getInstance()
-                        val playlistInfor = database.getReference("Playlist Information")
-
-                        playlistInfor.setValue(it)
                     }
-                }
-
-                else{
-                    Log.d("Test", "Failed")
                 }
             }
 
