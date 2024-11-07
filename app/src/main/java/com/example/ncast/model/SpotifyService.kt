@@ -4,6 +4,7 @@ import com.example.ncast.model.featuredPlaylist.FeaturedPlaylistResponse
 import com.example.ncast.model.featuredPlaylist.PlaylistResponse
 import com.example.ncast.model.newAlbumRelease.AlbumResponse
 import com.example.ncast.model.newAlbumRelease.NewAlbumReleaseResponse
+import com.example.ncast.model.search.SearchResponse
 import com.example.ncast.model.track.TrackResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -41,4 +42,12 @@ interface SpotifyService {
         @Header("Authorization") accessToken: String,
         @Path("playlist_id") id: String
     ): Call<PlaylistResponse>
+
+    @GET("v1/search")
+    fun search(
+        @Header("Authorization") accessToken: String,
+        @Query("q") key: String,
+        @Query("type") type: String = "track",
+        @Query("limit") limit: Int = 5
+    ): Call<SearchResponse>
 }

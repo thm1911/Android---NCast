@@ -1,12 +1,13 @@
 package com.example.ncast.model.featuredPlaylist
 
 import com.example.ncast.model.newAlbumRelease.AlbumResponse
+import com.example.ncast.model.newAlbumRelease.NewAlbumRelease
 import com.example.ncast.model.track.TrackResponse
 
 data class PlaylistResponse(
     val followers: Follower,
     val id: String,
-    val images: List<AlbumResponse.Image>,
+    val images: List<NewAlbumRelease.Item.Image>,
     val name: String,
     val tracks: Track
 ){
@@ -25,12 +26,12 @@ data class PlaylistResponse(
 
     data class TrackObject(
         val id: String,
-        val artists: List<TrackResponse.Artist>,
+        val artists: List<NewAlbumRelease.Item.Artist>,
         val album: Album,
         val name: String
     )
 
     data class Album(
-        val images: List<AlbumResponse.Image>
+        val images: List<NewAlbumRelease.Item.Image>
     )
 }

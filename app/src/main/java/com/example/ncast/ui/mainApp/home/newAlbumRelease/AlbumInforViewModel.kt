@@ -25,7 +25,7 @@ class AlbumInforViewModel(private val spotifyService: SpotifyService): ViewModel
 
     fun loadAlbums(id: String){
         val database = FirebaseDatabase.getInstance()
-        val accessTokenRef = database.getReference("Access Token")
+        val accessTokenRef = database.getReference("Access Token").child("value")
 
         accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

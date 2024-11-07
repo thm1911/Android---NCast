@@ -65,4 +65,5 @@
     <string name="cancel">Cancel</string>
     <string name="collection_of_newly_released_albums_updated_hourly">Collection of newly released albums, updated hourly.</string>
     <string name="collection_of_featured_playlists_updated_hourly">Collection of featured playlists, updated hourly.</string>
+    <string name="results_list">Results list</string>
 </resources>

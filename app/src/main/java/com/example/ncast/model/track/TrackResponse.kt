@@ -1,9 +1,10 @@
 package com.example.ncast.model.track
 
+import com.example.ncast.model.newAlbumRelease.NewAlbumRelease
+
 data class TrackResponse(
     val album: Album,
-    val artists: List<Artist>,
-    val duration_ms: Int,
+    val artists: List<NewAlbumRelease.Item.Artist>,
     val id: String,
     val name: String,
     var preview_url: String = "",
@@ -11,9 +12,5 @@ data class TrackResponse(
 ) {
     data class Album(
         val id: String
-    )
-
-    data class Artist(
-        val name: String
     )
 }
