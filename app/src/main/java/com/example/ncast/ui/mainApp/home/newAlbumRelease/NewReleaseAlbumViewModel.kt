@@ -18,11 +18,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NewReleaseAlbumViewModel(private val spotifyService: SpotifyService): ViewModel() {
+class NewReleaseAlbumViewModel(private val spotifyService: SpotifyService) : ViewModel() {
     private val _newAlbumReleaseList = MutableLiveData<List<NewAlbumRelease.Item>>()
     val newAlbumReleaseList: LiveData<List<NewAlbumRelease.Item>> get() = _newAlbumReleaseList
 
-    fun loadAlbums(){
+    fun loadAlbums() {
         val database = FirebaseDatabase.getInstance()
         val accessTokenRef = database.getReference("Access Token").child("value")
 
@@ -31,22 +31,23 @@ class NewReleaseAlbumViewModel(private val spotifyService: SpotifyService): View
                 val accessToken = snapshot.getValue(String::class.java) ?: ""
                 fetchNewAlbumRelease(accessToken)
             }
-                override fun onCancelled(error: DatabaseError) {
+
+            override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
         })
     }
 
-    private fun fetchNewAlbumRelease(accessToken: String){
+    private fun fetchNewAlbumRelease(accessToken: String) {
         viewModelScope.launch {
             val response = spotifyService.getNewAlbumRelease("Bearer $accessToken")
-            response.enqueue(object : Callback<NewAlbumReleaseResponse>{
+            response.enqueue(object : Callback<NewAlbumReleaseResponse> {
                 override fun onResponse(
                     call: Call<NewAlbumReleaseResponse>,
                     response: Response<NewAlbumReleaseResponse>
                 ) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         _newAlbumReleaseList.value = response.body()?.albums?.items
                     }
                 }
@@ -59,14 +60,15 @@ class NewReleaseAlbumViewModel(private val spotifyService: SpotifyService): View
         }
     }
 
-    class NewReleaseAlbumViewModelFactory(private val spotifyService: SpotifyService): ViewModelProvider
-    .Factory{
-            override fun <T: ViewModel> create (modelClass: Class<T>): T{
-                if(modelClass.isAssignableFrom(NewReleaseAlbumViewModel::class.java)){
-                    @Suppress("UNCHECKED_CAST")
-                    return NewReleaseAlbumViewModel(spotifyService) as T
-                }
-                throw IllegalArgumentException("Unknown ViewModel class")
+    class NewReleaseAlbumViewModelFactory(private val spotifyService: SpotifyService) :
+        ViewModelProvider
+        .Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(NewReleaseAlbumViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return NewReleaseAlbumViewModel(spotifyService) as T
             }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
+    }
 }

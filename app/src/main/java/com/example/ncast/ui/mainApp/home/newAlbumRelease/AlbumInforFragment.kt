@@ -1,6 +1,7 @@
 package com.example.ncast.ui.mainApp.home.newAlbumRelease
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,10 @@ class AlbumInforFragment : Fragment() {
     private lateinit var spotifyService: SpotifyService
     private lateinit var songAdapter: AlbumTrackAdapter
     private val viewModel: AlbumInforViewModel by viewModels {
-        AlbumInforViewModel.AlbumInforViewModelFactory(spotifyService)
+        AlbumInforViewModel.AlbumInforViewModelFactory(
+            requireActivity().application,
+            spotifyService
+        )
     }
 
     override fun onCreateView(
@@ -49,14 +53,20 @@ class AlbumInforFragment : Fragment() {
 
         val albumId = args.id
         viewModel.loadAlbums(albumId)
-        viewModel.album.observe(viewLifecycleOwner){album ->
+        viewModel.album.observe(viewLifecycleOwner) { album ->
             Glide.with(binding.image.context)
                 .load(album.images.get(0).url)
                 .into(binding.image)
 
             binding.albumType.setText(album.album_type)
             binding.name.setText(album.name)
-            binding.more.setText(String.format("%s - %d tracks", album.artists.get(0).name, album.total_tracks))
+            binding.more.setText(
+                String.format(
+                    "%s - %d tracks",
+                    album.artists.get(0).name,
+                    album.total_tracks
+                )
+            )
             SharePref.setImageUrl(requireActivity().application, album.images.get(0).url)
         }
 
@@ -68,16 +78,22 @@ class AlbumInforFragment : Fragment() {
 
     }
 
-    private fun initSong(){
-        songAdapter = AlbumTrackAdapter(mutableListOf()){ song ->
-            findNavController().navigate(AlbumInforFragmentDirections.actionAlbumInforFragmentToPlaySongFragment(song.id))
+    private fun initSong() {
+        songAdapter = AlbumTrackAdapter(mutableListOf()) { song ->
+            viewModel.setLyric(song.id)
+            findNavController().navigate(
+                AlbumInforFragmentDirections.actionAlbumInforFragmentToPlaySongFragment(
+                    song.id
+                )
+            )
         }
 
-        viewModel.songList.observe(viewLifecycleOwner){song ->
+        viewModel.songList.observe(viewLifecycleOwner) { song ->
             songAdapter.setData(song)
         }
         binding.recyclerView.adapter = songAdapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         val space = resources.getDimensionPixelSize(R.dimen.space_song)
         binding.recyclerView.addItemDecoration(SpacingItem(space))
 

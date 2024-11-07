@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        AccessToken.getAccessToken{token ->
+        AccessToken.getAccessToken { token ->
             val database = FirebaseDatabase.getInstance()
             val accessTokenRef = database.getReference("Access Token").child("value")
             accessTokenRef.setValue(token)

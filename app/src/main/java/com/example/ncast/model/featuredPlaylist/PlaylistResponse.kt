@@ -10,7 +10,7 @@ data class PlaylistResponse(
     val images: List<NewAlbumRelease.Item.Image>,
     val name: String,
     val tracks: Track
-){
+) {
     data class Follower(
         val total: Int
     )

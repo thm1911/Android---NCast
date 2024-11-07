@@ -44,7 +44,7 @@ class AlbumTrackAdapter(
         }
     }
 
-    fun setData(songList: List<AlbumResponse.Item>){
+    fun setData(songList: List<AlbumResponse.Item>) {
         val result = DiffUtil.calculateDiff(SongDiffUtilCallBack(this.songList, songList))
         this.songList.clear()
         this.songList.addAll(songList)

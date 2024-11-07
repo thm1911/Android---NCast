@@ -32,13 +32,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+    private lateinit var userId: String
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var auth: FirebaseAuth
     private lateinit var spotifyService: SpotifyService
     private lateinit var trackSearchAdapter: TrackSearchAdapter
     private lateinit var keySearchAdapter: KeySearchAdapter
     private val viewModel: SearchViewModel by viewModels {
-        SearchViewModel.SearchViewModelFactory(spotifyService)
+        SearchViewModel.SearchViewModelFactory(requireActivity().application, spotifyService)
     }
 
     override fun onCreateView(
@@ -62,8 +63,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             .build()
             .create(SpotifyService::class.java)
 
+        val auth = FirebaseAuth.getInstance()
+        userId = auth.currentUser?.uid ?: ""
+
+
         loadProfileImage()
-        viewModel.loadKeyList()
+        viewModel.loadKeyList(userId)
         initKeySearch()
         binding.textUpdateEveryHour.setText(Url.NOKEY.url)
 
@@ -73,10 +78,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     binding.textUpdateEveryHour.setText(Url.KEY.url)
                     viewModel.loadTrack(query)
                     initSearchTrack()
-                    viewModel.saveKeySearch(query)
+                    viewModel.saveKeySearch(query, userId)
                 } else {
                     binding.textUpdateEveryHour.setText(Url.NOKEY.url)
-                    viewModel.loadKeyList()
+                    viewModel.loadKeyList(userId)
                     initKeySearch()
                 }
                 return true
@@ -89,7 +94,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     initSearchTrack()
                 } else {
                     binding.textUpdateEveryHour.setText(Url.NOKEY.url)
-                    viewModel.loadKeyList()
+                    viewModel.loadKeyList(userId)
                     initKeySearch()
                 }
                 return true
@@ -127,7 +132,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private fun initSearchTrack() {
         trackSearchAdapter = TrackSearchAdapter(mutableListOf()) { track ->
-            viewModel.saveKeySearch(track.name)
+            viewModel.setLyric(track.id)
+            viewModel.saveKeySearch(track.name, userId)
             bottomNav.visibility = View.GONE
             SharePref.setImageUrl(requireActivity().application, track.album.images.get(0).url)
             findNavController().navigate(
@@ -150,8 +156,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             { key ->
                 binding.searchView.setQuery(key, true)
             },
-            {key ->
-                viewModel.deleteKeySearch(key)
+            { key ->
+                viewModel.deleteKeySearch(key, userId)
             }
         )
         viewModel.keyList.observe(viewLifecycleOwner) { key ->

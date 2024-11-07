@@ -40,7 +40,7 @@ class FeaturedPlaylistAdapter(
     override fun onBindViewHolder(holder: FeaturedPlaylistViewHolder, position: Int) {
         val playlist = featuredPlaylists[position]
         holder.bind(playlist)
-        holder.image.setOnClickListener{
+        holder.image.setOnClickListener {
             onCLick(playlist)
         }
     }

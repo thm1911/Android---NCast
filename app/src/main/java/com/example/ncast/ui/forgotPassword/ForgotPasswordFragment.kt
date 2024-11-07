@@ -57,22 +57,20 @@ class ForgotPasswordFragment : Fragment() {
         }
     }
 
-    private fun checkEmail(callback: (Boolean) -> Unit){
+    private fun checkEmail(callback: (Boolean) -> Unit) {
         val email = binding.email.text.toString()
 
-        if(email.isNullOrEmpty()){
+        if (email.isNullOrEmpty()) {
             binding.emailLayout.helperText = "Cannot be left blank"
             binding.email.setBackgroundResource(R.drawable.input_error)
             callback(false)
             return
-        }
-        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.emailLayout.helperText = "Invalid email"
             binding.email.setBackgroundResource(R.drawable.input_error)
             callback(false)
             return
-        }
-        else callback(true)
+        } else callback(true)
     }
 
     override fun onDestroyView() {

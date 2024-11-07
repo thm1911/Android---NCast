@@ -95,7 +95,7 @@ class UserSignInFragment : Fragment() {
             }
     }
 
-    private fun updatePassToDatabase(userId: String, pass: String){
+    private fun updatePassToDatabase(userId: String, pass: String) {
         val database = FirebaseDatabase.getInstance()
         val userRef = database.getReference("user").child(userId)
         userRef.child("password").setValue(pass)

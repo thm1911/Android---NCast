@@ -67,7 +67,8 @@ class ProfileFragment : Fragment() {
 
             SharePref.setUserLoginState(requireActivity().application, false)
 
-            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+            val navHostFragment =
+                requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
             val navController = navHostFragment.navController
 
             navController.popBackStack()

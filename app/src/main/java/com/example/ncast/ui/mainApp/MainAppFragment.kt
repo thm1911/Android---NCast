@@ -28,7 +28,8 @@ class MainAppFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Lấy NavHostFragment từ layout
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment
         val navController = navHostFragment.navController
 
         // Thiết lập BottomNavigationView với NavController

@@ -16,7 +16,7 @@ class PlaylistTrackAdapter(
 
     inner class TrackViewHolder(private val binding: ItemTrackInAlbumBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(track: PlaylistResponse.Item, position: Int){
+        fun bind(track: PlaylistResponse.Item, position: Int) {
             binding.stt.setText("${position + 1}")
             binding.artist.setText(track.track.artists.get(0).name)
             binding.nameSong.setText(track.track.name)
@@ -24,7 +24,8 @@ class PlaylistTrackAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
-        val binding = ItemTrackInAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemTrackInAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TrackViewHolder(binding)
     }
 

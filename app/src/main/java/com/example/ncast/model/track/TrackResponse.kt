@@ -7,8 +7,9 @@ data class TrackResponse(
     val artists: List<NewAlbumRelease.Item.Artist>,
     val id: String,
     val name: String,
-    var preview_url: String = "",
-//    var lyric: String = ""
+    val preview_url: String,
+    var full_url: String = "",
+    var lyric: String = ""
 ) {
     data class Album(
         val id: String

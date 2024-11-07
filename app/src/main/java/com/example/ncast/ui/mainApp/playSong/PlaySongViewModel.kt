@@ -19,14 +19,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PlaySongViewModel(private val application: Application, private val spotifyService: SpotifyService): ViewModel() {
+class PlaySongViewModel(
+    private val application: Application,
+    private val spotifyService: SpotifyService
+) : ViewModel() {
     private var _track = MutableLiveData<TrackResponse>()
     val track: LiveData<TrackResponse> get() = _track
 
-    fun loadTrack(idTrack: String){
+    fun loadTrack(idTrack: String) {
         val database = FirebaseDatabase.getInstance()
         val accessTokenRef = database.getReference("Access Token").child("value")
-        accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener{
+        accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val accessToken = snapshot.getValue(String::class.java) ?: ""
                 fetchTrack(accessToken, idTrack)
@@ -39,11 +42,11 @@ class PlaySongViewModel(private val application: Application, private val spotif
         })
     }
 
-    private fun fetchTrack(accessToken: String, id: String){
+    private fun fetchTrack(accessToken: String, id: String) {
         val response = spotifyService.getTrack("Bearer $accessToken", id)
-        response.enqueue(object : Callback<TrackResponse>{
+        response.enqueue(object : Callback<TrackResponse> {
             override fun onResponse(call: Call<TrackResponse>, response: Response<TrackResponse>) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val track = response.body()
                     if (track != null) {
                         track.let {
@@ -105,14 +108,17 @@ class PlaySongViewModel(private val application: Application, private val spotif
 //        }
 //    }
 
-    class PlaySongViewModelFactory(private val application: Application, private val spotifyService: SpotifyService): ViewModelProvider
-    .Factory{
-            override fun <T: ViewModel> create (modelClass: Class<T>): T{
-                if(modelClass.isAssignableFrom(PlaySongViewModel::class.java)){
-                    @Suppress("UNCHECKED_CAST")
-                    return PlaySongViewModel(application, spotifyService) as T
-                }
-                throw IllegalArgumentException("Unknown ViewModel class")
+    class PlaySongViewModelFactory(
+        private val application: Application,
+        private val spotifyService: SpotifyService
+    ) : ViewModelProvider
+    .Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(PlaySongViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return PlaySongViewModel(application, spotifyService) as T
             }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
+    }
 }

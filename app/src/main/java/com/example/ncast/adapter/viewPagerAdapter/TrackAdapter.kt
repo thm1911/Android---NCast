@@ -14,7 +14,7 @@ class TrackAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     }
 
     override fun createFragment(position: Int): Fragment {
-        return when(position){
+        return when (position) {
             0 -> ImageTrackFragment()
             else -> LyricTrackFragment()
         }

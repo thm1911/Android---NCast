@@ -28,7 +28,7 @@ class PlaylistFragment : Fragment() {
     private lateinit var trackAdapter: PlaylistTrackAdapter
     private val args: PlaylistFragmentArgs by navArgs()
     private val viewModel: PlaylistViewModel by viewModels {
-        PlaylistViewModel.PlaylistViewModelFactory(spotifyService)
+        PlaylistViewModel.PlaylistViewModelFactory(requireActivity().application, spotifyService)
     }
 
     override fun onCreateView(
@@ -59,29 +59,44 @@ class PlaylistFragment : Fragment() {
         }
     }
 
-    private fun initPlaylist(){
-        viewModel.playlist.observe(viewLifecycleOwner){playlist ->
+    private fun initPlaylist() {
+        viewModel.playlist.observe(viewLifecycleOwner) { playlist ->
             Glide.with(this)
                 .load(playlist.images.get(0).url)
                 .into(binding.image)
 
             binding.albumType.setText("")
             binding.name.setText(playlist.name)
-            binding.more.setText(String.format("%d followers - %d tracks", playlist.followers.total, playlist.tracks.total))
+            binding.more.setText(
+                String.format(
+                    "%d followers - %d tracks",
+                    playlist.followers.total,
+                    playlist.tracks.total
+                )
+            )
         }
     }
 
-    private fun initTrack(){
-        viewModel.trackList.observe(viewLifecycleOwner){track ->
+    private fun initTrack() {
+        viewModel.trackList.observe(viewLifecycleOwner) { track ->
             trackAdapter.setData(track)
             trackAdapter.notifyDataSetChanged()
         }
-        trackAdapter = PlaylistTrackAdapter(mutableListOf()){track ->
-            SharePref.setImageUrl(requireActivity().application, track.track.album.images.get(0).url)
-            findNavController().navigate(PlaylistFragmentDirections.actionPlaylistFragmentToPlaySongFragment(track.track.id))
+        trackAdapter = PlaylistTrackAdapter(mutableListOf()) { track ->
+            viewModel.setLyric(track.track.id)
+            SharePref.setImageUrl(
+                requireActivity().application,
+                track.track.album.images.get(0).url
+            )
+            findNavController().navigate(
+                PlaylistFragmentDirections.actionPlaylistFragmentToPlaySongFragment(
+                    track.track.id
+                )
+            )
         }
         binding.recyclerView.adapter = trackAdapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         val space = resources.getDimensionPixelSize(R.dimen.space_song)
         binding.recyclerView.addItemDecoration(SpacingItem(space))
     }

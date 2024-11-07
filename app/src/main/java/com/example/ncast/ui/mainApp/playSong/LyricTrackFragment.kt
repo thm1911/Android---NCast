@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentLyricTrackBinding
 import com.example.ncast.utils.SharePref
+import com.example.ncast.utils.Url
 
 class LyricTrackFragment : Fragment() {
     private var _binding: FragmentLyricTrackBinding? = null
@@ -24,7 +25,10 @@ class LyricTrackFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lyric.setText(SharePref.getLyric(requireActivity().application))
+        val lyric = SharePref.getLyric(requireActivity().application)
+        if (lyric.isNullOrEmpty()) {
+            binding.lyric.setText(Url.NOLYRIC.url)
+        } else binding.lyric.setText(SharePref.getLyric(requireActivity().application))
     }
 
     override fun onDestroyView() {
