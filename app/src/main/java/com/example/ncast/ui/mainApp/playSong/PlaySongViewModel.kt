@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.ncast.model.SpotifyService
 import com.example.ncast.model.track.TrackResponse
 import com.example.ncast.utils.SharePref
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -52,6 +53,7 @@ class PlaySongViewModel(
                         track.let {
                             _track.value = it
 //                            fetchFirebaseData(it)
+                            saveTrackIdToRecentlyPlayed(track.id)
                         }
                     }
                 }
@@ -62,6 +64,71 @@ class PlaySongViewModel(
 
         })
     }
+
+    private fun saveTrackIdToRecentlyPlayed(trackId: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val database = FirebaseDatabase.getInstance()
+        val recentTrackRef = database.getReference("user/$userId/recently_played")
+
+        recentTrackRef.orderByChild("id").equalTo(trackId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (trackSnapshot in snapshot.children) {
+                            recentTrackRef.orderByChild("order").limitToLast(1)
+                                .addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(orderSnapshot: DataSnapshot) {
+                                        var newOrder = 1
+                                        if (orderSnapshot.exists()) {
+                                            val maxOrder = orderSnapshot.children.first()
+                                                .child("order").getValue(Int::class.java) ?: 1
+                                            newOrder = maxOrder + 1
+                                        }
+                                        trackSnapshot.ref.updateChildren(mapOf("order" to newOrder))
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {}
+                                })
+                        }
+                    } else {
+                        recentTrackRef.orderByChild("order").limitToLast(1)
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(orderSnapshot: DataSnapshot) {
+                                    var newOrder = 1
+                                    if (orderSnapshot.exists()) {
+                                        val maxOrder = orderSnapshot.children.first()
+                                            .child("order").getValue(Int::class.java) ?: 1
+                                        newOrder = maxOrder + 1
+                                    }
+
+                                    val trackData = mapOf("id" to trackId, "order" to newOrder)
+                                    recentTrackRef.push().setValue(trackData)
+
+                                    recentTrackRef.orderByChild("order").limitToFirst(1)
+                                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                                            override fun onDataChange(oldSnapshot: DataSnapshot) {
+                                                if (snapshot.childrenCount > 8) {
+                                                    oldSnapshot.children.first().ref.removeValue()
+                                                }
+                                            }
+
+                                            override fun onCancelled(error: DatabaseError) {}
+                                        })
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {}
+                            })
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+    }
+
+
+
+
+
 
 //    private fun fetchFirebaseData(track: TrackResponse){
 //        val database = FirebaseDatabase.getInstance()

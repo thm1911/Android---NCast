@@ -12,6 +12,7 @@ data class TrackResponse(
     var lyric: String = ""
 ) {
     data class Album(
-        val id: String
+        val id: String,
+        val images: List<NewAlbumRelease.Item.Image>
     )
 }
