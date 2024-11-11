@@ -168,6 +168,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        bottomNav.visibility = View.VISIBLE
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

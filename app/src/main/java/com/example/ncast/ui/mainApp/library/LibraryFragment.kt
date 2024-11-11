@@ -1,11 +1,11 @@
 package com.example.ncast.ui.mainApp.library
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.ncast.R
@@ -37,6 +37,10 @@ class LibraryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
+
+        binding.yourLikedSongs.setOnClickListener {
+            findNavController().navigate(R.id.action_libraryFragment_to_favoriteSongsPlaylistFragment)
+        }
 
         binding.recycleYourPlaylist.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

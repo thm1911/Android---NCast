@@ -33,6 +33,11 @@ import com.google.android.exoplayer2.Player.RepeatMode
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.common.io.Resources
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -78,6 +83,10 @@ class PlaySongFragment : Fragment() {
         handle = Handler(Looper.getMainLooper())
         setData()
 
+        checkFavouriteStatus(args.idTrack)
+        binding.favourite.setOnClickListener {
+            toggleFavouriteStatus(args.idTrack)
+        }
 
         // Dừng/tiếp tục phát nhạc
         binding.playPause.setOnClickListener {
@@ -276,6 +285,74 @@ class PlaySongFragment : Fragment() {
             requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         downloadManager.enqueue(request)
     }
+
+    private fun toggleFavouriteStatus(trackId: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val database = FirebaseDatabase.getInstance()
+        val favouriteTracksRef = database.getReference("user/$userId/favourite_tracks")
+
+        favouriteTracksRef.child(trackId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    // Xóa bài hát khỏi danh sách yêu thích
+                    snapshot.ref.removeValue()
+                    binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
+                } else {
+                    // Lấy thứ tự hiện có cao nhất trong danh sách yêu thích
+                    favouriteTracksRef.orderByChild("order").limitToLast(1)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(orderSnapshot: DataSnapshot) {
+                                // Xác định thứ tự cho bài hát mới
+                                var nextOrder = 1
+                                if (orderSnapshot.exists()) {
+                                    val lastOrder = orderSnapshot.children.first()
+                                        .child("order").getValue(Int::class.java) ?: 0
+                                    nextOrder = lastOrder + 1
+                                }
+
+                                // Thêm bài hát với thứ tự mới
+                                val newFavourite = mapOf(
+                                    "id" to trackId,
+                                    "order" to nextOrder
+                                )
+                                favouriteTracksRef.child(trackId).setValue(newFavourite)
+                                binding.favourite.setBackgroundResource(R.drawable.ic_favourite)
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                // Xử lý lỗi nếu cần
+                            }
+                        })
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Xử lý lỗi nếu cần
+            }
+        })
+    }
+
+
+
+    private fun checkFavouriteStatus(trackId: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val database = FirebaseDatabase.getInstance()
+        val favouriteTracksRef = database.getReference("user/$userId/favourite_tracks")
+
+        favouriteTracksRef.child(trackId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    binding.favourite.setBackgroundResource(R.drawable.ic_favourite)
+                } else {
+                    binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
