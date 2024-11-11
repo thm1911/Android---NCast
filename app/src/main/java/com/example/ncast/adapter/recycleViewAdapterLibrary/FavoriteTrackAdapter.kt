@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ncast.R
@@ -36,9 +37,9 @@ class FavoriteTrackAdapter(
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         val track = trackList[position]
-
         holder.itemTitle.text = track.name
         holder.itemArtist.text = track.artists.joinToString(", ") { it.name }
+
         Glide.with(holder.itemView.context)
             .load(track.album.images.firstOrNull()?.url)
             .placeholder(R.drawable.picture_album)
@@ -48,7 +49,28 @@ class FavoriteTrackAdapter(
     override fun getItemCount(): Int = trackList.size
 
     fun updateData(newTrackList: List<TrackResponse>) {
+        val diffCallback = TrackDiffUtilCallback(trackList, newTrackList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         trackList = newTrackList
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    class TrackDiffUtilCallback(
+        private val oldList: List<TrackResponse>,
+        private val newList: List<TrackResponse>
+    ) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int = oldList.size
+
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
     }
 }

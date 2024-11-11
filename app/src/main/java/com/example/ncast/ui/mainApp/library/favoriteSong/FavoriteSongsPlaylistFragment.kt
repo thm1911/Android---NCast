@@ -49,8 +49,9 @@ class FavoriteSongsPlaylistFragment : Fragment() {
 
         viewModel.loadFavoriteTracks()
 
-        binding.back.setOnClickListener{
+        binding.back.setOnClickListener {
             findNavController().popBackStack()
+            bottomNav.visibility = View.VISIBLE
         }
     }
 

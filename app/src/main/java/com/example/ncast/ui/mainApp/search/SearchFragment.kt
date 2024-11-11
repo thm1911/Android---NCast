@@ -53,7 +53,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
+
+        bottomNav = requireActivity().findViewById(R.id.bottomNavigation)
+
+        // Hiển thị Bottom Navigation khi vào SearchFragment
         bottomNav.visibility = View.VISIBLE
 
         auth = FirebaseAuth.getInstance()
@@ -65,7 +68,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         val auth = FirebaseAuth.getInstance()
         userId = auth.currentUser?.uid ?: ""
-
 
         loadProfileImage()
         viewModel.loadKeyList(userId)
@@ -99,7 +101,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
                 return true
             }
-
         })
 
         val space = resources.getDimensionPixelSize(R.dimen.space_song)

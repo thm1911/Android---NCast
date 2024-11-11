@@ -62,17 +62,15 @@ class LibraryFragment : Fragment() {
                 override fun onDataChange(data: DataSnapshot) {
                     val imageUrl = data.child("imageUrl").getValue(String::class.java)
                     if (imageUrl != null) {
-                        // Kiểm tra xem Fragment có đang được gắn vào Activity
                         if (isAdded) {
                             Glide.with(this@LibraryFragment)
                                 .load(imageUrl)
-                                .into(binding.avt) // Giả sử bạn có ImageView với ID này
+                                .into(binding.avt)
                         }
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Có thể bỏ qua hoặc xử lý lỗi ở đây nếu cần
                 }
             })
         }
