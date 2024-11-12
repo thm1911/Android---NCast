@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import com.example.ncast.adapter.recycleViewAdapterSearch.KeySearchAdapter
 import com.example.ncast.adapter.recycleViewAdapterSearch.TrackSearchAdapter
 import com.example.ncast.databinding.FragmentSearchBinding
 import com.example.ncast.model.SpotifyService
+import com.example.ncast.ui.mainApp.SharedViewModel
 import com.example.ncast.utils.SharePref
 import com.example.ncast.utils.Url
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -41,6 +43,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private val viewModel: SearchViewModel by viewModels {
         SearchViewModel.SearchViewModelFactory(requireActivity().application, spotifyService)
     }
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -136,6 +139,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             viewModel.saveKeySearch(track.name, userId)
             bottomNav.visibility = View.GONE
             SharePref.setImageUrl(requireActivity().application, track.album.images.get(0).url)
+            sharedViewModel.hideMiniPlayer()
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchFragmentToPlaySongFragment(
                     track.id

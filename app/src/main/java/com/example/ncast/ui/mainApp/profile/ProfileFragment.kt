@@ -1,10 +1,15 @@
 package com.example.ncast.ui.mainApp.profile
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -17,12 +22,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.bumptech.glide.Glide
-import com.example.ncast.ui.mainApp.profile.ProfileFragmentDirections
+import com.example.ncast.MainActivity
+import com.example.ncast.ui.mainApp.SharedViewModel
+import com.google.android.exoplayer2.ExoPlayer
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
+    private lateinit var exoPlayer: ExoPlayer
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +47,7 @@ class ProfileFragment : Fragment() {
         val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.visibility = View.VISIBLE
 
+        exoPlayer = (activity as MainActivity).getExoPlayer()
         auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser?.uid
         init(userId!!)
@@ -63,9 +73,10 @@ class ProfileFragment : Fragment() {
         }
 
         binding.logout.setOnClickListener {
+            exoPlayer.stop()
             auth.signOut()
-
             SharePref.setUserLoginState(requireActivity().application, false)
+            sharedViewModel.hideMiniPlayer()
 
             val navHostFragment =
                 requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment

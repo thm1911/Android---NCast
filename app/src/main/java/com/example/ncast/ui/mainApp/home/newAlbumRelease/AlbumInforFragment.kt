@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,6 +17,7 @@ import com.example.ncast.SpacingItem
 import com.example.ncast.adapter.recyclerViewAdapterHome.AlbumTrackAdapter
 import com.example.ncast.model.SpotifyService
 import com.example.ncast.databinding.FragmentAlbumInforBinding
+import com.example.ncast.ui.mainApp.SharedViewModel
 import com.example.ncast.utils.SharePref
 import com.example.ncast.utils.Url
 import retrofit2.Retrofit
@@ -33,6 +35,7 @@ class AlbumInforFragment : Fragment() {
             spotifyService
         )
     }
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,6 +84,7 @@ class AlbumInforFragment : Fragment() {
     private fun initSong() {
         songAdapter = AlbumTrackAdapter(mutableListOf()) { song ->
             viewModel.setLyric(song.id)
+            sharedViewModel.hideMiniPlayer()
             findNavController().navigate(
                 AlbumInforFragmentDirections.actionAlbumInforFragmentToPlaySongFragment(
                     song.id
