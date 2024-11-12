@@ -15,6 +15,13 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_nav_graph" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/miniPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        app:layout_constraintVertical_bias="1" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"

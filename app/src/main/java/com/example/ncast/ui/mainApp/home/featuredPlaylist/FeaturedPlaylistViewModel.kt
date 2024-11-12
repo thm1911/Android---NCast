@@ -58,8 +58,6 @@ class FeaturedPlaylistViewModel(private val spotifyService: SpotifyService) : Vi
                         featuredPlaylist.let {
                             _featuredPlaylist.value = it
                         }
-                    } else {
-                        Log.d("Test", "Failed Response")
                     }
                 }
 
