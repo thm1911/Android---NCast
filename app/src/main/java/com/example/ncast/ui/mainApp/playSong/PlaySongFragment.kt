@@ -291,46 +291,28 @@ class PlaySongFragment : Fragment() {
         val database = FirebaseDatabase.getInstance()
         val favouriteTracksRef = database.getReference("user/$userId/favourite_tracks")
 
-        favouriteTracksRef.child(trackId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    // Xóa bài hát khỏi danh sách yêu thích
-                    snapshot.ref.removeValue()
-                    binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
-                } else {
-                    // Lấy thứ tự hiện có cao nhất trong danh sách yêu thích
-                    favouriteTracksRef.orderByChild("order").limitToLast(1)
-                        .addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onDataChange(orderSnapshot: DataSnapshot) {
-                                // Xác định thứ tự cho bài hát mới
-                                var nextOrder = 1
-                                if (orderSnapshot.exists()) {
-                                    val lastOrder = orderSnapshot.children.first()
-                                        .child("order").getValue(Int::class.java) ?: 0
-                                    nextOrder = lastOrder + 1
-                                }
-
-                                // Thêm bài hát với thứ tự mới
-                                val newFavourite = mapOf(
-                                    "id" to trackId,
-                                    "order" to nextOrder
-                                )
-                                favouriteTracksRef.child(trackId).setValue(newFavourite)
-                                binding.favourite.setBackgroundResource(R.drawable.ic_favourite)
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                // Xử lý lỗi nếu cần
-                            }
-                        })
-                }
+        favouriteTracksRef.get().addOnSuccessListener { snapshot ->
+            val favoriteList = mutableListOf<String>()
+            snapshot.children.forEach { child ->
+                child.getValue(String::class.java)?.let { favoriteList.add(it) }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                // Xử lý lỗi nếu cần
+            if (favoriteList.contains(trackId)) {
+                // Xóa bài hát khỏi danh sách yêu thích
+                favoriteList.remove(trackId)
+                binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
+            } else {
+                // Thêm bài hát vào đầu danh sách yêu thích
+                favoriteList.add(0, trackId)
+                binding.favourite.setBackgroundResource(R.drawable.ic_favourite)
             }
-        })
+
+            // Lưu danh sách mới vào Firebase
+            favouriteTracksRef.setValue(favoriteList)
+        }
     }
+
+
 
 
 
@@ -339,19 +321,17 @@ class PlaySongFragment : Fragment() {
         val database = FirebaseDatabase.getInstance()
         val favouriteTracksRef = database.getReference("user/$userId/favourite_tracks")
 
-        favouriteTracksRef.child(trackId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    binding.favourite.setBackgroundResource(R.drawable.ic_favourite)
-                } else {
-                    binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
-                }
+        favouriteTracksRef.get().addOnSuccessListener { snapshot ->
+            val favoriteList = snapshot.children.mapNotNull { it.getValue(String::class.java) }
+            if (favoriteList.contains(trackId)) {
+                binding.favourite.setBackgroundResource(R.drawable.ic_favourite)
+            } else {
+                binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
             }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+        }
     }
+
+
 
 
     override fun onDestroyView() {

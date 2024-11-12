@@ -1,6 +1,7 @@
 package com.example.ncast.ui.mainApp.library.favoriteSong
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,51 +30,34 @@ class FavoriteSongsViewModel(
     val favoriteTracks: LiveData<List<TrackResponse>> get() = _favoriteTracks
 
     fun loadFavoriteTracks() {
-        val database = FirebaseDatabase.getInstance()
-        val accessTokenRef = database.getReference("Access Token").child("value")
-
-        accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val accessToken = snapshot.getValue(String::class.java) ?: ""
-                fetchFavoriteTracks(accessToken)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-    }
-
-    private fun fetchFavoriteTracks(accessToken: String) {
-        val database = FirebaseDatabase.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val favoriteTracksRef = database.getReference("user/$userId/favourite_tracks")
+        val database = FirebaseDatabase.getInstance()
+        val favouriteTracksRef = database.getReference("user/$userId/favourite_tracks")
 
-        viewModelScope.launch {
+        favouriteTracksRef.get().addOnSuccessListener { snapshot ->
+            val trackIds = snapshot.children.mapIndexed { index, child ->
+                index to child.getValue(String::class.java)
+            }.filter { it.second != null }.map { it.first to it.second!! }
+
             val trackList = mutableListOf<Pair<Int, TrackResponse>>()
+            val accessTokenRef = database.getReference("Access Token").child("value")
 
-            favoriteTracksRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (trackSnapshot in snapshot.children) {
-                        val trackId = trackSnapshot.key ?: continue
-                        val order = trackSnapshot.child("order").getValue(Int::class.java) ?: Int.MAX_VALUE
-                        fetchTrackData(trackId, accessToken) { track ->
-                            track?.let {
-                                trackList.add(Pair(order, it))
-                                saveTrackDetails(it)
-                            }
-                            if (trackList.size == snapshot.childrenCount.toInt()) {
-                                val sortedList = trackList.sortedBy { it.first }.map { it.second }
-                                _favoriteTracks.value = sortedList
+            accessTokenRef.get().addOnSuccessListener { tokenSnapshot ->
+                val accessToken = tokenSnapshot.getValue(String::class.java) ?: ""
+                trackIds.forEach { (order, trackId) ->
+                    fetchTrackData(trackId, accessToken) { track ->
+                        track?.let {
+                            trackList.add(order to it)
+                            if (trackList.size == trackIds.size) {
+                                _favoriteTracks.value = trackList.sortedBy { it.first }.map { it.second }
                             }
                         }
                     }
                 }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
+            }
         }
     }
+
 
     private fun fetchTrackData(trackId: String, accessToken: String, onTrackFetched: (TrackResponse?) -> Unit) {
         spotifyService.getTrack("Bearer $accessToken", trackId).enqueue(object : Callback<TrackResponse> {
@@ -89,15 +73,6 @@ class FavoriteSongsViewModel(
                 onTrackFetched(null)
             }
         })
-    }
-
-    private fun saveTrackDetails(track: TrackResponse) {
-        track.album.images.firstOrNull()?.url?.let { imageUrl ->
-            SharePref.setImageUrl(application, imageUrl)
-        }
-        Track.getLyricFromFirebase(track.id) { lyric ->
-            SharePref.setLyric(application, lyric)
-        }
     }
 
     fun setImageUrl(imageUrl: String?) {

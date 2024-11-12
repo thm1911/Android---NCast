@@ -38,20 +38,20 @@ class FavoriteSongsPlaylistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottomNav.visibility = View.GONE
 
         initRecyclerView()
+
+        viewModel.loadFavoriteTracks()
 
         viewModel.favoriteTracks.observe(viewLifecycleOwner) { trackList ->
             (binding.recyclerViewYourFavorite.adapter as FavoriteTrackAdapter).updateData(trackList)
         }
 
-        viewModel.loadFavoriteTracks()
+
+
 
         binding.back.setOnClickListener {
             findNavController().popBackStack()
-            bottomNav.visibility = View.VISIBLE
         }
     }
 

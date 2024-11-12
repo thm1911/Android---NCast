@@ -58,6 +58,7 @@ class HomeFragment : Fragment() {
     }
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -85,20 +86,18 @@ class HomeFragment : Fragment() {
         initFeaturedPlaylist()
         featuredPlaylistViewModel.loadPlaylist()
 
+        initRecyclerView()
+
         auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser?.uid
         if (userId != null) {
             initUser(userId)
+            viewModel.loadRecentMusicListening(userId)
         }
 
-        recentMusicAdapter = RecentMusicAdapter(emptyList()) { track ->
-            val imageUrl = track.album.images[0].url
-            viewModel.setImageUrl(imageUrl)
-            viewModel.setLyric(track.id)
-
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToPlaySongFragment(track.id)
-            )
+        initRecyclerView()
+        viewModel.recentMusicList.observe(viewLifecycleOwner) { trackList ->
+            recentMusicAdapter.updateData(trackList)
         }
 
         val spaces = resources.getDimensionPixelSize(R.dimen.space)
@@ -112,8 +111,6 @@ class HomeFragment : Fragment() {
         binding.recyclerViewRecentMusicListening.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        loadRecentMusicListening()
-
         val space = resources.getDimensionPixelSize(R.dimen.space)
         binding.recyclerViewNewAlbumRelease.addItemDecoration(SpacingItem(space))
 
@@ -125,6 +122,24 @@ class HomeFragment : Fragment() {
         binding.featuredPlaylistMore.setOnClickListener {
             bottomNav.visibility = View.GONE
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFeaturedPlaylistFragment())
+        }
+    }
+
+
+    private fun initRecyclerView() {
+        recentMusicAdapter = RecentMusicAdapter(emptyList()) { track ->
+            viewModel.setImageUrl(track.album.images.firstOrNull()?.url)
+            viewModel.setLyric(track.id)
+
+            val action = HomeFragmentDirections
+                .actionHomeFragmentToPlaySongFragment(track.id)
+            findNavController().navigate(action)
+            bottomNav.visibility = View.GONE
+        }
+
+        binding.recyclerViewRecentMusicListening.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = recentMusicAdapter
         }
     }
 
@@ -144,82 +159,6 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-    }
-
-    private fun loadRecentMusicListening() {
-        val userId = auth.currentUser?.uid ?: return
-        val database = FirebaseDatabase.getInstance()
-        val recentTracksRef = database.getReference("user/$userId/recently_played")
-
-        recentTracksRef.orderByChild("order").limitToLast(8)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val trackList = mutableListOf<Pair<Int, String>>()
-
-                    for (trackSnapshot in snapshot.children) {
-                        val order = trackSnapshot.child("order").getValue(Int::class.java) ?: continue
-                        val trackId = trackSnapshot.child("id").getValue(String::class.java) ?: continue
-                        trackList.add(Pair(order, trackId))
-                    }
-
-                    trackList.sortByDescending { it.first }
-                    val trackIds = trackList.map { it.second }
-
-                    fetchTracksData(trackIds) { tracks ->
-                        recentMusicAdapter.setData(tracks)
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
-    }
-
-
-
-    private fun fetchTracksData(trackIds: List<String>, onTracksFetched: (List<TrackResponse>) -> Unit) {
-        val tracks = mutableListOf<TrackResponse>()
-        trackIds.forEachIndexed { index, trackId ->
-            fetchTrackData(trackId) { track ->
-                tracks.add(track)
-                if (tracks.size == trackIds.size) {
-                    val sortedTracks = trackIds.map { id -> tracks.first { it.id == id } }
-                    onTracksFetched(sortedTracks)
-                }
-            }
-        }
-    }
-
-
-    private fun fetchTrackData(trackId: String, onTrackFetched: (TrackResponse) -> Unit) {
-        getAccessTokenFromFirebase { accessToken ->
-            val response = spotifyService.getTrack("Bearer $accessToken", trackId)
-            response.enqueue(object : Callback<TrackResponse> {
-                override fun onResponse(call: Call<TrackResponse>, response: Response<TrackResponse>) {
-                    if (response.isSuccessful) {
-                        response.body()?.let(onTrackFetched)
-                    }
-                }
-
-                override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
-                }
-            })
-        }
-    }
-
-    private fun getAccessTokenFromFirebase(onTokenReceived: (String) -> Unit) {
-        val database = FirebaseDatabase.getInstance()
-        val accessTokenRef = database.getReference("Access Token").child("value")
-
-        accessTokenRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val accessToken = snapshot.getValue(String::class.java) ?: ""
-                onTokenReceived(accessToken)
             }
 
             override fun onCancelled(error: DatabaseError) {

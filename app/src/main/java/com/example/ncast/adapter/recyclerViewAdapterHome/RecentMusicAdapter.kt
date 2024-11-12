@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,13 +16,13 @@ class RecentMusicAdapter(
     private val onTrackClick: (TrackResponse) -> Unit
 ) : RecyclerView.Adapter<RecentMusicAdapter.RecentMusicViewHolder>() {
 
-    inner class RecentMusicViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.item_title)
-        val artist: TextView = itemView.findViewById(R.id.item_artist)
-        val image: ImageView = itemView.findViewById(R.id.item_image)
+    inner class RecentMusicViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val itemImage: ImageView = view.findViewById(R.id.item_image)
+        val itemTitle: TextView = view.findViewById(R.id.item_title)
+        val itemArtist: TextView = view.findViewById(R.id.item_artist)
 
         init {
-            itemView.setOnClickListener {
+            view.setOnClickListener {
                 val track = trackList[adapterPosition]
                 onTrackClick(track)
             }
@@ -38,24 +37,21 @@ class RecentMusicAdapter(
 
     override fun onBindViewHolder(holder: RecentMusicViewHolder, position: Int) {
         val track = trackList[position]
-        holder.title.text = track.name
-        holder.artist.text = track.artists.joinToString(", ") { it.name }
+        holder.itemTitle.text = track.name
+        holder.itemArtist.text = track.artists.joinToString(", ") { it.name }
 
-        if (track.album.images.isNotEmpty()) {
-            Glide.with(holder.itemView.context)
-                .load(track.album.images[0].url)
-                .placeholder(R.drawable.picture_album)
-                .into(holder.image)
-        } else {
-            holder.image.setImageResource(R.drawable.picture_album)
-        }
+        Glide.with(holder.itemView.context)
+            .load(track.album.images.firstOrNull()?.url)
+            .placeholder(R.drawable.picture_album)
+            .into(holder.itemImage)
     }
 
     override fun getItemCount(): Int = trackList.size
 
-    fun setData(newTrackList: List<TrackResponse>) {
+    fun updateData(newTrackList: List<TrackResponse>) {
         val diffCallback = TrackDiffUtilCallback(trackList, newTrackList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         trackList = newTrackList
         diffResult.dispatchUpdatesTo(this)
     }
@@ -64,6 +60,7 @@ class RecentMusicAdapter(
         private val oldList: List<TrackResponse>,
         private val newList: List<TrackResponse>
     ) : DiffUtil.Callback() {
+
         override fun getOldListSize(): Int = oldList.size
 
         override fun getNewListSize(): Int = newList.size

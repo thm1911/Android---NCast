@@ -53,7 +53,7 @@ class PlaySongViewModel(
                         track.let {
                             _track.value = it
 //                            fetchFirebaseData(it)
-                            saveTrackIdToRecentlyPlayed(track.id)
+                            saveTrackToRecentlyPlayed(it.id)
                         }
                     }
                 }
@@ -65,68 +65,27 @@ class PlaySongViewModel(
         })
     }
 
-    private fun saveTrackIdToRecentlyPlayed(trackId: String) {
+    private fun saveTrackToRecentlyPlayed(trackId: String) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val database = FirebaseDatabase.getInstance()
-        val recentTrackRef = database.getReference("user/$userId/recently_played")
+        val recentTracksRef = database.getReference("user/$userId/recently_played")
 
-        recentTrackRef.orderByChild("id").equalTo(trackId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        for (trackSnapshot in snapshot.children) {
-                            recentTrackRef.orderByChild("order").limitToLast(1)
-                                .addListenerForSingleValueEvent(object : ValueEventListener {
-                                    override fun onDataChange(orderSnapshot: DataSnapshot) {
-                                        var newOrder = 1
-                                        if (orderSnapshot.exists()) {
-                                            val maxOrder = orderSnapshot.children.first()
-                                                .child("order").getValue(Int::class.java) ?: 1
-                                            newOrder = maxOrder + 1
-                                        }
-                                        trackSnapshot.ref.updateChildren(mapOf("order" to newOrder))
-                                    }
+        recentTracksRef.get().addOnSuccessListener { snapshot ->
+            val recentList = mutableListOf<String>()
+            snapshot.children.mapNotNullTo(recentList) { it.getValue(String::class.java) }
 
-                                    override fun onCancelled(error: DatabaseError) {}
-                                })
-                        }
-                    } else {
-                        recentTrackRef.orderByChild("order").limitToLast(1)
-                            .addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(orderSnapshot: DataSnapshot) {
-                                    var newOrder = 1
-                                    if (orderSnapshot.exists()) {
-                                        val maxOrder = orderSnapshot.children.first()
-                                            .child("order").getValue(Int::class.java) ?: 1
-                                        newOrder = maxOrder + 1
-                                    }
+            if (recentList.contains(trackId)) {
+                recentList.remove(trackId)
+            }
+            recentList.add(0, trackId)
 
-                                    val trackData = mapOf("id" to trackId, "order" to newOrder)
-                                    recentTrackRef.push().setValue(trackData)
+            if (recentList.size > 8) {
+                recentList.removeLast()
+            }
 
-                                    recentTrackRef.orderByChild("order").limitToFirst(1)
-                                        .addListenerForSingleValueEvent(object : ValueEventListener {
-                                            override fun onDataChange(oldSnapshot: DataSnapshot) {
-                                                if (snapshot.childrenCount > 8) {
-                                                    oldSnapshot.children.first().ref.removeValue()
-                                                }
-                                            }
-
-                                            override fun onCancelled(error: DatabaseError) {}
-                                        })
-                                }
-
-                                override fun onCancelled(error: DatabaseError) {}
-                            })
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
+            recentTracksRef.setValue(recentList)
+        }
     }
-
-
-
 
 
 
