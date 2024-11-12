@@ -1,14 +1,16 @@
 package com.example.ncast.ui.mainApp.playSong
 
 import android.app.DownloadManager
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
+import android.os.IBinder
 import android.os.Looper
 import android.util.Log
-import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +18,14 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.ncast.MainActivity
 import com.example.ncast.R
+import com.example.ncast.ui.mainApp.SharedViewModel
 import com.example.ncast.adapter.viewPagerAdapter.TrackAdapter
 import com.example.ncast.databinding.FragmentPlaySongBinding
 import com.example.ncast.model.SpotifyService
@@ -38,10 +43,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayoutMediator
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class PlaySongFragment : Fragment() {
+class PlaySongFragment() : Fragment() {
     private var _binding: FragmentPlaySongBinding? = null
     private val binding get() = _binding!!
     private lateinit var spotifyService: SpotifyService
@@ -56,6 +64,8 @@ class PlaySongFragment : Fragment() {
     private val viewModel: PlaySongViewModel by viewModels {
         PlaySongViewModel.PlaySongViewModelFactory(requireActivity().application, spotifyService)
     }
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,11 +77,16 @@ class PlaySongFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val idTrack: String = args.idTrack
+
+        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNav.visibility = View.GONE
 
         val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.visibility = View.GONE
 
         val idTrack = args.idTrack
+
         spotifyService = Retrofit.Builder()
             .baseUrl(Url.SPOTIFY.url)
             .addConverterFactory(GsonConverterFactory.create())
@@ -79,7 +94,7 @@ class PlaySongFragment : Fragment() {
             .create(SpotifyService::class.java)
 
         viewModel.loadTrack(idTrack)
-        exoPlayer = ExoPlayer.Builder(requireContext()).build()
+        exoPlayer = (activity as MainActivity).getExoPlayer()
         handle = Handler(Looper.getMainLooper())
         setData()
 
@@ -145,7 +160,17 @@ class PlaySongFragment : Fragment() {
 
         // Thoát khỏi chế độ phát nhạc
         binding.gone.setOnClickListener {
+            if (urlMp3.isNullOrEmpty()) {
+                findNavController().popBackStack()
+            } else {
+                sharedViewModel.showMiniPlayer()
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
             findNavController().popBackStack()
+            sharedViewModel.showMiniPlayer()
         }
 
     }
@@ -166,10 +191,14 @@ class PlaySongFragment : Fragment() {
                     }
                 } else urlMp3 = url
 
+                sharedViewModel.setIdTrack(track.id)
+                sharedViewModel.setNameTrack(track.name)
+                sharedViewModel.setArtistTrack(track.artists.get(0).name)
+
                 nameTrack = track.name
                 exoPlayer.addListener(object : Player.Listener {
                     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-                        if (playbackState == Player.STATE_READY && playWhenReady) {
+                        if (playbackState == Player.STATE_READY && playWhenReady && _binding != null) {
                             binding.playPause.setBackgroundResource(R.drawable.ic_play)
                             binding.name.setText(track.name)
                             binding.nameTrack.setText(track.name)
@@ -177,7 +206,7 @@ class PlaySongFragment : Fragment() {
                             binding.seekBar.max = exoPlayer.duration.toInt()
                             binding.duration.setText(formatTime(exoPlayer.duration.toInt()))
                             setupSeekBar()
-                        } else if (playbackState == Player.STATE_READY && !playWhenReady) {
+                        } else if (playbackState == Player.STATE_READY && !playWhenReady && _binding != null) {
                             binding.playPause.setBackgroundResource(R.drawable.ic_pause)
                             binding.name.setText(track.name)
                             binding.nameTrack.setText(track.name)
@@ -185,10 +214,6 @@ class PlaySongFragment : Fragment() {
                             binding.seekBar.max = exoPlayer.duration.toInt()
                             binding.duration.setText(formatTime(exoPlayer.duration.toInt()))
                         }
-
-//                        else if(playbackState == Player.STATE_ENDED){
-//                            findNavController().popBackStack()
-//                        }
                     }
 
                 })
@@ -338,7 +363,6 @@ class PlaySongFragment : Fragment() {
         super.onDestroyView()
         if (!urlMp3.isNullOrEmpty()) {
             handle.removeCallbacks(runable!!)
-            exoPlayer.release()
         }
         _binding = null
     }

@@ -43,7 +43,5 @@ class SharePref {
             val sharePref = application.getSharedPreferences("lyric", Context.MODE_PRIVATE)
             return sharePref.getString("lyric", null)
         }
-
-
     }
 }
