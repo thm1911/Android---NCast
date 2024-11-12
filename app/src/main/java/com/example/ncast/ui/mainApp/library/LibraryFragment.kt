@@ -1,17 +1,18 @@
 package com.example.ncast.ui.mainApp.library
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.ncast.R
 import com.example.ncast.SpacingItem
 import com.example.ncast.adapter.recycleViewAdapterLibrary.YourPlaylistAdapter
 import com.example.ncast.databinding.FragmentLibraryBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,7 +24,7 @@ class LibraryFragment : Fragment() {
     private var _binding: FragmentLibraryBinding? = null
     private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
-
+    private lateinit var bottomNav: BottomNavigationView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,7 +37,15 @@ class LibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bottomNav = requireActivity().findViewById(R.id.bottomNavigation)
+        bottomNav.visibility = View.VISIBLE
+
         auth = FirebaseAuth.getInstance()
+
+        binding.yourLikedSongs.setOnClickListener {
+            findNavController().navigate(R.id.action_libraryFragment_to_favoriteSongsPlaylistFragment)
+            bottomNav.visibility = View.GONE
+        }
 
         binding.recycleYourPlaylist.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -58,17 +67,15 @@ class LibraryFragment : Fragment() {
                 override fun onDataChange(data: DataSnapshot) {
                     val imageUrl = data.child("imageUrl").getValue(String::class.java)
                     if (imageUrl != null) {
-                        // Kiểm tra xem Fragment có đang được gắn vào Activity
                         if (isAdded) {
                             Glide.with(this@LibraryFragment)
                                 .load(imageUrl)
-                                .into(binding.avt) // Giả sử bạn có ImageView với ID này
+                                .into(binding.avt)
                         }
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Có thể bỏ qua hoặc xử lý lỗi ở đây nếu cần
                 }
             })
         }

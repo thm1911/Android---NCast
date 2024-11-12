@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeFragment_to_playlistFragment"
             app:destination="@id/playlistFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
     </fragment>
 
     <fragment
@@ -38,7 +41,11 @@
         android:id="@+id/libraryFragment"
         android:name="com.example.ncast.ui.mainApp.library.LibraryFragment"
         android:label="Library"
-        tools:layout="@layout/fragment_library" />
+        tools:layout="@layout/fragment_library" >
+        <action
+            android:id="@+id/action_libraryFragment_to_favoriteSongsPlaylistFragment"
+            app:destination="@id/favoriteSongsPlaylistFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
@@ -114,6 +121,15 @@
             app:argType="string" />
         <action
             android:id="@+id/action_playlistFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteSongsPlaylistFragment"
+        android:name="com.example.ncast.ui.mainApp.library.favoriteSong.FavoriteSongsPlaylistFragment"
+        android:label="fragment_favorite_songs_playlist"
+        tools:layout="@layout/fragment_favorite_songs_playlist" >
+        <action
+            android:id="@+id/action_favoriteSongsPlaylistFragment_to_playSongFragment"
             app:destination="@id/playSongFragment" />
     </fragment>
 </navigation>

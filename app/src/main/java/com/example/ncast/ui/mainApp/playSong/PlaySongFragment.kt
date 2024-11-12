@@ -34,6 +34,15 @@ import com.example.ncast.utils.Url
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.Player.RepeatMode
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayoutMediator
+import com.google.common.io.Resources
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
@@ -73,6 +82,11 @@ class PlaySongFragment() : Fragment() {
         val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.visibility = View.GONE
 
+        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNav.visibility = View.GONE
+
+        val idTrack = args.idTrack
+
         spotifyService = Retrofit.Builder()
             .baseUrl(Url.SPOTIFY.url)
             .addConverterFactory(GsonConverterFactory.create())
@@ -84,6 +98,10 @@ class PlaySongFragment() : Fragment() {
         handle = Handler(Looper.getMainLooper())
         setData()
 
+        checkFavouriteStatus(args.idTrack)
+        binding.favourite.setOnClickListener {
+            toggleFavouriteStatus(args.idTrack)
+        }
 
         // Dừng/tiếp tục phát nhạc
         binding.playPause.setOnClickListener {
@@ -292,6 +310,54 @@ class PlaySongFragment() : Fragment() {
             requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         downloadManager.enqueue(request)
     }
+
+    private fun toggleFavouriteStatus(trackId: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val database = FirebaseDatabase.getInstance()
+        val favouriteTracksRef = database.getReference("user/$userId/favourite_tracks")
+
+        favouriteTracksRef.get().addOnSuccessListener { snapshot ->
+            val favoriteList = mutableListOf<String>()
+            snapshot.children.forEach { child ->
+                child.getValue(String::class.java)?.let { favoriteList.add(it) }
+            }
+
+            if (favoriteList.contains(trackId)) {
+                // Xóa bài hát khỏi danh sách yêu thích
+                favoriteList.remove(trackId)
+                binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
+            } else {
+                // Thêm bài hát vào đầu danh sách yêu thích
+                favoriteList.add(0, trackId)
+                binding.favourite.setBackgroundResource(R.drawable.ic_favourite)
+            }
+
+            // Lưu danh sách mới vào Firebase
+            favouriteTracksRef.setValue(favoriteList)
+        }
+    }
+
+
+
+
+
+    private fun checkFavouriteStatus(trackId: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val database = FirebaseDatabase.getInstance()
+        val favouriteTracksRef = database.getReference("user/$userId/favourite_tracks")
+
+        favouriteTracksRef.get().addOnSuccessListener { snapshot ->
+            val favoriteList = snapshot.children.mapNotNull { it.getValue(String::class.java) }
+            if (favoriteList.contains(trackId)) {
+                binding.favourite.setBackgroundResource(R.drawable.ic_favourite)
+            } else {
+                binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
+            }
+        }
+    }
+
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

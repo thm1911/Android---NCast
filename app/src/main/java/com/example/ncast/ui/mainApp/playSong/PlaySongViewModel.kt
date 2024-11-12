@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.ncast.model.SpotifyService
 import com.example.ncast.model.track.TrackResponse
 import com.example.ncast.utils.SharePref
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -52,6 +53,7 @@ class PlaySongViewModel(
                         track.let {
                             _track.value = it
 //                            fetchFirebaseData(it)
+                            saveTrackToRecentlyPlayed(it.id)
                         }
                     }
                 }
@@ -62,6 +64,30 @@ class PlaySongViewModel(
 
         })
     }
+
+    private fun saveTrackToRecentlyPlayed(trackId: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val database = FirebaseDatabase.getInstance()
+        val recentTracksRef = database.getReference("user/$userId/recently_played")
+
+        recentTracksRef.get().addOnSuccessListener { snapshot ->
+            val recentList = mutableListOf<String>()
+            snapshot.children.mapNotNullTo(recentList) { it.getValue(String::class.java) }
+
+            if (recentList.contains(trackId)) {
+                recentList.remove(trackId)
+            }
+            recentList.add(0, trackId)
+
+            if (recentList.size > 8) {
+                recentList.removeLast()
+            }
+
+            recentTracksRef.setValue(recentList)
+        }
+    }
+
+
 
 //    private fun fetchFirebaseData(track: TrackResponse){
 //        val database = FirebaseDatabase.getInstance()
