@@ -1,11 +1,13 @@
 package com.example.ncast.ui.signUp
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
@@ -31,6 +33,52 @@ class UserSignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
+
+        val noSpaceFilter = InputFilter { source, _, _, _, _, _ ->
+            if (source == " ") "" else null
+        }
+
+        binding.email.filters = arrayOf(noSpaceFilter, InputFilter.LengthFilter(25))
+        binding.password.filters = arrayOf(noSpaceFilter, InputFilter.LengthFilter(25))
+        binding.cfPassword.filters = arrayOf(noSpaceFilter, InputFilter.LengthFilter(25))
+        binding.username.filters = arrayOf(noSpaceFilter, InputFilter.LengthFilter(25))
+
+        binding.email.addTextChangedListener {
+            if (it?.length == 25) {
+                binding.emailLayout.helperText = "Email maximum 25 characters"
+                binding.email.setBackgroundResource(R.drawable.input_error)
+            } else {
+                binding.emailLayout.helperText = ""
+                binding.email.setBackgroundResource(R.drawable.input_text)
+            }
+        }
+        binding.password.addTextChangedListener {
+            if (it?.length == 25) {
+                binding.passwordLayout.helperText = "Password maximum 25 characters"
+                binding.password.setBackgroundResource(R.drawable.input_error)
+            } else {
+                binding.passwordLayout.helperText = ""
+                binding.password.setBackgroundResource(R.drawable.input_text)
+            }
+        }
+        binding.cfPassword.addTextChangedListener {
+            if (it?.length == 25) {
+                binding.cfPasswordLayout.helperText = "Password maximum 25 characters"
+                binding.cfPassword.setBackgroundResource(R.drawable.input_error)
+            } else {
+                binding.cfPasswordLayout.helperText = ""
+                binding.cfPassword.setBackgroundResource(R.drawable.input_text)
+            }
+        }
+        binding.username.addTextChangedListener {
+            if (it?.length == 25) {
+                binding.usernameLayout.helperText = "Email maximum 25 characters"
+                binding.username.setBackgroundResource(R.drawable.input_error)
+            } else {
+                binding.usernameLayout.helperText = ""
+                binding.username.setBackgroundResource(R.drawable.input_text)
+            }
+        }
 
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.userSignUpFragment, true)
@@ -68,6 +116,10 @@ class UserSignUpFragment : Fragment() {
             }
         }
 
+
+        binding.signIn.setOnClickListener {
+            findNavController().navigate(UserSignUpFragmentDirections.actionUserSignUpFragmentToUserSignInFragment())
+        }
     }
 
     private fun checkUser(callback: (Boolean) -> Unit) {

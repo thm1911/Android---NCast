@@ -44,9 +44,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.tabs.TabLayoutMediator
 import retrofit2.Retrofit
+
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PlaySongFragment() : Fragment() {
@@ -82,10 +81,6 @@ class PlaySongFragment() : Fragment() {
         val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.visibility = View.GONE
 
-        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottomNav.visibility = View.GONE
-
-        val idTrack = args.idTrack
 
         spotifyService = Retrofit.Builder()
             .baseUrl(Url.SPOTIFY.url)
