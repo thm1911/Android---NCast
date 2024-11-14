@@ -22,7 +22,7 @@ class FeaturedPlaylistAdapter(
 
         fun bind(playlist: FeaturedPlaylist.Item) {
             Glide.with(image.context)
-                .load(playlist.images.get(0).url)
+                .load(playlist.images[0].url)
                 .into(image)
 
         }

@@ -34,4 +34,5 @@ data class PlaylistResponse(
     data class Album(
         val images: List<NewAlbumRelease.Item.Image>
     )
+
 }

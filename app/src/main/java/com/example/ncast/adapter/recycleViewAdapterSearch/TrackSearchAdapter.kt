@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ncast.databinding.ItemTrackInAlbumBinding
+import com.example.ncast.databinding.ItemTrackInAlbumPicBinding
 
 class TrackSearchAdapter(
     private val trackList: MutableList<Tracks.Item>,
@@ -13,18 +15,24 @@ class TrackSearchAdapter(
 ) :
     RecyclerView.Adapter<TrackSearchAdapter.TrackSearchViewHolder>() {
 
-    inner class TrackSearchViewHolder(val binding: ItemTrackInAlbumBinding) :
+    inner class TrackSearchViewHolder(val binding: ItemTrackInAlbumPicBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(track: Tracks.Item) {
             binding.stt.setText("")
             binding.nameSong.setText(track.name)
-            binding.artist.setText(track.artists.get(0).name)
+            val artistNames = track.artists.joinToString(", ") { it.name }
+            binding.artist.text = artistNames
+
+            val imageUrl = track.album.images[0].url
+            Glide.with(binding.itemImage.context)
+                .load(imageUrl)
+                .into(binding.itemImage)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackSearchViewHolder {
         val binding =
-            ItemTrackInAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemTrackInAlbumPicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TrackSearchViewHolder(binding)
     }
 
