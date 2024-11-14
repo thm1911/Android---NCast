@@ -251,14 +251,13 @@
         android:autoSizeMinTextSize="13sp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
-        android:text="Already have an account?"
+        android:text="Already have an account? "
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/sign_in"
+        app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/sign_up"
         app:layout_constraintVertical_bias="0.4"
         app:layout_constraintWidth_percent="0.52" />
@@ -275,9 +274,8 @@
         android:textColor="@color/main"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintStart_toEndOf="@id/text_sign"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
         app:layout_constraintTop_toBottomOf="@id/sign_up"
         app:layout_constraintVertical_bias="0.4"
         app:layout_constraintWidth_percent="0.15" />
@@ -295,5 +293,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
