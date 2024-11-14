@@ -105,7 +105,10 @@
             android:background="@drawable/input_text"
             android:hint="@string/enter_your_playlist_name"
             android:paddingStart="45dp"
+            android:inputType="text"
             android:textColor="@color/black"
+            android:lines="1"
+            android:imeOptions="actionDone"
             android:textColorHint="@color/input_color" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,6 +142,7 @@
         app:layout_constraintStart_toEndOf="@id/cancel"
         app:layout_constraintTop_toBottomOf="@id/name_layout"
         app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintWidth_percent="0.25" />
 
     <androidx.constraintlayout.widget.Guideline
