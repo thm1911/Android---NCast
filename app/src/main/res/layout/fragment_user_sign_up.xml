@@ -138,6 +138,7 @@
             android:paddingStart="45sp"
             android:textColor="@color/black"
             android:textColorHint="@color/input_color" />
+            android:paddingStart="45dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

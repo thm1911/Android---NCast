@@ -13,7 +13,7 @@ import com.example.ncast.R
 import com.example.ncast.model.track.TrackResponse
 
 class FavoriteTrackAdapter(
-    private var trackList: List<TrackResponse>,
+    private var trackList: MutableList<TrackResponse>,
     private val onTrackClick: (TrackResponse) -> Unit
 ) : RecyclerView.Adapter<FavoriteTrackAdapter.TrackViewHolder>() {
 
@@ -52,13 +52,10 @@ class FavoriteTrackAdapter(
     fun updateData(newTrackList: List<TrackResponse>) {
         val diffCallback = TrackDiffUtilCallback(trackList, newTrackList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-        trackList = newTrackList
+        trackList.clear()
+        trackList.addAll(newTrackList)
         diffResult.dispatchUpdatesTo(this)
     }
-
-
-
 
     class TrackDiffUtilCallback(
         private val oldList: List<TrackResponse>,

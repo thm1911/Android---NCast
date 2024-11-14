@@ -38,17 +38,12 @@ class FavoriteSongsPlaylistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         initRecyclerView()
 
         viewModel.loadFavoriteTracks()
-
         viewModel.favoriteTracks.observe(viewLifecycleOwner) { trackList ->
             (binding.recyclerViewYourFavorite.adapter as FavoriteTrackAdapter).updateData(trackList)
         }
-
-
-
 
         binding.back.setOnClickListener {
             findNavController().popBackStack()
@@ -56,7 +51,7 @@ class FavoriteSongsPlaylistFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val favoriteTrackAdapter = FavoriteTrackAdapter(emptyList()) { track ->
+        val favoriteTrackAdapter = FavoriteTrackAdapter(mutableListOf()) { track ->
             viewModel.setImageUrl(track.album.images.firstOrNull()?.url)
             viewModel.setLyric(track.id)
 
@@ -71,10 +66,15 @@ class FavoriteSongsPlaylistFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        initRecyclerView()
+//
+//        viewModel.loadFavoriteTracks()
+//        viewModel.favoriteTracks.observe(viewLifecycleOwner) { trackList ->
+//            (binding.recyclerViewYourFavorite.adapter as FavoriteTrackAdapter).updateData(trackList)
+//        }
+//    }
 
     private fun getSpotifyService(): SpotifyService {
         return Retrofit.Builder()

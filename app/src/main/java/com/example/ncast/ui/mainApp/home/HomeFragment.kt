@@ -18,11 +18,8 @@ import com.example.ncast.adapter.recyclerViewAdapterHome.RecentMusicAdapter
 import com.example.ncast.model.SpotifyService
 import com.example.ncast.databinding.FragmentHomeBinding
 import com.example.ncast.model.User
-import com.example.ncast.model.track.TrackResponse
 import com.example.ncast.ui.mainApp.home.featuredPlaylist.FeaturedPlaylistViewModel
 import com.example.ncast.ui.mainApp.home.newAlbumRelease.NewReleaseAlbumViewModel
-import com.example.ncast.ui.mainApp.home.recentPlaySongs.HomeViewModel
-import com.example.ncast.utils.SharePref
 import com.example.ncast.utils.Url
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -30,9 +27,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -56,8 +50,6 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels {
         HomeViewModel.HomeViewModelFactory(requireActivity().application, spotifyService)
     }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

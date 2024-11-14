@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_libraryFragment_to_favoriteSongsPlaylistFragment"
             app:destination="@id/favoriteSongsPlaylistFragment" />
+        <action
+            android:id="@+id/action_libraryFragment_to_addNewPlaylistFragment"
+            app:destination="@id/addNewPlaylistFragment" />
     </fragment>
 
     <fragment
@@ -99,9 +102,13 @@
     </fragment>
     <fragment
         android:id="@+id/chooseAppProfileFragment"
-        android:name="com.example.ncast.ui.mainApp.profile.ChooseAppProfileFragment"
+        android:name="com.example.ncast.ui.mainApp.profile.ChoosePictureFragment"
         android:label="fragment_choose_app_profile"
-        tools:layout="@layout/fragment_choose_app_profile" />
+        tools:layout="@layout/fragment_choose_app_profile" >
+        <argument
+            android:name="mes"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/featuredPlaylistFragment"
         android:name="com.example.ncast.ui.mainApp.home.featuredPlaylist.FeaturedPlaylistFragment"
@@ -131,5 +138,14 @@
         <action
             android:id="@+id/action_favoriteSongsPlaylistFragment_to_playSongFragment"
             app:destination="@id/playSongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewPlaylistFragment"
+        android:name="com.example.ncast.ui.mainApp.library.yourPlaylist.AddNewPlaylistFragment"
+        android:label="fragment_add_new_playlist"
+        tools:layout="@layout/fragment_add_new_playlist" >
+        <action
+            android:id="@+id/action_addNewPlaylistFragment_to_chooseAppProfileFragment"
+            app:destination="@id/chooseAppProfileFragment" />
     </fragment>
 </navigation>

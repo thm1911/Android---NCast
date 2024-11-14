@@ -1,10 +1,6 @@
 package com.example.ncast.ui.mainApp.profile
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentProfileBinding
 import com.example.ncast.model.User
-import com.example.ncast.ui.mainApp.profile.dialog.ProfilePictureBottomSheet
 import com.example.ncast.utils.SharePref
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -52,14 +47,8 @@ class ProfileFragment : Fragment() {
         val userId = auth.currentUser?.uid
         init(userId!!)
 
-        // Lắng nghe kết quả từ ProfilePictureBottomSheet
-        setFragmentResultListener("requestKey") { _, bundle ->
-            val imageUrl = bundle.getString("imageUrl")
-            updateProfileImage(imageUrl)
-        }
-
         binding.changeAvtLayout.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_chooseAppProfileFragment)
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChooseAppProfileFragment("Profile Avt"))
             bottomNav.visibility = View.GONE
         }
 
@@ -102,14 +91,6 @@ class ProfileFragment : Fragment() {
                         .into(binding.imageAvt)
                 }
             }
-        }
-    }
-
-    private fun updateProfileImage(imageUrl: String?) {
-        imageUrl?.let {
-            Glide.with(this)
-                .load(it)
-                .into(binding.imageAvt)
         }
     }
 
