@@ -87,53 +87,6 @@ class PlaySongViewModel(
         }
     }
 
-
-
-//    private fun fetchFirebaseData(track: TrackResponse){
-//        val database = FirebaseDatabase.getInstance()
-//        val trackRef = database.getReference("tracks").child(track.id)
-//        trackRef.addListenerForSingleValueEvent(object : ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if(snapshot.exists()){
-//                    track.url = snapshot.child("mp3").getValue(String::class.java) ?: ""
-//                    track.lyric = snapshot.child("lyric").getValue(String::class.java) ?: ""
-//                    _track.value = track
-//
-//                    val database = FirebaseDatabase.getInstance()
-//                    val trackRef = database.getReference("track")
-//                    trackRef.setValue(_track)
-//
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
-//        val storage = FirebaseStorage.getInstance()
-//        Log.d("Test", track.id)
-//        val url = storage.reference.child("tracks/mp3/${track.id}.mp3")
-//        val lyric = storage.reference.child("tracks/lyrics/${track.id}.txt")
-//
-//        url.downloadUrl.addOnSuccessListener {uri ->
-//            track.url = uri.toString()
-//        }
-//
-//        fetchLyric(lyric, track)
-//    }
-//
-//    private fun fetchLyric(lyricRef: StorageReference, track: TrackResponse) {
-//        lyricRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { bytes ->
-//            track.lyric = String(bytes)
-//            SharePref.setLyric(application, String(bytes))
-//            _track.value = track
-//            val database = FirebaseDatabase.getInstance()
-//            val trackRef = database.getReference("tracks")
-//            trackRef.setValue(_track)
-//        }
-//    }
-
     class PlaySongViewModelFactory(
         private val application: Application,
         private val spotifyService: SpotifyService

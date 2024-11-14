@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.ncast.ui.mainApp.library.yourPlaylist.AddNewPlaylistFragment
 import com.example.ncast.R
 import com.example.ncast.SpacingItem
 import com.example.ncast.adapter.recycleViewAdapterLibrary.YourPlaylistAdapter
 import com.example.ncast.databinding.FragmentLibraryBinding
+import com.example.ncast.model.yourPlaylist.YourPlaylist
+import com.example.ncast.utils.Url
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -25,6 +29,11 @@ class LibraryFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
     private lateinit var bottomNav: BottomNavigationView
+    private lateinit var adapter: YourPlaylistAdapter
+    private val viewModel: LibraryViewModel by viewModels {
+        LibraryViewModel.LibraryViewModelFactory()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,21 +50,38 @@ class LibraryFragment : Fragment() {
         bottomNav.visibility = View.VISIBLE
 
         auth = FirebaseAuth.getInstance()
+        loadProfileImage()
+        initYourPlaylist()
+
+        binding.addNewPlayist.setOnClickListener {
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+            val database = FirebaseDatabase.getInstance()
+            val userRef = database.getReference("user").child(userId!!)
+            userRef.child("playlistImageUrl").setValue(Url.IMAGEPLAYLIST.url)
+            findNavController().navigate(LibraryFragmentDirections.actionLibraryFragmentToAddNewPlaylistFragment())
+        }
 
         binding.yourLikedSongs.setOnClickListener {
             findNavController().navigate(R.id.action_libraryFragment_to_favoriteSongsPlaylistFragment)
             bottomNav.visibility = View.GONE
         }
 
-        binding.recycleYourPlaylist.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        val adapterUpdate = YourPlaylistAdapter()
-        binding.recycleYourPlaylist.adapter = adapterUpdate
-
         val space = resources.getDimensionPixelSize(R.dimen.space)
         binding.recycleYourPlaylist.addItemDecoration(SpacingItem(space))
 
-        loadProfileImage()
+    }
+
+    private fun initYourPlaylist(){
+        adapter = YourPlaylistAdapter(mutableListOf()){playlist ->
+
+        }
+        viewModel.loadPlaylist()
+        viewModel.playlist.observe(viewLifecycleOwner){playlist ->
+            adapter.setData(playlist)
+        }
+        binding.recycleYourPlaylist.adapter = adapter
+        binding.recycleYourPlaylist.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
     }
 
     private fun loadProfileImage() {

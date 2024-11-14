@@ -45,25 +45,13 @@
     <string name="forgot_pass">Forgot Password</string>
     <string name="new_album_release">New Album Release</string>
     <string name="featured_playlist">Featured Playlist</string>
-    <string name="lyric_test">Thức giấc mỗi ngày là khi màn đêm vừa kéo về
-        \nTiếng chuông ngân dài, nhưng vẫn không thấy một ai
-        \nBờ vai nhữ rã rời, con tim em muốn dừng lại thôi
-        \nKết thúc câu chuyện cũng là lúc không ai bước tiếp
-        \nEm giờ đã có bầu trời mới, mọi chuyện sẽ qua thôi
-        \nAnh thì tìm kiếm tình yêu dù đánh mất lâu rồi
-        \nChạy thật nhanh, đi thật xa để cố quên những gì xảy ra
-        \nNhưng trước mắt anh vẫn toàn thấy ký ức về em
-        \nEm giờ đã có bầu trời mới, thế giới cũng đổi thay
-        \nGiữa muôn vàn vì sao chiếu sáng nơi đây chỉ có mỗi anh lạc lõng
-        \nĐoạn đường mới đừng tìm lại giấc mơ em đã cất sâu
-        \nCó khi ngày mai ta sẽ vô tình gặp nhau, đứng thật lâu
-        \nCứ mỗi sớm ban mai là giấc mơ xưa lại đến
-        \nVẫn cứ ngỡ bên tai là những thanh âm ngọt ngào
-        \nGió cuốn những đám mây về một nơi xa</string>
     <string name="loading">Loading...</string>
     <string name="add_to_playlist">Add to Playlist</string>
     <string name="cancel">Cancel</string>
     <string name="collection_of_newly_released_albums_updated_hourly">Collection of newly released albums, updated hourly.</string>
     <string name="collection_of_featured_playlists_updated_hourly">Collection of featured playlists, updated hourly.</string>
     <string name="results_list">Results list</string>
+    <string name="enter_your_playlist_name">Enter your playlist name</string>
+    <string name="name"><b><font color="#FF000000">Name</font></b><b><font color="#F40303"> *</font></b></string>
+    <string name="create_your_playlist">Create your playlist</string>
 </resources>

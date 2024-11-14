@@ -1,14 +1,11 @@
 package com.example.ncast.ui.mainApp.playSong
 
 import android.app.DownloadManager
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
-import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -23,29 +20,24 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ncast.MainActivity
 import com.example.ncast.R
+import com.example.ncast.adapter.recycleViewAdapterLibrary.FavoriteTrackAdapter
 import com.example.ncast.ui.mainApp.SharedViewModel
 import com.example.ncast.adapter.viewPagerAdapter.TrackAdapter
 import com.example.ncast.databinding.FragmentPlaySongBinding
 import com.example.ncast.model.SpotifyService
+import com.example.ncast.ui.mainApp.library.favoriteSong.FavoriteSongsViewModel
 import com.example.ncast.utils.Track
 import com.example.ncast.utils.Url
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.Player.RepeatMode
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.common.io.Resources
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.tabs.TabLayoutMediator
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -64,6 +56,9 @@ class PlaySongFragment() : Fragment() {
     private val viewModel: PlaySongViewModel by viewModels {
         PlaySongViewModel.PlaySongViewModelFactory(requireActivity().application, spotifyService)
     }
+    private val favouriteSongViewModel: FavoriteSongsViewModel by viewModels{
+        FavoriteSongsViewModel.FavoriteSongsViewModelFactory(requireActivity().application, spotifyService)
+    }
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
 
@@ -77,15 +72,10 @@ class PlaySongFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val idTrack: String = args.idTrack
-
         val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.visibility = View.GONE
-
-        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottomNav.visibility = View.GONE
-
         val idTrack = args.idTrack
+        sharedViewModel.hideMiniPlayer()
 
         spotifyService = Retrofit.Builder()
             .baseUrl(Url.SPOTIFY.url)
@@ -317,28 +307,25 @@ class PlaySongFragment() : Fragment() {
         val favouriteTracksRef = database.getReference("user/$userId/favourite_tracks")
 
         favouriteTracksRef.get().addOnSuccessListener { snapshot ->
-            val favoriteList = mutableListOf<String>()
+            val favouriteList = mutableListOf<String>()
             snapshot.children.forEach { child ->
-                child.getValue(String::class.java)?.let { favoriteList.add(it) }
+                child.getValue(String::class.java)?.let { favouriteList.add(it) }
             }
 
-            if (favoriteList.contains(trackId)) {
+            if (favouriteList.contains(trackId)) {
                 // Xóa bài hát khỏi danh sách yêu thích
-                favoriteList.remove(trackId)
+                favouriteList.remove(trackId)
                 binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
             } else {
                 // Thêm bài hát vào đầu danh sách yêu thích
-                favoriteList.add(0, trackId)
+                favouriteList.add(0, trackId)
                 binding.favourite.setBackgroundResource(R.drawable.ic_favourite)
             }
 
             // Lưu danh sách mới vào Firebase
-            favouriteTracksRef.setValue(favoriteList)
+            favouriteTracksRef.setValue(favouriteList)
         }
     }
-
-
-
 
 
     private fun checkFavouriteStatus(trackId: String) {

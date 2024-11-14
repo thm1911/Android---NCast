@@ -5,20 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
-import com.example.ncast.R
 import com.example.ncast.databinding.DialogChangePictureProfileBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class ProfilePictureBottomSheet : BottomSheetDialogFragment() {
+class PictureBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: DialogChangePictureProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var imageUrl: String
+    private lateinit var mes: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +30,8 @@ class ProfilePictureBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.save.setOnClickListener {
-            saveProfilePicture()
+            if(mes.equals("Profile Avt")) saveProfilePicture()
+            else if(mes.equals("Picture Playlist")) savePicturePlaylist()
         }
 
         binding.cancel.setOnClickListener {
@@ -51,12 +50,26 @@ class ProfilePictureBottomSheet : BottomSheetDialogFragment() {
                 dismiss()
             }
         }
+    }
 
-
+    private fun savePicturePlaylist(){
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val database = FirebaseDatabase.getInstance()
+        val userRef = database.getReference("user").child(userId!!)
+        userRef.child("playlistImageUrl").setValue(imageUrl).addOnCompleteListener{task ->
+            if (task.isSuccessful){
+                findNavController().popBackStack()
+                dismiss()
+            }
+        }
     }
 
     fun setImageUrl(url: String) {
         imageUrl = url
+    }
+
+    fun setMes(mes: String){
+        this.mes = mes
     }
 
     override fun onDestroyView() {

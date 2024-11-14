@@ -1,13 +1,29 @@
 package com.example.ncast.adapter.recycleViewAdapterLibrary
 
+import android.provider.Settings.Global
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ncast.R
+import com.example.ncast.databinding.FragmentAddNewPlaylistBinding
 import com.example.ncast.databinding.ItemMyPlaylistLibraryBinding
+import com.example.ncast.model.yourPlaylist.YourPlaylist
 
-class YourPlaylistAdapter:RecyclerView.Adapter<YourPlaylistAdapter.YourPlaylistViewHolder>() {
-    inner class YourPlaylistViewHolder(val binding:ItemMyPlaylistLibraryBinding): RecyclerView.ViewHolder(binding.root)
+class YourPlaylistAdapter(
+    private val yourPlaylist: MutableList<YourPlaylist>,
+    private val onClick: (YourPlaylist) -> Unit
+) : RecyclerView.Adapter<YourPlaylistAdapter.YourPlaylistViewHolder>() {
+
+    inner class YourPlaylistViewHolder(val binding: ItemMyPlaylistLibraryBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bind(playlist: YourPlaylist){
+            binding.itemTitle.setText(playlist.name)
+            Glide.with(binding.itemImage.context)
+                .load(playlist.imageUrl)
+                .into(binding.itemImage)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YourPlaylistViewHolder {
         val binding = ItemMyPlaylistLibraryBinding.inflate(
@@ -18,13 +34,40 @@ class YourPlaylistAdapter:RecyclerView.Adapter<YourPlaylistAdapter.YourPlaylistV
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return yourPlaylist.size
     }
 
     override fun onBindViewHolder(holder: YourPlaylistViewHolder, position: Int) {
-        holder.binding.itemTitle.text = "For the road"
-        holder.binding.itemAuthorName.text = "Davido"
-        holder.binding.itemImage.setImageResource(R.drawable.trend_song)
+        val playlist = yourPlaylist[position]
+        holder.bind(playlist)
+        holder.itemView.setOnClickListener {
+            onClick(playlist)
+        }
     }
 
+    fun setData(playlist: List<YourPlaylist>){
+        val result = DiffUtil.calculateDiff(PlaylistDiffUtilCallBack(yourPlaylist, playlist))
+        yourPlaylist.clear()
+        yourPlaylist.addAll(playlist)
+        result.dispatchUpdatesTo(this)
+    }
+
+    class PlaylistDiffUtilCallBack(private val oldList: List<YourPlaylist>, private val newList: List<YourPlaylist>): DiffUtil.Callback(){
+        override fun getOldListSize(): Int {
+            return oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+
+    }
 }
