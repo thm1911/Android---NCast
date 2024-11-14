@@ -1,4 +1,4 @@
-package com.example.ncast.ui.mainApp.home.recentPlaySongs
+package com.example.ncast.ui.mainApp.home
 
 import android.app.Application
 import androidx.lifecycle.LiveData

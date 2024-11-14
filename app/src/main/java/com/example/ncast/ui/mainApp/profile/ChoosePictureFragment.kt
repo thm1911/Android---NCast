@@ -8,19 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.ncast.R
 import com.example.ncast.adapter.recycleViewAdapterProfile.ChoosePictureAdapter
 import com.example.ncast.databinding.FragmentChooseAppProfileBinding
-import com.example.ncast.ui.mainApp.profile.dialog.ProfilePictureBottomSheet
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.ncast.ui.mainApp.profile.dialog.PictureBottomSheet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
-class ChooseAppProfileFragment : Fragment() {
+class ChoosePictureFragment : Fragment() {
     private var _binding: FragmentChooseAppProfileBinding? = null
     private val binding get() = _binding!!
+    private val args: ChoosePictureFragmentArgs by navArgs()
+    private lateinit var mes: String
     private val imageUrls = mutableListOf<String>()
 
     override fun onCreateView(
@@ -35,6 +36,7 @@ class ChooseAppProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mes = args.mes
         binding.recyclerViewChoosePiture.layoutManager = GridLayoutManager(requireContext(), 2)
         val adapter = ChoosePictureAdapter(imageUrls) { selectedImageUrl ->
             showProfilePictureBottomSheet(selectedImageUrl)
@@ -105,8 +107,9 @@ class ChooseAppProfileFragment : Fragment() {
     }
 
     private fun showProfilePictureBottomSheet(imageUrl: String) {
-        val bottomSheet = ProfilePictureBottomSheet()
+        val bottomSheet = PictureBottomSheet()
         bottomSheet.setImageUrl(imageUrl)
+        bottomSheet.setMes(mes)
         bottomSheet.show(childFragmentManager, bottomSheet.tag)
     }
 
