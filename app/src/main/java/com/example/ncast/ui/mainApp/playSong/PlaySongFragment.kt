@@ -38,7 +38,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import retrofit2.Retrofit
+
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PlaySongFragment() : Fragment() {
@@ -72,9 +75,11 @@ class PlaySongFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val idTrack: String = args.idTrack
+
         val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.visibility = View.GONE
-        val idTrack = args.idTrack
+
         sharedViewModel.hideMiniPlayer()
 
         spotifyService = Retrofit.Builder()

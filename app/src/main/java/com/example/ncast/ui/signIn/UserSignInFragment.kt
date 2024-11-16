@@ -2,10 +2,12 @@ package com.example.ncast.ui.signIn
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.InputFilter
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -32,6 +34,34 @@ class UserSignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
 
+        val noSpaceFilter =
+            InputFilter { source, _, _, _, _, _ -> //source, start, end, dest, dstart, dend
+                if (source == " ") "" else null
+            }
+
+        binding.email.filters = arrayOf(noSpaceFilter, InputFilter.LengthFilter(25))
+        binding.password.filters = arrayOf(noSpaceFilter, InputFilter.LengthFilter(25))
+
+        binding.email.addTextChangedListener {
+            if (it?.length == 25) {
+                binding.emailLayout.helperText = "Email maximum 25 characters"
+                binding.email.setBackgroundResource(R.drawable.input_error)
+            } else {
+                binding.emailLayout.helperText = ""
+                binding.email.setBackgroundResource(R.drawable.input_text)
+            }
+        }
+
+        binding.password.addTextChangedListener {
+            if (it?.length == 25) {
+                binding.passwordLayout.helperText = "Password maximum 25 characters"
+                binding.password.setBackgroundResource(R.drawable.input_error)
+            } else {
+                binding.passwordLayout.helperText = ""
+                binding.password.setBackgroundResource(R.drawable.input_text)
+            }
+        }
+
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.userSignInFragment, true)
             .setPopUpTo(R.id.createAccountFragment, true)
@@ -56,6 +86,9 @@ class UserSignInFragment : Fragment() {
 
         binding.forgotPassword.setOnClickListener {
             findNavController().navigate(UserSignInFragmentDirections.actionUserSignInFragmentToForgotPasswordFragment())
+        }
+        binding.signUp.setOnClickListener {
+            findNavController().navigate(UserSignInFragmentDirections.actionUserSignInFragmentToUserSignUpFragment())
         }
     }
 
