@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black_bg"
     tools:context=".ui.mainApp.search.SearchFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -60,7 +60,8 @@
         android:autoSizeMinTextSize="20sp"
         android:autoSizeTextType="uniform"
         android:text="@string/search"
-        android:textColor="@color/main"
+        android:fontFamily="@font/montserrat_bold"
+        android:textColor="@color/green"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/image_layout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +103,7 @@
         android:autoSizeTextType="uniform"
         android:gravity="center|start"
         android:text="@string/results_list"
-        android:textColor="@color/grey"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"

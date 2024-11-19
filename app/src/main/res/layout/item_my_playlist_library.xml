@@ -6,13 +6,12 @@
     android:layout_margin="6dp"
     android:backgroundTint="@android:color/transparent"
     app:cardCornerRadius="16dp"
-    app:cardElevation="6dp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@color/grey">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/item_image_card"
@@ -44,17 +43,18 @@
             android:autoSizeMaxTextSize="25sp"
             android:autoSizeMinTextSize="15sp"
             android:autoSizeTextType="uniform"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="center_vertical"
             android:text="For the road"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.3"
             app:layout_constraintStart_toEndOf="@id/item_image_card"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.7"
-            app:layout_constraintVertical_bias="0.5"/>
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_percent="0.7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
