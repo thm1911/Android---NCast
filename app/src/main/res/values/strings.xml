@@ -52,6 +52,6 @@
     <string name="collection_of_featured_playlists_updated_hourly">Collection of featured playlists, updated hourly.</string>
     <string name="results_list">Results list</string>
     <string name="enter_your_playlist_name">Enter your playlist name</string>
-    <string name="name"><b><font color="#FF000000">Name</font></b><b><font color="#F40303"> *</font></b></string>
+    <string name="name"><b><font color="#FFFFFFFF">Name</font></b><b><font color="#F40303"></font></b></string>
     <string name="create_your_playlist">Create your playlist</string>
 </resources>

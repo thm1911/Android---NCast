@@ -7,6 +7,12 @@
     android:background="@color/black_bg"
     tools:context=".ui.mainApp.home.HomeFragment">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:background="@drawable/blur_gr" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
@@ -124,8 +130,8 @@
         android:autoSizeMaxTextSize="15sp"
         android:autoSizeMinTextSize="5sp"
         android:autoSizeTextType="uniform"
-        android:gravity="center"
         android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
         android:text="@string/view_all"
         android:textColor="@color/green"
         android:textStyle="bold"
@@ -179,8 +185,8 @@
         android:autoSizeMaxTextSize="15sp"
         android:autoSizeMinTextSize="5sp"
         android:autoSizeTextType="uniform"
-        android:gravity="center"
         android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
         android:text="@string/view_all"
         android:textColor="@color/green"
         android:textStyle="bold"

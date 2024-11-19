@@ -19,4 +19,5 @@ class TrackAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
             else -> LyricTrackFragment()
         }
     }
+
 }

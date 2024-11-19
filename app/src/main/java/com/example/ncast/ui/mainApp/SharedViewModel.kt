@@ -8,9 +8,11 @@ class SharedViewModel: ViewModel() {
     private var _trackId = MutableLiveData<String>()
     private var _nameTrack = MutableLiveData<String>()
     private var _artistTrack = MutableLiveData<String>()
+    private val _dominantColor = MutableLiveData<Int>()
     val trackId get() = _trackId
     val nameTrack get() = _nameTrack
     val artistTrack get() = _artistTrack
+    val dominantColor: LiveData<Int> get() = _dominantColor
     private val _isMiniPlayerVisible = MutableLiveData(false)
     val isMiniPlayerVisible: LiveData<Boolean> get() = _isMiniPlayerVisible
 
@@ -32,5 +34,8 @@ class SharedViewModel: ViewModel() {
 
     fun hideMiniPlayer() {
         _isMiniPlayerVisible.value = false
+    }
+    fun setDominantColor(color: Int) {
+        _dominantColor.value = color // Cập nhật mã màu
     }
 }

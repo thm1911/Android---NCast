@@ -7,6 +7,12 @@
     android:background="@color/black_bg"
     tools:context=".ui.mainApp.library.LibraryFragment">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:background="@drawable/blur_gr" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
