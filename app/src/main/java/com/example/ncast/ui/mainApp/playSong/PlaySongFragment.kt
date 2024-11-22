@@ -2,11 +2,15 @@ package com.example.ncast.ui.mainApp.playSong
 
 import android.app.DownloadManager
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import com.bumptech.glide.request.transition.Transition
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,7 +24,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
 import com.example.ncast.MainActivity
 import com.example.ncast.R
 import com.example.ncast.adapter.recycleViewAdapterLibrary.FavoriteTrackAdapter
@@ -172,6 +179,10 @@ class PlaySongFragment() : Fragment() {
 
     private fun setData() {
         viewModel.track.observe(viewLifecycleOwner) { track ->
+
+            val albumArtUrl = track.album.images[0].url // URL ảnh bìa bài hát
+            applyGradientBackground(albumArtUrl) // Áp dụng gradient nền
+
             Track.getUrlFromDatabase(track.id) { url ->
                 if (url.isNullOrEmpty()) {
                     if (track.preview_url.isNullOrEmpty()) {
@@ -346,6 +357,46 @@ class PlaySongFragment() : Fragment() {
                 binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
             }
         }
+    }
+
+
+    private fun applyGradientBackground(imageUrl: String) {
+        Glide.with(this)
+            .asBitmap()
+            .load(imageUrl)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    // Sử dụng Palette
+                    Palette.from(resource).generate { palette ->
+                        val vibrantColor = palette?.getVibrantColor(0xFF000000.toInt()) ?: 0xFF000000.toInt()
+                        sharedViewModel.setDominantColor(vibrantColor)
+
+                        val transparentColor = adjustAlpha(vibrantColor, 0.0f) // Làm màu trong suốt
+
+                        val gradientDrawable = GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            intArrayOf(vibrantColor, transparentColor)
+                        )
+
+                        gradientDrawable.gradientType = GradientDrawable.LINEAR_GRADIENT
+
+                        // gradient ben tren
+                        binding.gradientOverlay.background = gradientDrawable
+                    }
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
+            })
+    }
+
+    // giam opacity
+    private fun adjustAlpha(color: Int, factor: Float): Int {
+        val alpha = (color shr 24 and 0xFF) * factor
+        val red = color shr 16 and 0xFF
+        val green = color shr 8 and 0xFF
+        val blue = color and 0xFF
+        return (alpha.toInt() shl 24) or (red shl 16) or (green shl 8) or blue
     }
 
 

@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black_bg"
     tools:context=".ui.mainApp.search.SearchFragment">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:background="@drawable/blur_gr" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -59,8 +65,9 @@
         android:autoSizeMaxTextSize="35sp"
         android:autoSizeMinTextSize="20sp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/search"
-        android:textColor="@color/main"
+        android:textColor="@color/green"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/image_layout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +109,7 @@
         android:autoSizeTextType="uniform"
         android:gravity="center|start"
         android:text="@string/results_list"
-        android:textColor="@color/grey"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"

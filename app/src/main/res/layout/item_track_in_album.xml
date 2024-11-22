@@ -9,7 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/grey"
+        >
 
         <View
             android:id="@+id/play"
@@ -32,7 +33,7 @@
             android:autoSizeMaxTextSize="15sp"
             android:autoSizeTextType="uniform"
             android:textStyle="bold"
-            android:textColor="@color/grey"
+            android:textColor="@color/white"
             android:padding="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +48,8 @@
             android:layout_height="0dp"
             android:text="Bầu trời mới"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/white"
             app:layout_constraintWidth_percent="0.7"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintHeight_percent="0.5"
@@ -64,7 +66,8 @@
             android:id="@+id/artist"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:textColor="@color/grey"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_semibold"
             android:text="DaLab"
             app:layout_constraintTop_toBottomOf="@id/name_song"
             app:layout_constraintBottom_toBottomOf="parent"

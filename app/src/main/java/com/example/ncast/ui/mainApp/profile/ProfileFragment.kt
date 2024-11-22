@@ -58,7 +58,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.about.setOnClickListener {
-            bottomNav.visibility = View.GONE
+            //bottomNav.visibility = View.GONE
         }
 
         binding.logout.setOnClickListener {
