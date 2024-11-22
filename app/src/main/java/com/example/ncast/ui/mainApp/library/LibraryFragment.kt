@@ -1,6 +1,8 @@
 package com.example.ncast.ui.mainApp.library
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,6 +61,7 @@ class LibraryFragment : Fragment() {
             val userRef = database.getReference("user").child(userId!!)
             userRef.child("playlistImageUrl").setValue(Url.IMAGEPLAYLIST.url)
             findNavController().navigate(LibraryFragmentDirections.actionLibraryFragmentToAddNewPlaylistFragment())
+            bottomNav.visibility = View.GONE
         }
 
         binding.yourLikedSongs.setOnClickListener {
@@ -71,12 +74,21 @@ class LibraryFragment : Fragment() {
 
     }
 
-    private fun initYourPlaylist(){
-        adapter = YourPlaylistAdapter(mutableListOf()){playlist ->
-
-        }
+    private fun initYourPlaylist() {
+        adapter = YourPlaylistAdapter(mutableListOf(),
+            onClick = { playlist ->
+                bottomNav.visibility = View.GONE
+                val name = playlist.name
+                findNavController().navigate(
+                    LibraryFragmentDirections.actionLibraryFragmentToYourPlaylistFragment(name)
+                )
+            },
+            onDelete = { playlist ->
+                Log.d("test", "delete")
+                showNoti(playlist.name)
+            })
         viewModel.loadPlaylist()
-        viewModel.playlist.observe(viewLifecycleOwner){playlist ->
+        viewModel.playlist.observe(viewLifecycleOwner) { playlist ->
             adapter.setData(playlist)
         }
         binding.recycleYourPlaylist.adapter = adapter
@@ -107,6 +119,30 @@ class LibraryFragment : Fragment() {
         }
     }
 
+    private fun showNoti(name: String){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Playlist?")
+            .setMessage("Are you sure you want to delete?")
+            .setNegativeButton("Yes"){dialog, _ ->
+                deletePlaylist(name)
+                dialog.dismiss()
+            }
+            .setPositiveButton("No"){dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun deletePlaylist(name: String){
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val playlistRef = FirebaseDatabase.getInstance().getReference("user")
+            .child(userId!!)
+            .child("playlist")
+            .child(name)
+
+        playlistRef.removeValue()
+        initYourPlaylist()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

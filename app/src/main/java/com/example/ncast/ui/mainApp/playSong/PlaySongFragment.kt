@@ -36,6 +36,7 @@ import com.example.ncast.adapter.viewPagerAdapter.TrackAdapter
 import com.example.ncast.databinding.FragmentPlaySongBinding
 import com.example.ncast.model.SpotifyService
 import com.example.ncast.ui.mainApp.library.favoriteSong.FavoriteSongsViewModel
+import com.example.ncast.ui.mainApp.library.yourPlaylist.PickPlaylistDialogFragment
 import com.example.ncast.utils.Track
 import com.example.ncast.utils.Url
 import com.google.android.exoplayer2.ExoPlayer
@@ -139,6 +140,9 @@ class PlaySongFragment() : Fragment() {
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.add_playlist -> {
+                        val pickPlaylist = PickPlaylistDialogFragment()
+                        pickPlaylist.setIdTrack(idTrack)
+                        pickPlaylist.show(parentFragmentManager, pickPlaylist.tag)
                         true
                     }
 
@@ -156,7 +160,7 @@ class PlaySongFragment() : Fragment() {
                     else -> false
                 }
             }
-            popupMenu.setForceShowIcon(true)
+//            popupMenu.setForceShowIcon(true)
             popupMenu.show()
         }
 
@@ -361,7 +365,6 @@ class PlaySongFragment() : Fragment() {
         }
     }
 
-
     private fun applyGradientBackground(imageUrl: String) {
         Glide.with(this)
             .asBitmap()
@@ -400,9 +403,6 @@ class PlaySongFragment() : Fragment() {
         val blue = color and 0xFF
         return (alpha.toInt() shl 24) or (red shl 16) or (green shl 8) or blue
     }
-
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
