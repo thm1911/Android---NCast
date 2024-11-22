@@ -3,11 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="main">#4C0099</color>
-    <color name="green">#24A19C</color>
-    <color name="grey">#787777</color>
-    <color name="red">#F40303</color>
+    <color name="green">#65D36E</color>
+    <color name="dark_green">#2A9B33</color>
+    <color name="grey">#50888888</color>
+    <color name="red">#95F40303</color>
     <color name="input_color">#A9B0C5</color>
     <color name="orange">#EC904D</color>
-    <color name="black_bg">#262626</color>
+    <color name="black_bg">#0F0E0E</color>
     <color name="transparent">#00000000</color>
 </resources>

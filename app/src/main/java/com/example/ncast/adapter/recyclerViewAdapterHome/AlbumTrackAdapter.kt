@@ -21,7 +21,8 @@ class AlbumTrackAdapter(
         fun bind(track: AlbumResponse.Item, position: Int) {
             stt.setText(position.toString())
             nameTrack.setText(track.name)
-            artist.setText(track.artists.get(0).name)
+            val artistNames = track.artists.joinToString(", ") { it.name }
+            binding.artist.text = artistNames
         }
 
     }

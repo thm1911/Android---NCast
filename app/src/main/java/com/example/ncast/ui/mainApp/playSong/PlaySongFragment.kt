@@ -2,11 +2,15 @@ package com.example.ncast.ui.mainApp.playSong
 
 import android.app.DownloadManager
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import com.bumptech.glide.request.transition.Transition
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,7 +24,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
 import com.example.ncast.MainActivity
 import com.example.ncast.R
 import com.example.ncast.adapter.recycleViewAdapterLibrary.FavoriteTrackAdapter
@@ -39,7 +46,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import retrofit2.Retrofit
+
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PlaySongFragment() : Fragment() {
@@ -73,9 +83,11 @@ class PlaySongFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val idTrack: String = args.idTrack
+
         val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.visibility = View.GONE
-        val idTrack = args.idTrack
+
         sharedViewModel.hideMiniPlayer()
 
         spotifyService = Retrofit.Builder()
@@ -171,6 +183,10 @@ class PlaySongFragment() : Fragment() {
 
     private fun setData() {
         viewModel.track.observe(viewLifecycleOwner) { track ->
+
+            val albumArtUrl = track.album.images[0].url // URL ảnh bìa bài hát
+            applyGradientBackground(albumArtUrl) // Áp dụng gradient nền
+
             Track.getUrlFromDatabase(track.id) { url ->
                 if (url.isNullOrEmpty()) {
                     if (track.preview_url.isNullOrEmpty()) {
@@ -196,7 +212,8 @@ class PlaySongFragment() : Fragment() {
                             binding.playPause.setBackgroundResource(R.drawable.ic_play)
                             binding.name.setText(track.name)
                             binding.nameTrack.setText(track.name)
-                            binding.artist.setText(track.artists.get(0).name)
+                            binding.artist.text = track.artists.joinToString(", ") { it.name }
+
                             binding.seekBar.max = exoPlayer.duration.toInt()
                             binding.duration.setText(formatTime(exoPlayer.duration.toInt()))
                             setupSeekBar()
@@ -204,7 +221,8 @@ class PlaySongFragment() : Fragment() {
                             binding.playPause.setBackgroundResource(R.drawable.ic_pause)
                             binding.name.setText(track.name)
                             binding.nameTrack.setText(track.name)
-                            binding.artist.setText(track.artists.get(0).name)
+                            binding.artist.text = track.artists.joinToString(", ") { it.name }
+
                             binding.seekBar.max = exoPlayer.duration.toInt()
                             binding.duration.setText(formatTime(exoPlayer.duration.toInt()))
                         }
@@ -345,6 +363,45 @@ class PlaySongFragment() : Fragment() {
                 binding.favourite.setBackgroundResource(R.drawable.ic_unfavourite)
             }
         }
+    }
+
+    private fun applyGradientBackground(imageUrl: String) {
+        Glide.with(this)
+            .asBitmap()
+            .load(imageUrl)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    // Sử dụng Palette
+                    Palette.from(resource).generate { palette ->
+                        val vibrantColor = palette?.getVibrantColor(0xFF000000.toInt()) ?: 0xFF000000.toInt()
+                        sharedViewModel.setDominantColor(vibrantColor)
+
+                        val transparentColor = adjustAlpha(vibrantColor, 0.0f) // Làm màu trong suốt
+
+                        val gradientDrawable = GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            intArrayOf(vibrantColor, transparentColor)
+                        )
+
+                        gradientDrawable.gradientType = GradientDrawable.LINEAR_GRADIENT
+
+                        // gradient ben tren
+                        binding.gradientOverlay.background = gradientDrawable
+                    }
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
+            })
+    }
+
+    // giam opacity
+    private fun adjustAlpha(color: Int, factor: Float): Int {
+        val alpha = (color shr 24 and 0xFF) * factor
+        val red = color shr 16 and 0xFF
+        val green = color shr 8 and 0xFF
+        val blue = color and 0xFF
+        return (alpha.toInt() shl 24) or (red shl 16) or (green shl 8) or blue
     }
 
     override fun onDestroyView() {

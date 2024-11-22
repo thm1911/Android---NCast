@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black_bg"
     tools:context=".ui.mainApp.home.featuredPlaylist.PlaylistFragment">
 
     <androidx.cardview.widget.CardView
@@ -22,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/black_bg">
 
             <View
                 android:id="@+id/back"
@@ -41,11 +41,12 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:autoSizeMaxTextSize="26sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:autoSizeMaxTextSize="24sp"
                 android:autoSizeMinTextSize="20sp"
                 android:autoSizeTextType="uniform"
                 android:text="Your Favorite Songs Playlist"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

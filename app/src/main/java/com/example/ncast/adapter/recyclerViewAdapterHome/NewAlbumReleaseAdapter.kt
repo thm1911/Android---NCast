@@ -27,7 +27,8 @@ class NewAlbumReleaseAdapter(
                 .into(image)
 
             title.setText(album.name)
-            artist.setText(album.artists.get(0).name)
+            val artistNames = album.artists.joinToString(", ") { it.name }
+            artist.text = artistNames
         }
     }
 

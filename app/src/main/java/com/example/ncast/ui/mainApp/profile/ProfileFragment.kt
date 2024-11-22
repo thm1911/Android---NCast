@@ -52,13 +52,23 @@ class ProfileFragment : Fragment() {
             bottomNav.visibility = View.GONE
         }
 
+        binding.imageAvtLayout.setOnClickListener{
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChooseAppProfileFragment("Profile Avt"))
+            bottomNav.visibility = View.GONE
+        }
+
         binding.changePassword.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment())
             bottomNav.visibility = View.GONE
         }
 
-        binding.about.setOnClickListener {
+        binding.premium.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToPremiumFragment())
             bottomNav.visibility = View.GONE
+        }
+
+        binding.about.setOnClickListener {
+            //bottomNav.visibility = View.GONE
         }
 
         binding.logout.setOnClickListener {

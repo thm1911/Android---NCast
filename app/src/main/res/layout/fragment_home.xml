@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black_bg"
     tools:context=".ui.mainApp.home.HomeFragment">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:background="@drawable/blur_gr" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -48,16 +54,17 @@
         android:id="@+id/welcome"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMaxTextSize="23sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/welcome_back_home"
-        android:textColor="@color/main"
+        android:textColor="@color/green"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toEndOf="@id/avt"
         app:layout_constraintTop_toTopOf="@id/guideline3"
@@ -68,15 +75,16 @@
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeMaxTextSize="23sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_bold"
         android:text="loading..."
-        android:textColor="@color/grey"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/avt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintHeight_percent="0.038"
         app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toEndOf="@id/avt"
         app:layout_constraintTop_toBottomOf="@id/welcome"
@@ -87,12 +95,13 @@
         android:id="@+id/text1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMaxTextSize="23sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_bold"
         android:gravity="center_vertical"
         android:text="@string/new_album_release"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,6 +119,7 @@
         android:autoSizeMaxTextSize="15sp"
         android:autoSizeMinTextSize="5sp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_semibold"
         android:gravity="center"
         android:text="@string/view_all"
         android:textColor="@color/green"
@@ -121,7 +131,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/text1"
         app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintWidth_percent="0.2" />
+        app:layout_constraintWidth_percent="0.22" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_new_album_release"
@@ -129,32 +139,34 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintHeight_percent="0.16"
+        app:layout_constraintHeight_percent="0.17"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/text1"
-        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_new_album_release_home" />
 
     <TextView
         android:id="@+id/text2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMaxTextSize="23sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_bold"
         android:gravity="center_vertical"
         android:text="@string/featured_playlist"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintHeight_percent="0.06"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/recyclerView_new_album_release"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent="0.6" />
+
 
     <TextView
         android:id="@+id/featured_playlist_more"
@@ -163,6 +175,7 @@
         android:autoSizeMaxTextSize="15sp"
         android:autoSizeMinTextSize="5sp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_semibold"
         android:gravity="center"
         android:text="@string/view_all"
         android:textColor="@color/green"
@@ -173,8 +186,8 @@
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/text2"
-        app:layout_constraintVertical_bias="0.445"
-        app:layout_constraintWidth_percent="0.2" />
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintWidth_percent="0.22" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_featured_playlist"
@@ -193,21 +206,23 @@
         android:id="@+id/recent_listening"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:autoSizeMaxTextSize="25sp"
+        android:autoSizeMaxTextSize="23sp"
         android:autoSizeMinTextSize="15sp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/montserrat_bold"
         android:gravity="center_vertical"
         android:text="@string/recently_played_songs"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/recyclerView_featured_playlist"
         app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.7" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_recent_music_listening"

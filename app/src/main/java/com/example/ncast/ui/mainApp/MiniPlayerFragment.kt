@@ -1,5 +1,6 @@
 package com.example.ncast.ui.mainApp
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -39,6 +40,11 @@ class MiniPlayerFragment : Fragment() {
             binding.artistTrack.setText(artist)
         }
 
+        sharedViewModel.dominantColor.observe(viewLifecycleOwner) { color ->
+            val darkenedColor = blendWithBlack(color, 0.3f) // 30% đen
+            binding.root.setBackgroundColor(darkenedColor)
+        }
+
         init()
     }
 
@@ -63,6 +69,14 @@ class MiniPlayerFragment : Fragment() {
             sharedViewModel.hideMiniPlayer()
         }
     }
+
+    private fun blendWithBlack(color: Int, factor: Float): Int {
+        val red = ((color shr 16 and 0xFF) * (1 - factor)).toInt()
+        val green = ((color shr 8 and 0xFF) * (1 - factor)).toInt()
+        val blue = ((color and 0xFF) * (1 - factor)).toInt()
+        return (0xFF shl 24) or (red shl 16) or (green shl 8) or blue
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

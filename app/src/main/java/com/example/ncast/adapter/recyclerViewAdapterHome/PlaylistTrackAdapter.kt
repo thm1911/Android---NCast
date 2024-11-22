@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ncast.databinding.ItemTrackInAlbumBinding
+import com.example.ncast.databinding.ItemTrackInAlbumPicBinding
 import com.example.ncast.model.featuredPlaylist.PlaylistResponse
 
 class PlaylistTrackAdapter(
@@ -14,18 +16,25 @@ class PlaylistTrackAdapter(
     private val onClick: (PlaylistResponse.Item) -> Unit
 ) : RecyclerView.Adapter<PlaylistTrackAdapter.TrackViewHolder>() {
 
-    inner class TrackViewHolder(private val binding: ItemTrackInAlbumBinding) :
+    inner class TrackViewHolder(private val binding: ItemTrackInAlbumPicBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(track: PlaylistResponse.Item, position: Int) {
             binding.stt.setText("${position + 1}")
-            binding.artist.setText(track.track.artists.get(0).name)
+            val artistNames = track.track.artists.joinToString(", ") { it.name }
+            binding.artist.text = artistNames
+
             binding.nameSong.setText(track.track.name)
+
+            val imageUrl = track.track.album.images[0].url
+            Glide.with(binding.itemImage.context)
+                .load(imageUrl)
+                .into(binding.itemImage)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val binding =
-            ItemTrackInAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemTrackInAlbumPicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TrackViewHolder(binding)
     }
 

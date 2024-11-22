@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -43,6 +44,7 @@ class OnboardingFragment : Fragment() {
 
         }.attach()
 
+
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 if (position == 0) {
@@ -61,7 +63,6 @@ class OnboardingFragment : Fragment() {
         binding.Continue.setOnClickListener {
             findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToCreateAccountFragment())
         }
-
         binding.skip.setOnClickListener {
             findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToCreateAccountFragment())
         }
