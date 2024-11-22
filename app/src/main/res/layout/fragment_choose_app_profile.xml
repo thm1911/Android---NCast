@@ -39,7 +39,6 @@
         android:text="Choose photo"
         android:fontFamily="@font/montserrat_bold"
         android:textColor="@color/white"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHeight_percent="0.05"

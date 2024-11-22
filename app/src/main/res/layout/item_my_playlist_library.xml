@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
     android:backgroundTint="@android:color/transparent"
     app:cardCornerRadius="16dp"
     app:cardUseCompatPadding="true">
@@ -39,14 +38,13 @@
             android:id="@+id/item_title"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeMaxTextSize="15sp"
             android:autoSizeMinTextSize="10sp"
             android:autoSizeTextType="uniform"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/montserrat_semibold"
             android:gravity="center_vertical"
             android:text="For the road"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.6"
@@ -65,7 +63,7 @@
             app:layout_constraintStart_toEndOf="@id/item_title"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/ic_delete"
-            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintWidth_percent="0.08"
             app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintDimensionRatio="1:1"/>
 

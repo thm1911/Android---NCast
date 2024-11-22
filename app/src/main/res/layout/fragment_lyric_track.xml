@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_bg"
+    android:background="@color/transparent"
     tools:context=".ui.mainApp.playSong.LyricTrackFragment">
 
     <ScrollView
@@ -14,8 +14,7 @@
             android:id="@+id/lyric"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/abeezee"
-            android:textColor="@color/white"
+            android:textColor="@color/white_blur"
             android:textSize="20sp"
             android:letterSpacing="0.1"/>
 

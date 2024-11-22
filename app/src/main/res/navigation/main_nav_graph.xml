@@ -166,6 +166,7 @@
             android:id="@+id/action_yourPlaylistFragment_to_playSongFragment"
             app:destination="@id/playSongFragment" />
     </fragment>
+    <fragment
         android:id="@+id/premiumFragment"
         android:name="com.example.ncast.ui.mainApp.profile.PremiumFragment"
         android:label="fragment_premium"

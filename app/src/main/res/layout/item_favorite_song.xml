@@ -41,7 +41,7 @@
             android:gravity="start|bottom"
             android:text="RELEASED"
             android:textColor="@android:color/white"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/montserrat_semibold"
             android:autoSizeMaxTextSize="15sp"
             android:autoSizeMinTextSize="10sp"
             android:autoSizeTextType="uniform"
@@ -51,8 +51,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.6"
             app:layout_constraintHeight_percent="0.6"
-            app:layout_constraintVertical_bias="0"
-            android:textStyle="bold" />
+            app:layout_constraintVertical_bias="0"/>
 
         <TextView
             android:id="@+id/item_artist"
@@ -67,8 +66,7 @@
             app:layout_constraintStart_toStartOf="@id/item_title"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="Ryhder"
-            android:textColor="@color/white"
-            android:textStyle="bold"
+            android:textColor="@color/white_blur"
             />
 
 

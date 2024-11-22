@@ -52,30 +52,11 @@
                 app:layout_constraintVertical_bias="0.65" />
 
             <TextView
-                android:id="@+id/album_type"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:autoSizeMaxTextSize="15sp"
-                android:autoSizeMinTextSize="7sp"
-                android:autoSizeTextType="uniform"
-                android:fontFamily="@font/montserrat_semibold"
-                android:gravity="bottom"
-                android:paddingStart="10dp"
-                android:text="@string/loading"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@id/image"
-                app:layout_constraintEnd_toEndOf="@id/guideline2"
-                app:layout_constraintHeight_percent="0.15"
-                app:layout_constraintStart_toEndOf="@id/image"
-                app:layout_constraintTop_toTopOf="@id/image"
-                app:layout_constraintVertical_bias="0.15" />
-
-            <TextView
                 android:id="@+id/name"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:autoSizeMaxTextSize="30sp"
-                android:autoSizeMinTextSize="25sp"
+                android:autoSizeMinTextSize="15sp"
                 android:autoSizeTextType="uniform"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center|start"
@@ -84,10 +65,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/image"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
-                app:layout_constraintHeight_percent="0.27"
+                app:layout_constraintHeight_percent="0.4"
                 app:layout_constraintStart_toEndOf="@id/image"
-                app:layout_constraintTop_toBottomOf="@id/album_type"
-                app:layout_constraintVertical_bias="0" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6" />
 
             <TextView
                 android:id="@+id/more"

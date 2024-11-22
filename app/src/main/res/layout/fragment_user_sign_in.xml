@@ -61,12 +61,12 @@
         android:id="@+id/text3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:autoSizeMaxTextSize="25sp"
-        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="10sp"
         android:autoSizeTextType="uniform"
-        android:fontFamily="@font/montserrat_bold"
+        android:fontFamily="@font/montserrat_semibold"
         android:text="@string/email"
-        android:textColor="@color/white"
+        android:textColor="@color/white_blur"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHeight_percent="0.05"
@@ -97,6 +97,8 @@
             android:hint="@string/abc_gmail_com"
             android:inputType="textEmailAddress"
             android:paddingStart="45sp"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textSize="15sp"
             android:textColor="@color/white"
             android:textColorHint="@color/input_color" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -105,10 +107,11 @@
         android:id="@+id/text4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:autoSizeMaxTextSize="25sp"
-        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMaxTextSize="15sp"
+        android:autoSizeMinTextSize="10sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/montserrat_bold"
+        android:textColor="@color/white_blur"
         android:text="@string/password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -131,7 +134,7 @@
         app:layout_constraintVertical_bias="0"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/green"
-        app:startIconDrawable="@drawable/ic_password"
+        app:startIconDrawable="@drawable/ic_pass"
         app:startIconTint="@color/green">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -142,6 +145,8 @@
             android:hint="Enter your password"
             android:inputType="textPassword"
             android:paddingStart="45sp"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat_semibold"
             android:textColor="@color/white"
             android:textColorHint="@color/input_color" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -156,7 +161,7 @@
         android:fontFamily="@font/montserrat_semibold"
         android:gravity="end"
         android:text="@string/forgot_password"
-        android:textColor="@color/white"
+        android:textColor="@color/white_blur"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHeight_percent="0.05"
@@ -171,6 +176,7 @@
         android:background="@drawable/button"
         android:text="@string/sign_in"
         android:textAllCaps="false"
+        android:fontFamily="@font/montserrat_semibold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHeight_percent="0.06"
@@ -179,42 +185,40 @@
         app:layout_constraintVertical_bias="0.7"
         app:layout_constraintWidth_percent="0.45" />
 
-
     <TextView
         android:id="@+id/text_sign"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:autoSizeMaxTextSize="18sp"
-        android:autoSizeMinTextSize="13sp"
+        android:autoSizeMaxTextSize="13sp"
+        android:autoSizeMinTextSize="7sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/montserrat_semibold"
-        android:gravity="center"
-        android:text="Don't have an account  "
+        android:gravity="center|end"
+        android:text="@string/don_t_have_an_account"
         android:textColor="@color/white"
-        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintHeight_percent="0.05"
-        app:layout_constraintTop_toBottomOf="@id/sign_in"
-        app:layout_constraintWidth_percent="0.45" />
+        app:layout_constraintTop_toBottomOf="@id/sign_in"/>
 
     <TextView
         android:id="@+id/sign_up"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:autoSizeMaxTextSize="18sp"
-        android:autoSizeMinTextSize="13sp"
+        android:autoSizeMaxTextSize="13sp"
+        android:autoSizeMinTextSize="7sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/montserrat_semibold"
-        android:gravity="center"
-        android:text="Sign Up"
+        android:gravity="center|start"
+        android:text="@string/sign_up"
+        android:paddingStart="10dp"
         android:textColor="@color/green"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintStart_toStartOf="@id/guideline3"
-        app:layout_constraintTop_toBottomOf="@id/sign_in"
-        app:layout_constraintWidth_percent="0.15" />
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/sign_in"/>
 
 
     <androidx.constraintlayout.widget.Guideline
