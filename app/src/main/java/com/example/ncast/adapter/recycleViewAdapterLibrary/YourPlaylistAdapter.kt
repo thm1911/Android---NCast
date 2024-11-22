@@ -13,7 +13,8 @@ import com.example.ncast.model.yourPlaylist.YourPlaylist
 
 class YourPlaylistAdapter(
     private val yourPlaylist: MutableList<YourPlaylist>,
-    private val onClick: (YourPlaylist) -> Unit
+    private val onClick: (YourPlaylist) -> Unit,
+    private val onDelete: (YourPlaylist) -> Unit
 ) : RecyclerView.Adapter<YourPlaylistAdapter.YourPlaylistViewHolder>() {
 
     inner class YourPlaylistViewHolder(val binding: ItemMyPlaylistLibraryBinding) : RecyclerView.ViewHolder(binding.root){
@@ -22,6 +23,10 @@ class YourPlaylistAdapter(
             Glide.with(binding.itemImage.context)
                 .load(playlist.imageUrl)
                 .into(binding.itemImage)
+
+            binding.delete.setOnClickListener{
+                onDelete(playlist)
+            }
         }
     }
 

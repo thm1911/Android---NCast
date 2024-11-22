@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_libraryFragment_to_addNewPlaylistFragment"
             app:destination="@id/addNewPlaylistFragment" />
+        <action
+            android:id="@+id/action_libraryFragment_to_yourPlaylistFragment"
+            app:destination="@id/yourPlaylistFragment" />
     </fragment>
 
     <fragment
@@ -147,5 +150,17 @@
         <action
             android:id="@+id/action_addNewPlaylistFragment_to_chooseAppProfileFragment"
             app:destination="@id/chooseAppProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/yourPlaylistFragment"
+        android:name="com.example.ncast.ui.mainApp.library.yourPlaylist.YourPlaylistFragment"
+        android:label="fragment_your_playlist"
+        tools:layout="@layout/fragment_your_playlist" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_yourPlaylistFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
     </fragment>
 </navigation>
