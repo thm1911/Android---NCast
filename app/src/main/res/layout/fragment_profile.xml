@@ -177,7 +177,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/about_layout"
+        android:id="@+id/premium_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cardCornerRadius="10sp"
@@ -187,6 +187,39 @@
         app:layout_constraintHeight_percent="0.06"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/change_pass_layout"
+        app:layout_constraintVertical_bias="0.05">
+
+        <TextView
+            android:id="@+id/premium"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:drawableStart="@drawable/ic_about"
+            android:drawablePadding="10sp"
+            android:drawableTint="@color/green"
+            android:fontFamily="@font/montserrat_semibold"
+            android:gravity="center|start"
+            android:paddingStart="10dp"
+            android:text="Subscribe to Premium"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.6" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/about_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="10sp"
+        app:cardElevation="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/premium_layout"
         app:layout_constraintVertical_bias="0.05">
 
         <TextView
@@ -207,7 +240,6 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="0.6" />
-
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView

@@ -61,6 +61,9 @@
         <action
             android:id="@+id/action_profileFragment_to_chooseAppProfileFragment"
             app:destination="@id/chooseAppProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_premiumFragment"
+            app:destination="@id/premiumFragment" />
     </fragment>
 
     <fragment
@@ -148,4 +151,9 @@
             android:id="@+id/action_addNewPlaylistFragment_to_chooseAppProfileFragment"
             app:destination="@id/chooseAppProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/premiumFragment"
+        android:name="com.example.ncast.ui.mainApp.profile.PremiumFragment"
+        android:label="fragment_premium"
+        tools:layout="@layout/fragment_premium" />
 </navigation>
