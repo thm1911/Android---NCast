@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="60dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/input_color"
     tools:context=".ui.mainApp.MiniPlayerFragment">
@@ -12,10 +12,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Name Track"
+        android:fontFamily="@font/montserrat_semibold"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintHeight_percent="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.7"
@@ -27,7 +28,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Artist Track"
-        android:textColor="@color/white"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textColor="@color/white_blur"
         app:layout_constraintTop_toBottomOf="@id/nameTrack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +47,7 @@
         app:layout_constraintStart_toEndOf="@id/nameTrack"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/ic_play"
-        app:layout_constraintWidth_percent="0.11"
+        app:layout_constraintWidth_percent="0.1"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintHorizontal_bias="0.3"/>
 
@@ -58,7 +60,7 @@
         app:layout_constraintStart_toEndOf="@id/play_pause_hide"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/ic_close"
-        app:layout_constraintWidth_percent="0.11"
+        app:layout_constraintWidth_percent="0.1"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintHorizontal_bias="1"/>
 

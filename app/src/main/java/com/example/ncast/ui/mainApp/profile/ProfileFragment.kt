@@ -47,31 +47,27 @@ class ProfileFragment : Fragment() {
         val userId = auth.currentUser?.uid
         init(userId!!)
 
-        binding.changeAvtLayout.setOnClickListener {
+        binding.imageAvt.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChooseAppProfileFragment("Profile Avt"))
             bottomNav.visibility = View.GONE
         }
 
-        binding.imageAvtLayout.setOnClickListener{
+        binding.camera.setOnClickListener{
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChooseAppProfileFragment("Profile Avt"))
             bottomNav.visibility = View.GONE
         }
 
-        binding.changePassword.setOnClickListener {
+        binding.changePassLayout.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment())
             bottomNav.visibility = View.GONE
         }
 
-        binding.premium.setOnClickListener {
+        binding.premiumLayout.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToPremiumFragment())
             bottomNav.visibility = View.GONE
         }
 
-        binding.about.setOnClickListener {
-            //bottomNav.visibility = View.GONE
-        }
-
-        binding.logout.setOnClickListener {
+        binding.logoutLayout.setOnClickListener {
             exoPlayer.stop()
             auth.signOut()
             SharePref.setUserLoginState(requireActivity().application, false)

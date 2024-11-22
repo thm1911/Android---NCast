@@ -54,4 +54,8 @@
     <string name="enter_your_playlist_name">Enter your playlist name</string>
     <string name="name"><b><font color="#FFFFFFFF">Name</font></b><b><font color="#F40303"></font></b></string>
     <string name="create_your_playlist">Create your playlist</string>
+    <string name="your_favorite_songs">Your Favorite Songs</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="subscribe_to_premium">Subscribe to Premium</string>
 </resources>

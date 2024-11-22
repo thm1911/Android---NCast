@@ -69,7 +69,6 @@ class PlaylistFragment : Fragment() {
                 .load(playlist.images.get(0).url)
                 .into(binding.image)
 
-            binding.albumType.setText("")
             binding.name.setText(playlist.name)
             binding.more.setText(
                 String.format(

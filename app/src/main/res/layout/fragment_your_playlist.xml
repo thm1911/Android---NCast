@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@color/black_bg"
     tools:context=".ui.mainApp.library.yourPlaylist.YourPlaylistFragment">
 
     <androidx.cardview.widget.CardView
@@ -22,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/black_bg">
 
             <View
                 android:id="@+id/close"
@@ -56,11 +56,12 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:autoSizeMaxTextSize="30sp"
-                android:autoSizeMinTextSize="25sp"
+                android:autoSizeMinTextSize="15sp"
                 android:autoSizeTextType="uniform"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center|start"
                 android:paddingStart="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/image"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
@@ -75,7 +76,8 @@
                 android:text="0 tracks"
                 android:layout_height="0dp"
                 android:paddingStart="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat_semibold"
                 app:layout_constraintBottom_toBottomOf="@id/image"
                 app:layout_constraintEnd_toEndOf="@id/guideline2"
                 app:layout_constraintStart_toEndOf="@id/image"

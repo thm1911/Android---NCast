@@ -48,6 +48,6 @@ interface SpotifyService {
         @Header("Authorization") accessToken: String,
         @Query("q") key: String,
         @Query("type") type: String = "track",
-        @Query("limit") limit: Int = 5
+        @Query("limit") limit: Int = 10
     ): Call<SearchResponse>
 }
