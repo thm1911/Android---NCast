@@ -41,7 +41,7 @@ class MiniPlayerFragment : Fragment() {
         }
 
         sharedViewModel.dominantColor.observe(viewLifecycleOwner) { color ->
-            val darkenedColor = blendWithBlack(color, 0.5f) // 50% đen
+            val darkenedColor = blendWithBlack(color, 0.3f) // 30% đen
             binding.root.setBackgroundColor(darkenedColor)
         }
 

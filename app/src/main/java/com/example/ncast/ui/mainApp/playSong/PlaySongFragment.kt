@@ -208,7 +208,8 @@ class PlaySongFragment() : Fragment() {
                             binding.playPause.setBackgroundResource(R.drawable.ic_play)
                             binding.name.setText(track.name)
                             binding.nameTrack.setText(track.name)
-                            binding.artist.setText(track.artists.get(0).name)
+                            binding.artist.text = track.artists.joinToString(", ") { it.name }
+
                             binding.seekBar.max = exoPlayer.duration.toInt()
                             binding.duration.setText(formatTime(exoPlayer.duration.toInt()))
                             setupSeekBar()
@@ -216,7 +217,8 @@ class PlaySongFragment() : Fragment() {
                             binding.playPause.setBackgroundResource(R.drawable.ic_pause)
                             binding.name.setText(track.name)
                             binding.nameTrack.setText(track.name)
-                            binding.artist.setText(track.artists.get(0).name)
+                            binding.artist.text = track.artists.joinToString(", ") { it.name }
+
                             binding.seekBar.max = exoPlayer.duration.toInt()
                             binding.duration.setText(formatTime(exoPlayer.duration.toInt()))
                         }
