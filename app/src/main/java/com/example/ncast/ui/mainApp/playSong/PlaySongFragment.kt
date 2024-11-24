@@ -234,6 +234,9 @@ class PlaySongFragment() : Fragment() {
                 exoPlayer.prepare()
                 exoPlayer.play()
 
+                binding.gone.visibility = View.VISIBLE
+                binding.menu.visibility = View.VISIBLE
+
                 // update seekBar khi kéo
                 binding.seekBar.setOnSeekBarChangeListener(object :
                     SeekBar.OnSeekBarChangeListener {
