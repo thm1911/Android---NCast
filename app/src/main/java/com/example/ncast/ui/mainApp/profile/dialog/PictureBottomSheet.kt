@@ -1,16 +1,17 @@
 package com.example.ncast.ui.mainApp.profile.dialog
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.databinding.DialogChangePictureProfileBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class PictureDialogFragment  : DialogFragment() {
+class PictureBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: DialogChangePictureProfileBinding? = null
     private val binding get() = _binding!!

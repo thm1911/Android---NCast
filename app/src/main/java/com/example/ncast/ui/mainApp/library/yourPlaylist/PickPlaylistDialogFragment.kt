@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ncast.R
 import com.example.ncast.adapter.recycleViewAdapterLibrary.PickPlaylistAdapter
+import com.example.ncast.databinding.DialogCustomConfirmationBinding
 import com.example.ncast.databinding.FragmentPickPlaylistDialogBinding
 import com.example.ncast.ui.mainApp.library.LibraryViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -64,19 +65,27 @@ class PickPlaylistDialogFragment : DialogFragment() {
         initRecyclerView()
 
         binding.save.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle("Save these changes")
-                .setMessage("Are you sure you want to save them")
-                .setNegativeButton("Yes") { dialog, _ ->
-                    saveData()
-                    dismiss()
-                }
-                .setPositiveButton("No") { dialog, _ ->
-                    dismiss()
-                }
-                .show()
-            dismiss()
+            val dialogBinding = DialogCustomConfirmationBinding.inflate(LayoutInflater.from(requireContext()))
+            val dialog = AlertDialog.Builder(requireContext()).setView(dialogBinding.root).create()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+            dialogBinding.dialogTitle.text = "Save these changes"
+            dialogBinding.dialogMessage.text = "Are you sure you want to save them?"
+
+            dialogBinding.btnConfirm.setOnClickListener {
+                saveData()
+                dialog.dismiss()
+                dismiss()
+            }
+
+            dialogBinding.btnCancel.setOnClickListener {
+                dialog.dismiss()
+                dismiss()
+            }
+
+            dialog.show()
         }
+
 
     }
 
