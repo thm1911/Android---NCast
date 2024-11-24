@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,7 @@ import com.example.ncast.ui.mainApp.library.yourPlaylist.AddNewPlaylistFragment
 import com.example.ncast.R
 import com.example.ncast.SpacingItem
 import com.example.ncast.adapter.recycleViewAdapterLibrary.YourPlaylistAdapter
+import com.example.ncast.databinding.DialogCustomConfirmationBinding
 import com.example.ncast.databinding.FragmentLibraryBinding
 import com.example.ncast.model.yourPlaylist.YourPlaylist
 import com.example.ncast.utils.Url
@@ -119,19 +121,28 @@ class LibraryFragment : Fragment() {
         }
     }
 
-    private fun showNoti(name: String){
-        AlertDialog.Builder(requireContext())
-            .setTitle("Delete Playlist?")
-            .setMessage("Are you sure you want to delete?")
-            .setNegativeButton("Yes"){dialog, _ ->
-                deletePlaylist(name)
-                dialog.dismiss()
-            }
-            .setPositiveButton("No"){dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+    private fun showNoti(name: String) {
+        val bindingDialog = DialogCustomConfirmationBinding.inflate(LayoutInflater.from(requireContext()))
+        val dialog = AlertDialog.Builder(requireContext()).setView(bindingDialog.root).create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        bindingDialog.dialogTitle.text = "Delete Playlist?"
+        bindingDialog.dialogMessage.text = "Are you sure you want to delete this playlist?"
+
+        bindingDialog.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        bindingDialog.btnConfirm.setOnClickListener {
+            deletePlaylist(name)
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
+
+
+
 
     private fun deletePlaylist(name: String){
         val userId = FirebaseAuth.getInstance().currentUser?.uid

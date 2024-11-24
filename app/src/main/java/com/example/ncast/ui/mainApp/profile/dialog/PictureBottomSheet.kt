@@ -29,12 +29,12 @@ class PictureBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.save.setOnClickListener {
+        binding.btnConfirm.setOnClickListener {
             if(mes.equals("Profile Avt")) saveProfilePicture()
             else if(mes.equals("Picture Playlist")) savePicturePlaylist()
         }
 
-        binding.cancel.setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             dismiss()
         }
     }

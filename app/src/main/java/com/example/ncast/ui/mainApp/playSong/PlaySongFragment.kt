@@ -188,6 +188,8 @@ class PlaySongFragment() : Fragment() {
 
             Track.getUrlFromDatabase(track.id) { url ->
                 if (url.isNullOrEmpty()) {
+                    val dialog = DialogPremiumFragment()
+                    dialog.show(childFragmentManager, "DialogPremium")
                     if (track.preview_url.isNullOrEmpty()) {
                         urlMp3 = ""
                         Toast.makeText(
