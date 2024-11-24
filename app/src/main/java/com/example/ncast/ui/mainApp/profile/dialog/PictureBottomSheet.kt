@@ -1,17 +1,16 @@
 package com.example.ncast.ui.mainApp.profile.dialog
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.databinding.DialogChangePictureProfileBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class PictureBottomSheet : BottomSheetDialogFragment() {
+class PictureDialogFragment  : DialogFragment() {
 
     private var _binding: DialogChangePictureProfileBinding? = null
     private val binding get() = _binding!!
@@ -29,12 +28,12 @@ class PictureBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.save.setOnClickListener {
+        binding.btnConfirm.setOnClickListener {
             if(mes.equals("Profile Avt")) saveProfilePicture()
             else if(mes.equals("Picture Playlist")) savePicturePlaylist()
         }
 
-        binding.cancel.setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             dismiss()
         }
     }
