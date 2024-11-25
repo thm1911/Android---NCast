@@ -7,13 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentHostCallback
 import androidx.navigation.fragment.findNavController
 import com.example.ncast.R
 import com.example.ncast.databinding.FragmentForgotPasswordBinding
-import com.example.ncast.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 class ForgotPasswordFragment : Fragment() {
     private var _binding: FragmentForgotPasswordBinding? = null
@@ -60,22 +57,20 @@ class ForgotPasswordFragment : Fragment() {
         }
     }
 
-    private fun checkEmail(callback: (Boolean) -> Unit){
+    private fun checkEmail(callback: (Boolean) -> Unit) {
         val email = binding.email.text.toString()
 
-        if(email.isNullOrEmpty()){
+        if (email.isNullOrEmpty()) {
             binding.emailLayout.helperText = "Cannot be left blank"
             binding.email.setBackgroundResource(R.drawable.input_error)
             callback(false)
             return
-        }
-        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.emailLayout.helperText = "Invalid email"
             binding.email.setBackgroundResource(R.drawable.input_error)
             callback(false)
             return
-        }
-        else callback(true)
+        } else callback(true)
     }
 
     override fun onDestroyView() {

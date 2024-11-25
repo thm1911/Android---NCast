@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_onboardingFragment_to_createAccountFragment"
             app:destination="@id/createAccountFragment" />
+        <action
+            android:id="@+id/action_onboardingFragment_to_mainAppFragment"
+            app:destination="@id/mainAppFragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
@@ -39,6 +42,9 @@
         <action
             android:id="@+id/action_userSignUpFragment_to_mainAppFragment"
             app:destination="@id/mainAppFragment" />
+        <action
+            android:id="@+id/action_userSignUpFragment_to_userSignInFragment"
+            app:destination="@id/userSignInFragment" />
     </fragment>
     <fragment
         android:id="@+id/userSignInFragment"
@@ -51,6 +57,9 @@
         <action
             android:id="@+id/action_userSignInFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_userSignInFragment_to_userSignUpFragment"
+            app:destination="@id/userSignUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"

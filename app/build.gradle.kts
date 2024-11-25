@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -89,4 +90,26 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.5.0"))
 
     implementation("com.google.firebase:firebase-analytics")
+
+    implementation ("com.google.android.exoplayer:exoplayer:2.18.1")
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation (libs.glide)
+
+    // Glide for image loading with annotationProcessor
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+
+    // Room Database with annotationProcessor
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    //Palette
+    implementation ("androidx.palette:palette:1.0.0")
+
 }

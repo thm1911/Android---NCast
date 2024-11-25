@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black_bg"
     tools:context=".ui.onBoarding.Onboarding1Fragment">
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/name_app"
+        android:background="@drawable/icon_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="5:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,14 +20,15 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <View
+        android:id="@+id/icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/icon_app"
+        android:background="@drawable/iconapp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.4"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4" />

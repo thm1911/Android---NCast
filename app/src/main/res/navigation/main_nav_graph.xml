@@ -9,32 +9,167 @@
         android:id="@+id/homeFragment"
         android:name="com.example.ncast.ui.mainApp.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_newReleaseAlbumFragment"
+            app:destination="@id/newReleaseAlbumFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_albumInforFragment"
+            app:destination="@id/albumInforFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_featuredPlaylistFragment"
+            app:destination="@id/featuredPlaylistFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.ncast.ui.mainApp.search.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/libraryFragment"
         android:name="com.example.ncast.ui.mainApp.library.LibraryFragment"
         android:label="Library"
-        tools:layout="@layout/fragment_library" />
+        tools:layout="@layout/fragment_library" >
+        <action
+            android:id="@+id/action_libraryFragment_to_favoriteSongsPlaylistFragment"
+            app:destination="@id/favoriteSongsPlaylistFragment" />
+        <action
+            android:id="@+id/action_libraryFragment_to_addNewPlaylistFragment"
+            app:destination="@id/addNewPlaylistFragment" />
+        <action
+            android:id="@+id/action_libraryFragment_to_yourPlaylistFragment"
+            app:destination="@id/yourPlaylistFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.ncast.ui.mainApp.profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_chooseAppProfileFragment"
+            app:destination="@id/chooseAppProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_premiumFragment"
+            app:destination="@id/premiumFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="com.example.ncast.ui.mainApp.profile.changePassword.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
+
+    <fragment
+        android:id="@+id/newReleaseAlbumFragment"
+        android:name="com.example.ncast.ui.mainApp.home.newAlbumRelease.NewReleaseAlbumFragment"
+        android:label="fragment_new_release_album"
+        tools:layout="@layout/fragment_new_release_album">
+        <action
+            android:id="@+id/action_newReleaseAlbumFragment_to_albumInforFragment"
+            app:destination="@id/albumInforFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/albumInforFragment"
+        android:name="com.example.ncast.ui.mainApp.home.newAlbumRelease.AlbumInforFragment"
+        android:label="fragment_album_infor"
+        tools:layout="@layout/fragment_album_infor">
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_albumInforFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playSongFragment"
+        android:name="com.example.ncast.ui.mainApp.playSong.PlaySongFragment"
+        android:label="fragment_play_song"
+        tools:layout="@layout/fragment_play_song" >
+        <argument
+            android:name="idTrack"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseAppProfileFragment"
+        android:name="com.example.ncast.ui.mainApp.profile.ChoosePictureFragment"
+        android:label="fragment_choose_app_profile"
+        tools:layout="@layout/fragment_choose_app_profile" >
+        <argument
+            android:name="mes"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/featuredPlaylistFragment"
+        android:name="com.example.ncast.ui.mainApp.home.featuredPlaylist.FeaturedPlaylistFragment"
+        android:label="fragment_featured_playlist"
+        tools:layout="@layout/fragment_featured_playlist" >
+        <action
+            android:id="@+id/action_featuredPlaylistFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.example.ncast.ui.mainApp.home.featuredPlaylist.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist" >
+        <argument
+            android:name="playlistId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_playlistFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteSongsPlaylistFragment"
+        android:name="com.example.ncast.ui.mainApp.library.favoriteSong.FavoriteSongsPlaylistFragment"
+        android:label="fragment_favorite_songs_playlist"
+        tools:layout="@layout/fragment_favorite_songs_playlist" >
+        <action
+            android:id="@+id/action_favoriteSongsPlaylistFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewPlaylistFragment"
+        android:name="com.example.ncast.ui.mainApp.library.yourPlaylist.AddNewPlaylistFragment"
+        android:label="fragment_add_new_playlist"
+        tools:layout="@layout/fragment_add_new_playlist" >
+        <action
+            android:id="@+id/action_addNewPlaylistFragment_to_chooseAppProfileFragment"
+            app:destination="@id/chooseAppProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/yourPlaylistFragment"
+        android:name="com.example.ncast.ui.mainApp.library.yourPlaylist.YourPlaylistFragment"
+        android:label="fragment_your_playlist"
+        tools:layout="@layout/fragment_your_playlist" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_yourPlaylistFragment_to_playSongFragment"
+            app:destination="@id/playSongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/premiumFragment"
+        android:name="com.example.ncast.ui.mainApp.profile.PremiumFragment"
+        android:label="fragment_premium"
+        tools:layout="@layout/fragment_premium" />
+
 </navigation>

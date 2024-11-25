@@ -4,13 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black_bg"
     tools:context=".ui.mainApp.profile.ProfileFragment">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:background="@drawable/blur_gr" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/text1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/black_bg"
         app:cardElevation="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.08"
@@ -20,193 +27,227 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:autoSizeMaxTextSize="30sp"
+            android:autoSizeMaxTextSize="25sp"
             android:autoSizeMinTextSize="20sp"
             android:autoSizeTextType="uniform"
-            android:background="@color/white"
+            android:background="@color/black_bg"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
             android:text="@string/profile"
-            android:textColor="@color/black"
+            android:textColor="@color/green"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/image_layout"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_avt"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avtapp"
         app:layout_constraintTop_toBottomOf="@id/text1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintDimensionRatio="1:1"
-        app:cardCornerRadius="100sp"
-        app:cardElevation="5sp"
+        app:layout_constraintHeight_percent="0.2"
         app:layout_constraintVertical_bias="0.05"
-        app:layout_constraintHorizontal_bias="0">
+        app:shapeAppearanceOverlay="@style/ShapeImage"/>
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/custom_circle_shape"
-            android:scaleType="centerCrop"
-            android:src="@drawable/icon_app" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/infor"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/camera"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/image_layout"
-        app:layout_constraintBottom_toBottomOf="@id/image_layout"
-        app:layout_constraintStart_toEndOf="@id/image_layout"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintHorizontal_bias="0.05">
+        android:src="@drawable/ic_camera"
+        app:layout_constraintBottom_toBottomOf="@id/image_avt"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@id/image_avt"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="@id/image_avt"
+        app:layout_constraintTop_toTopOf="@id/image_avt"
+        app:layout_constraintVertical_bias="0.98"
+        app:shapeAppearanceOverlay="@style/ShapeImage" />
 
         <TextView
             android:id="@+id/username"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.5"
-            app:layout_constraintVertical_bias="0"
             android:drawableStart="@drawable/ic_profile"
-            android:drawableTint="@color/main"
-            android:text="pt"
-            android:textColor="@color/black"
+            android:drawablePadding="10sp"
+            android:drawableTint="@color/green"
+            android:fontFamily="@font/montserrat_semibold"
             android:gravity="center|start"
-            android:drawablePadding="10sp"/>
+            android:text="@string/loading"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.05"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/image_avt"
+            app:layout_constraintVertical_bias="0" />
 
         <TextView
             android:id="@+id/email"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/username"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:drawableStart="@drawable/ic_email"
-            android:textColor="@color/black"
-            android:text="hihi@gmail.com"
+            android:drawablePadding="10sp"
+            android:fontFamily="@font/montserrat_semibold"
             android:gravity="center|start"
-            android:drawablePadding="10sp"/>
+            android:text="loading..."
+            android:textColor="@color/white"
+            android:paddingStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/username"
+            app:layout_constraintHeight_percent="0.05"
+            app:layout_constraintStart_toStartOf="@id/username"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintVertical_bias="0" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/change_pass_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/image_layout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHeight_percent="0.06"
-        app:layout_constraintVertical_bias="0.05"
-        app:cardCornerRadius="10sp"
-        app:cardElevation="10sp">
-
-            <TextView
-                android:id="@+id/change_password"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.6"
-                app:layout_constraintHorizontal_bias="0"
-                android:paddingStart="10dp"
-                android:drawableStart="@drawable/ic_password"
-                android:drawableTint="@color/main"
-                android:text="@string/change_password"
-                android:background="@color/white"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:gravity="center|start"
-                android:drawablePadding="10sp"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/about_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/change_pass_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline1"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintHeight_percent="0.06"
-        app:layout_constraintVertical_bias="0.05"
-        app:cardCornerRadius="10sp"
-        app:cardElevation="10sp">
+        app:layout_constraintTop_toBottomOf="@id/email"
+        app:layout_constraintVertical_bias="0.05">
 
         <TextView
-            android:id="@+id/about"
-            android:layout_width="match_parent"
+            android:id="@+id/change_password"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.6"
-            app:layout_constraintHorizontal_bias="0"
-            android:paddingStart="10dp"
-            android:drawableStart="@drawable/ic_about"
-            android:drawableTint="@color/main"
-            android:text="@string/about"
-            android:background="@color/white"
-            android:textColor="@color/black"
-            android:textStyle="bold"
+            android:drawableStart="@drawable/ic_pass"
+            android:drawablePadding="10sp"
+            android:drawableTint="@color/green"
+            android:fontFamily="@font/montserrat_semibold"
             android:gravity="center|start"
-            android:drawablePadding="10sp"/>
+            android:paddingStart="10dp"
+            android:text="@string/change_password"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-    </androidx.cardview.widget.CardView>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_next"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/change_password"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.cardview.widget.CardView
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/premium_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/change_pass_layout"
+        app:layout_constraintVertical_bias="0.05">
+
+        <TextView
+            android:id="@+id/premium"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_about"
+            android:drawablePadding="10sp"
+            android:drawableTint="@color/green"
+            android:fontFamily="@font/montserrat_semibold"
+            android:gravity="center|start"
+            android:paddingStart="10dp"
+            android:text="@string/subscribe_to_premium"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_next"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/premium"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/logout_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/about_layout"
+        app:cardCornerRadius="10sp"
+        app:cardElevation="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintHeight_percent="0.06"
-        app:layout_constraintVertical_bias="0.05"
-        app:cardCornerRadius="10sp"
-        app:cardElevation="10sp">
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintTop_toBottomOf="@id/premium_layout"
+        app:layout_constraintVertical_bias="0.05">
 
         <TextView
             android:id="@+id/logout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.6"
-            app:layout_constraintHorizontal_bias="0"
             android:drawableStart="@drawable/ic_logout"
-            android:drawableTint="@color/main"
-            android:text="Log out"
-            android:paddingStart="10dp"
-            android:background="@color/white"
-            android:textColor="@color/black"
-            android:textStyle="bold"
+            android:drawablePadding="10sp"
+            android:drawableTint="@color/green"
+            android:fontFamily="@font/montserrat_semibold"
             android:gravity="center|start"
-            android:drawablePadding="10sp"/>
+            android:paddingStart="10dp"
+            android:text="Log out"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.85" />
 
-    </androidx.cardview.widget.CardView>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_next"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/logout"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.06"/>
+        app:layout_constraintGuide_percent="0.06" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.94"/>
+        app:layout_constraintGuide_percent="0.94" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

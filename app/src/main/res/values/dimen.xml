@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="space">-10dp</dimen>
+    <dimen name="space">-5dp</dimen>
+    <dimen name="space_song">10dp</dimen>
+    <dimen name="space_featured_playlist">6dp</dimen>
 </resources>

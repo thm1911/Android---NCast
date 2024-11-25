@@ -2,7 +2,6 @@ package com.example.ncast.model
 
 import androidx.room.Entity
 import androidx.room.Index
-import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "User",
@@ -12,5 +11,6 @@ data class User(
     val userId: String = "",
     val email: String = "",
     val username: String = "",
-    val password: String = ""
+    val password: String = "",
+    val imageUrl: String? = null
 )
